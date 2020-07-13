@@ -1,8 +1,14 @@
 import {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import MapView from 'react-native-map-clustering';
-
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TouchableOpacity,
+    ImageBackground,
+} from 'react-native';
 import mapConfig from '../../configs/mapConfig';
 import images from '../../assets/images';
 import {
@@ -27,6 +33,7 @@ const Map = () => {
 
     const onLocationPress = () => {
         getCurrentLocation(setCurrentRegion);
+        animateToRegion();
     };
 
     useEffect(() => {
@@ -44,56 +51,77 @@ const Map = () => {
     }, []);
 
     //markers
-    let branchMarkers = () => {
+    let branchMarkers = useCallback(() => {
         return branchList.map((region, index) => (
             <Marker
                 key={index}
-                coordinate={{
-                    latitude: region.longitude,
-                    longitude: region.latitude,
+                style={{
+                    width: 15,
+                    height: 15,
                 }}
+                // style={styles.marker}
+                tracksViewChanges={false}
+                coordinate={{
+                    latitude: region.latitude,
+                    longitude: region.longitude,
+                }}
+                icon={images.branch}
                 title={region.name}>
-                <Image source={images.branch} style={styles.marker} />
+                {/* <Image source={images.branch} style={styles.marker} /> */}
             </Marker>
         ));
-    };
+    }, [branchList]);
 
-    let atmMarkers = () => {
+    let atmMarkers = useCallback(() => {
         return atmList.map((region, index) => (
             <Marker
                 key={index}
+                style={styles.marker}
+                tracksViewChanges={false}
                 coordinate={{
                     latitude: region.longitude,
                     longitude: region.latitude,
                 }}
+                icon={images.atm}
                 title={region.name}>
-                <Image source={images.atm} style={styles.marker} />
+                {/* <Image source={images.atm} style={styles.marker} /> */}
             </Marker>
         ));
-    };
-    let minibankMarkers = () => {
+    }, [atmList]);
+    let minibankMarkers = useCallback(() => {
         return minibankList.map((region, index) => (
             <Marker
                 key={index}
+                style={styles.marker}
+                tracksViewChanges={false}
                 coordinate={{
                     latitude: region.longitude,
                     longitude: region.latitude,
                 }}
+                icon={images.bank}
                 title={region.name}>
-                <Image source={images.bank} style={styles.marker} />
+                {/* <Image source={images.bank} style={styles.marker} /> */}
             </Marker>
         ));
-    };
+    }, [minibankList]);
+
+    //example
+    let mapRef = useRef(null);
+
+    const animateToRegion = useCallback(() => {
+        mapRef.current.animateToRegion(currentRegion, 500);
+    }, [currentRegion]);
 
     return (
         <>
             <MapView
+                ref={mapRef}
                 style={styles.map}
                 provider={PROVIDER_GOOGLE}
                 initialRegion={currentRegion}
                 // region={currentRegion}
                 clusteringEnabled={true}
-                radius={50}
+                radius={70}
                 customMapStyle={mapConfig}>
                 <Marker coordinate={currentRegion} title={'me'} style={{}}>
                     <Image

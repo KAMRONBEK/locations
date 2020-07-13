@@ -4,4 +4,5 @@ export default {
     atm: require('./atm-marker.png'),
     bank: require('./bank-marker.png'),
     branch: require('./branch-marker.png'),
+    grayBg: require('./gray-bg.png'),
 };
