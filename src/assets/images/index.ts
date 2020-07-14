@@ -5,4 +5,5 @@ export default {
     bank: require('./bank-marker.png'),
     branch: require('./branch-marker.png'),
     grayBg: require('./gray-bg.png'),
+    temp: require('./temp.jpg'),
 };

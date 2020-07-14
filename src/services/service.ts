@@ -13,16 +13,16 @@ class Service {
             let minibanks = source.data.minibanks.map((minibank, index) => {
                 return {
                     ...minibank,
-                    longitude: parseFloat(minibank.location.split(',')[1]),
-                    latitude: parseFloat(minibank.location.split(',')[0]),
+                    longitude: parseFloat(minibank.location.split(',')[0]),
+                    latitude: parseFloat(minibank.location.split(',')[1]),
                 };
             });
 
             let atms = source.data.atms.map((atm, index) => {
                 return {
                     ...atm,
-                    longitude: parseFloat(atm.location.split(',')[1]),
-                    latitude: parseFloat(atm.location.split(',')[0]),
+                    longitude: parseFloat(atm.location.split(',')[0]),
+                    latitude: parseFloat(atm.location.split(',')[1]),
                 };
             });
 

@@ -3,11 +3,15 @@ import MapView from 'react-native-map-clustering';
 import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {
     StyleSheet,
-    Text,
     View,
     Image,
     TouchableOpacity,
     ImageBackground,
+    LayoutAnimation,
+    PermissionsAndroid,
+    ScrollView,
+    Platform,
+    TextInput,
 } from 'react-native';
 import mapConfig from '../../configs/mapConfig';
 import images from '../../assets/images';
@@ -16,9 +20,16 @@ import {
     LONGITUDE,
     LATITUDE_DELTA,
     LONGITUDE_DELTA,
+    colors,
+    deviceHeight,
+    CARD_WIDTH,
+    CARD_HEIGHT,
 } from '../../constants';
 import Service from '../../services/service';
 import {getCurrentLocation} from '../../services/functions';
+import FilterItem from '../../component/common/FilterItem';
+import {strings} from '../../locales/strings';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Map = () => {
     let [currentRegion, setCurrentRegion] = useState({
@@ -38,6 +49,7 @@ const Map = () => {
 
     useEffect(() => {
         getCurrentLocation(setCurrentRegion);
+        animateToRegion();
 
         Service.get()
             .then((res) => {
@@ -59,7 +71,6 @@ const Map = () => {
                     width: 15,
                     height: 15,
                 }}
-                // style={styles.marker}
                 tracksViewChanges={false}
                 coordinate={{
                     latitude: region.latitude,
@@ -76,7 +87,6 @@ const Map = () => {
         return atmList.map((region, index) => (
             <Marker
                 key={index}
-                style={styles.marker}
                 tracksViewChanges={false}
                 coordinate={{
                     latitude: region.longitude,
@@ -92,7 +102,6 @@ const Map = () => {
         return minibankList.map((region, index) => (
             <Marker
                 key={index}
-                style={styles.marker}
                 tracksViewChanges={false}
                 coordinate={{
                     latitude: region.longitude,
@@ -106,43 +115,57 @@ const Map = () => {
     }, [minibankList]);
 
     //example
-    let mapRef = useRef(null);
+    let _map = useRef(null);
 
     const animateToRegion = useCallback(() => {
-        mapRef.current.animateToRegion(currentRegion, 500);
+        _map.current.animateToRegion(currentRegion, 500);
     }, [currentRegion]);
 
+    // const _onMapReady = () => {
+    //     PermissionsAndroid.request(
+    //         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    //     ).then((granted) => {
+    //         setMapMargin(0);
+    //     });
+    // };
+
     return (
-        <>
+        <View style={styles.container}>
             <MapView
-                ref={mapRef}
-                style={styles.map}
+                showsUserLocation={true}
+                layoutAnimationConf={LayoutAnimation.Presets.easeInEaseOut}
+                animationEnabled={true}
+                ref={_map}
+                style={[styles.map]}
                 provider={PROVIDER_GOOGLE}
                 initialRegion={currentRegion}
-                // region={currentRegion}
+                showsMyLocationButton={true}
                 clusteringEnabled={true}
-                radius={70}
-                customMapStyle={mapConfig}>
-                <Marker coordinate={currentRegion} title={'me'} style={{}}>
+                radius={20}
+                customMapStyle={mapConfig}
+                // onMapReady={_onMapReady}
+            >
+                {/* <Marker coordinate={currentRegion} title={'my location'}>
                     <Image
                         source={images.currentLocation}
                         style={{
-                            height: 15,
-                            width: 15,
-                            paddingBottom: 15,
+                            height: 20,
+                            width: 20,
                         }}
                     />
-                </Marker>
+                </Marker> */}
                 {branchMarkers()}
                 {atmMarkers()}
                 {minibankMarkers()}
             </MapView>
             <View style={styles.markerWrapper}>
                 <TouchableOpacity onPress={onLocationPress}>
-                    <Image style={styles.marker} source={images.marker} />
+                    <View style={styles.locationIcon}>
+                        <Ionicons name="locate-outline" size={24} />
+                    </View>
                 </TouchableOpacity>
             </View>
-        </>
+        </View>
     );
 };
 
@@ -166,17 +189,23 @@ const styles = StyleSheet.create({
         padding: 40,
     },
     markerWrapper: {
-        bottom: 40,
-        right: 40,
+        bottom: 18,
+        right: 18,
         position: 'absolute',
-        backgroundColor: 'rgba(200,200,200,0.9)',
-        borderRadius: 4,
+        backgroundColor: colors.ultraLightBlue,
+        borderColor: colors.gray,
+        borderRadius: 5,
+        borderWidth: 0.5,
+        marginBottom: CARD_HEIGHT,
     },
     marker: {
         margin: 10,
-        height: 20,
-        width: 20,
+        height: 25,
+        width: 25,
         resizeMode: 'contain',
+    },
+    locationIcon: {
+        padding: 8,
     },
 });
 export default Map;
