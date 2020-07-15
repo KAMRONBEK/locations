@@ -10,6 +10,7 @@ class Service {
                     latitude: parseFloat(branch.location.split(',')[0]),
                 };
             });
+
             let minibanks = source.data.minibanks.map((minibank, index) => {
                 return {
                     ...minibank,

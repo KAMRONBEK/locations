@@ -9,5 +9,5 @@ export const deviceHeight = Dimensions.get('window').height;
 export const deviceWidth = Dimensions.get('window').width;
 
 export const CARD_HEIGHT = 200;
-export const CARD_WIDTH = deviceWidth - 40;
-export const SPACING_FOR_CARD_INSET = 10;
+export const CARD_WIDTH = deviceWidth - 80;
+export const SPACING_FOR_CARD_INSET = 30;
