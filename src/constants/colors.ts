@@ -4,4 +4,5 @@ export const colors = {
     black: '#000',
     ultraLightBlue: '#F3F3F9',
     gray: '#ccc',
+    orange: '#fcba03',
 };

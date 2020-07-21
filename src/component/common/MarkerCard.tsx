@@ -1,7 +1,18 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TouchableOpacity,
+    Animated,
+} from 'react-native';
 import {CARD_HEIGHT, CARD_WIDTH} from '../../constants';
 import images from '../../assets/images';
+import {
+    PanGestureHandler,
+    TouchableWithoutFeedback,
+} from 'react-native-gesture-handler';
 
 interface MarkerCardProps {
     id: string;
@@ -14,28 +25,31 @@ interface MarkerCardProps {
     phone: [];
     trial503: string;
     x: number;
+    onPress: any;
 }
 
-const MarkerCard = ({name, address, phone}: MarkerCardProps) => {
+const MarkerCard = ({name, address, phone, onPress}: MarkerCardProps) => {
     return (
-        <View style={styles.container}>
-            <Image
-                source={images.temp}
-                style={styles.cardImage}
-                resizeMode="cover"
-            />
-            <View style={styles.textContent}>
-                <Text numberOfLines={1} style={styles.cardtitle}>
-                    {name}
-                </Text>
-                <Text numberOfLines={1} style={styles.cardDescription}>
-                    {address}
-                </Text>
-                <Text numberOfLines={1} style={styles.cardDescription}>
-                    {phone[0]}
-                </Text>
-            </View>
-        </View>
+        <TouchableWithoutFeedback onPress={onPress}>
+            <Animated.View style={styles.container}>
+                <Image
+                    source={images.temp}
+                    style={styles.cardImage}
+                    resizeMode="cover"
+                />
+                <View style={styles.textContent}>
+                    <Text numberOfLines={1} style={styles.cardtitle}>
+                        {name}
+                    </Text>
+                    <Text numberOfLines={1} style={styles.cardDescription}>
+                        {address}
+                    </Text>
+                    <Text numberOfLines={1} style={styles.cardDescription}>
+                        {phone && phone[0]}
+                    </Text>
+                </View>
+            </Animated.View>
+        </TouchableWithoutFeedback>
     );
 };
 
@@ -53,7 +67,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     cardImage: {
-        flex: 3,
+        flex: 2,
         width: '100%',
         height: '100%',
         alignSelf: 'center',
