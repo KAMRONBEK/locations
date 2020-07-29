@@ -33,7 +33,7 @@ class Service {
                     ...minibank,
                     longitude: parseFloat(minibank.location.split(',')[1]),
                     latitude: parseFloat(minibank.location.split(',')[0]),
-                    tag: `branch ${
+                    tag: `minibank ${
                         minibank.name +
                         ' ' +
                         minibank.address +
@@ -48,7 +48,7 @@ class Service {
                     ...atm,
                     longitude: parseFloat(atm.location.split(',')[1]),
                     latitude: parseFloat(atm.location.split(',')[0]),
-                    tag: `branch ${
+                    tag: `atm ${
                         atm.name + ' ' + atm.address + ' ' + atm.type
                     } `,
                 };
@@ -56,20 +56,35 @@ class Service {
 
             setTimeout(() => {
                 resolve([...branches, ...minibanks, ...atms]);
-            }, 500);
+            }, 200);
         });
     }
 
     static search = ({searchKey, list}: searchProps) => {
         return new Promise((resolve, reject) => {
             let resultList = [];
+            let key = searchKey.toLowerCase().replace(/ /gi, '|');
+            console.log('^(' + key + ')');
+
+            // let searchRegex=
             list.map((marker, index) => {
-                if (marker && marker.tag.includes(searchKey))
+                if (
+                    marker &&
+                    marker.tag
+                        .toLowerCase()
+                        .match(new RegExp('^.*(' + key + ').*$', 'g'))
+                )
                     resultList.push(marker);
+                console.log(marker);
             });
             if (resultList.length > 0) {
-                resolve(resultList);
-            } else reject('404');
+                setTimeout(() => {
+                    resolve(resultList);
+                }, 200);
+            } else
+                setTimeout(() => {
+                    reject('404');
+                }, 1000);
         });
     };
 }

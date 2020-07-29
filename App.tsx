@@ -5,27 +5,12 @@
  * @format
  * @flow strict-local
  */
-
 import React from 'react';
-import {
-    SafeAreaView,
-    StyleSheet,
-    ScrollView,
-    View,
-    Text,
-    StatusBar,
-    Platform,
-    UIManager,
-} from 'react-native';
-
-import {
-    Header,
-    LearnMoreLinks,
-    Colors,
-    DebugInstructions,
-    ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {SafeAreaView, StatusBar, Platform, UIManager} from 'react-native';
 import AppRouter from './src/routes/AppRouter';
+import {Provider} from 'react-redux';
+import configureStore from './src/redux/configureStore';
+import LoadingModal from './src/component/container/LoadingModal';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -34,53 +19,20 @@ if (Platform.OS === 'android') {
 }
 
 const App = () => {
+    console.disableYellowBox = true;
+
+    let store = configureStore();
     return (
         <>
             <StatusBar barStyle="dark-content" backgroundColor={'white'} />
             <SafeAreaView style={{flex: 1}}>
-                <AppRouter />
+                <Provider store={store}>
+                    <AppRouter />
+                    <LoadingModal />
+                </Provider>
             </SafeAreaView>
         </>
     );
 };
-
-const styles = StyleSheet.create({
-    scrollView: {
-        backgroundColor: Colors.lighter,
-    },
-    engine: {
-        position: 'absolute',
-        right: 0,
-    },
-    body: {
-        backgroundColor: Colors.white,
-    },
-    sectionContainer: {
-        marginTop: 32,
-        paddingHorizontal: 24,
-    },
-    sectionTitle: {
-        fontSize: 24,
-        fontWeight: '600',
-        color: Colors.black,
-    },
-    sectionDescription: {
-        marginTop: 8,
-        fontSize: 18,
-        fontWeight: '400',
-        color: Colors.dark,
-    },
-    highlight: {
-        fontWeight: '700',
-    },
-    footer: {
-        color: Colors.dark,
-        fontSize: 12,
-        fontWeight: '600',
-        padding: 4,
-        paddingRight: 12,
-        textAlign: 'right',
-    },
-});
 
 export default App;

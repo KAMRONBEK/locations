@@ -3,25 +3,28 @@ import React, {
     Dispatch,
     SetStateAction,
     MutableRefObject,
+    useEffect,
 } from 'react';
 import {
     StyleSheet,
-    Text,
     View,
     TextInput,
     TouchableOpacity,
-    Pressable,
+    Keyboard,
 } from 'react-native';
 import Service from '../../services/service';
 import {strings} from '../../locales/strings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {colors, deviceHeight} from '../../constants';
+import {MaterialIndicator} from 'react-native-indicators';
+import Text from './Text';
 
 interface SearchBarProps {
     searchData: Array<object>;
     onSearch: Dispatch<SetStateAction<never[]>>;
     mapRef: MutableRefObject<null>;
     searchResultList: Array<object>;
+    slidePanelRef: MutableRefObject<null>;
 }
 
 const SearchBar = ({
@@ -29,16 +32,47 @@ const SearchBar = ({
     onSearch,
     mapRef,
     searchResultList,
+    slidePanelRef,
 }: SearchBarProps) => {
     let [searchKey, setSearchKey] = useState('');
+    const [searchState, setSearchState] = useState('initial'); //searching, searched, initial
+    const [searchResultCount, setSearchResultCount] = useState(0);
+    const [searchResultText, setSearchResultText] = useState('');
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            () => {
+                setKeyboardVisible(true);
+                slidePanelRef.current.hide();
+            },
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            () => {
+                setKeyboardVisible(false);
+                slidePanelRef.current.show();
+            },
+        );
+
+        return () => {
+            keyboardDidHideListener.remove();
+            keyboardDidShowListener.remove();
+        };
+    }, []);
 
     const search = (searchKey: string) => {
+        setSearchState('searching');
         Service.search({
             searchKey: searchKey,
             list: searchData,
         })
             .then((res) => {
-                console.log(res.length + 'ta topildi');
+                setSearchResultCount(res.length);
+                setSearchResultText(
+                    strings.found + ' ' + res.length + ' ' + strings.results,
+                );
                 onSearch(res);
                 mapRef.current.fitToCoordinates(searchResultList, {
                     edgePadding: {
@@ -50,31 +84,79 @@ const SearchBar = ({
                     animated: true,
                 });
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                setSearchResultCount(0);
+                setSearchResultText('');
+                console.log(err);
+            })
+            .finally(() => {
+                setSearchState('searched');
+            });
     };
     return (
-        <View style={styles.searchbar}>
-            <TextInput
-                onChangeText={(text) => {
-                    setSearchKey(text);
-                }}
-                placeholder={strings.searchHere}
-                style={{flex: 1, padding: 0}}
-                onFocus={(e) => {
-                    console.log(e);
-                }}
-            />
-            <Pressable
-                onPress={() => {
-                    console.log('touch');
-                    if (!!searchKey) {
-                        search(searchKey);
-                    }
-                }}>
-                <View>
-                    <Ionicons name="ios-search" size={20} />
+        <View>
+            <View style={styles.searchbar}>
+                <TextInput
+                    onChangeText={(text) => {
+                        setSearchKey(text);
+                        setSearchState('initial');
+                        setSearchResultText('');
+                    }}
+                    value={searchKey}
+                    placeholder={strings.searchHere}
+                    style={{flex: 1, padding: 0}}
+                    onFocus={() => {
+                        setSearchState('initial');
+                        setSearchResultText('');
+                    }}
+                />
+                <View style={{}}>
+                    {searchState == 'initial' && (
+                        <TouchableOpacity
+                            onPress={() => {
+                                Keyboard.dismiss();
+                                if (!!searchKey) {
+                                    search(searchKey);
+                                }
+                            }}>
+                            <View>
+                                <Ionicons name="ios-search" size={20} />
+                            </View>
+                        </TouchableOpacity>
+                    )}
+                    {searchState == 'searched' && (
+                        <TouchableOpacity
+                            onPress={() => {
+                                setSearchState('initial');
+                                onSearch(searchData);
+                                setSearchKey('');
+                                setSearchResultText('');
+                            }}>
+                            <View>
+                                <Ionicons name="close" size={25} />
+                            </View>
+                        </TouchableOpacity>
+                    )}
+                    {searchState == 'searching' && (
+                        <MaterialIndicator size={22} color={colors.lightBlue} />
+                    )}
                 </View>
-            </Pressable>
+            </View>
+            {!!searchResultText ? (
+                <View style={styles.searchResult}>
+                    <Text style={styles.searchResultText}>
+                        {searchResultText}
+                    </Text>
+                </View>
+            ) : searchState == 'searched' ? (
+                <View style={styles.searchResult}>
+                    <Text style={styles.searchResultText}>
+                        {strings.nothingFound}
+                    </Text>
+                </View>
+            ) : (
+                <View style={styles.searchResult}></View>
+            )}
         </View>
     );
 };
@@ -92,17 +174,20 @@ const styles = StyleSheet.create({
         elevation: 5,
         alignItems: 'center',
         paddingHorizontal: 15,
+        justifyContent: 'space-between',
     },
     searchResult: {
         overflow: 'hidden',
         borderRadius: 20,
         maxHeight: deviceHeight * 0.5,
-        paddingHorizontal: 15,
-        backgroundColor: colors.white,
-        marginVertical: 10,
+        padding: 5,
     },
     searchItem: {
         paddingVertical: 10,
+    },
+    searchResultText: {
+        fontSize: 14,
+        fontWeight: '300',
     },
 });
 

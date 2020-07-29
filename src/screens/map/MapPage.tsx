@@ -10,7 +10,7 @@ import {
 import Map from './Map';
 import Service from '../../services/service';
 import RoundButton from '../../component/common/RoundButton';
-import Text from '../../component/Text';
+import Text from '../../component/common/Text';
 import {strings} from '../../locales/strings';
 import FilterItem from '../../component/common/FilterItem';
 import {colors, CARD_WIDTH, SPACING_FOR_CARD_INSET} from '../../constants';
@@ -21,7 +21,6 @@ const MapPage = () => {
     return (
         <View style={styles.container}>
             <Map />
-           
         </View>
     );
 };
@@ -32,5 +31,4 @@ const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
     },
-   
 });

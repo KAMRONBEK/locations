@@ -13,6 +13,7 @@ import {
     TextInput,
     Animated,
     TouchableWithoutFeedback,
+    Pressable,
     ScrollView,
     InteractionManager,
 } from 'react-native';
@@ -30,17 +31,21 @@ import {
     SPACING_FOR_CARD_INSET,
 } from '../../constants';
 import Service from '../../services/service';
-import {getCurrentLocation} from '../../services/functions';
+import {
+    getCurrentLocation,
+    requestLocationPermission,
+} from '../../services/functions';
 import FilterItem from '../../component/common/FilterItem';
 import {strings} from '../../locales/strings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MarkerCard from '../../component/common/MarkerCard';
-import Text from '../../component/Text';
-import {PanGestureHandler} from 'react-native-gesture-handler';
+import Text from '../../component/common/Text';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import SearchBar from '../../component/common/SearchBar';
+import {showMapLoading, hideMapLoading} from '../../redux/actions';
+import {connect} from 'react-redux';
 
-const Map = () => {
+const Map = ({showMapLoading, hideMapLoading, appState}) => {
     let [currentRegion, setCurrentRegion] = useState({
         latitude: LATITUDE,
         longitude: LONGITUDE,
@@ -60,52 +65,9 @@ const Map = () => {
     }, [currentRegion]);
 
     const onLocationPress = () => {
-        requestAnimationFrame(() => {
-            console.log('pressed');
-            getCurrentLocation(setCurrentRegion);
-            animateToRegion();
-        });
+        getCurrentLocation(setCurrentRegion);
+        animateToRegion();
     };
-
-    const requestLocationPermission = async () => {
-        try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-                {
-                    title: 'Example App',
-                    message: 'Example App access to your location ',
-                    buttonPositive: 'Yes',
-                },
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log('You can use the location');
-            } else {
-                console.log('location permission denied');
-            }
-        } catch (err) {
-            console.warn(err);
-        }
-    };
-
-    useEffect(() => {
-        _draggablePanel.current.show({toValue: CARD_HEIGHT, velocity: 0.4});
-        InteractionManager.runAfterInteractions(() => {
-            requestLocationPermission();
-            getCurrentLocation(setCurrentRegion);
-            animateToRegion();
-
-            Service.get()
-                .then((res) => {
-                    setBranchList(res);
-                    setOriginalBranchList(res);
-                    // setAtmList(res.atms);
-                    // setMinibankList(res.minibanks);
-                })
-                .catch((err) => {
-                    console.warn(err);
-                });
-        });
-    }, []);
 
     //markers
     let branchMarkers = useCallback(() => {
@@ -151,12 +113,14 @@ const Map = () => {
         if (index >= branchList.length) {
             index = branchList.length - 1;
         }
+
         if (index <= 0) {
             index = 0;
         }
 
         if (regionTimeout.current !== false)
             clearTimeout(regionTimeout.current);
+        console.log('map animation');
 
         regionTimeout.current = setTimeout(() => {
             if (mapIndex !== index) {
@@ -175,6 +139,11 @@ const Map = () => {
         }, 10);
     };
 
+    useEffect(() => {
+        const id = mapAnimation.addListener(mapAnimationListener);
+        return () => mapAnimation.removeListener(id);
+    }, []);
+
     const onMarkerPress = (mapEventData) => {
         const markerID = parseFloat(
             mapEventData._targetInst.return.key.split('$')[1],
@@ -186,6 +155,7 @@ const Map = () => {
         }
 
         _scrollView.current.scrollTo({x: x, y: 0, animated: true});
+        _draggablePanel.current.show();
     };
 
     const interpolations =
@@ -207,19 +177,41 @@ const Map = () => {
         });
 
     useEffect(() => {
-        const id = mapAnimation.addListener(mapAnimationListener);
-        return () => mapAnimation.removeListener(id);
-    });
+        _draggablePanel.current.show({
+            toValue: CARD_HEIGHT + 60,
+            velocity: 0.1,
+        });
+        // InteractionManager.runAfterInteractions(() => {
+        showMapLoading();
+        requestLocationPermission();
+        getCurrentLocation(setCurrentRegion);
+        animateToRegion();
+        Service.get()
+            .then((res) => {
+                setBranchList(res);
+                setOriginalBranchList(res);
+                // setAtmList(res.atms);
+                // setMinibankList(res.minibanks);
+            })
+            .catch((err) => {
+                console.warn(err);
+            })
+            .finally(() => {
+                hideMapLoading();
+            });
+        // });
+    }, []);
 
     //search
-
     return (
         <View style={styles.container}>
             <MapView
                 showsUserLocation={true}
                 layoutAnimationConf={LayoutAnimation.Presets.easeInEaseOut}
+                a
                 animationEnabled={true}
                 ref={_map}
+                showsBuildings={true}
                 userLocationUpdateInterval={10000}
                 userLocationPriority={'passive'}
                 style={[styles.map]}
@@ -244,24 +236,8 @@ const Map = () => {
                             onSearch={setBranchList}
                             searchResultList={branchList}
                             mapRef={_map}
+                            slidePanelRef={_draggablePanel}
                         />
-                        {/* <ScrollView
-                    style={styles.searchResult}
-                    contentContainerStyle={{}}
-                    showsVerticalScrollIndicator={false}>
-                    {searchList.length > 0 &&
-                        searchList.map((searchItem, index) => (
-                            <View style={styles.searchItem} key={index}>
-                                <Highlighter
-                                    highlightStyle={{
-                                        color: colors.orange,
-                                    }}
-                                    searchWords={searchKey.split(' ')}
-                                    textToHighlight={searchItem.name}
-                                />
-                            </View>
-                        ))}
-                </ScrollView> */}
                     </View>
                     <ScrollView
                         horizontal
@@ -286,22 +262,23 @@ const Map = () => {
                     ref={_draggablePanel}
                     draggableRange={{
                         top: CARD_HEIGHT + 60,
-                        bottom: CARD_HEIGHT / 3 + 40,
+                        bottom: CARD_HEIGHT / 2 + 40,
                     }}
                     minimumVelocityThreshold={100}
-                    // height={CARD_HEIGHT + 60}
+                    height={CARD_HEIGHT + 60}
                     snappingPoints={[CARD_HEIGHT / 3 + 60]}
-                    showBackdrop={false}
+                    showBackdrop={true}
                     allowMomentum={true}
-                    friction={0.01}
+                    backdropOpacity={0.1}
+                    friction={0.7}
                     animatedValue={draggableValue}>
                     <View style={styles.footer}>
                         <View style={styles.markerWrapper}>
-                            <TouchableWithoutFeedback onPress={onLocationPress}>
+                            <TouchableOpacity onPress={onLocationPress}>
                                 <View style={styles.locationIcon}>
                                     <Ionicons name="locate-outline" size={24} />
                                 </View>
-                            </TouchableWithoutFeedback>
+                            </TouchableOpacity>
                         </View>
 
                         <Animated.ScrollView
@@ -325,18 +302,20 @@ const Map = () => {
                                         ? SPACING_FOR_CARD_INSET
                                         : 0,
                             }}
-                            onScroll={Animated.event(
-                                [
-                                    {
-                                        nativeEvent: {
-                                            contentOffset: {
-                                                x: mapAnimation,
+                            onScroll={() => {
+                                Animated.event(
+                                    [
+                                        {
+                                            nativeEvent: {
+                                                contentOffset: {
+                                                    x: mapAnimation,
+                                                },
                                             },
                                         },
-                                    },
-                                ],
-                                {useNativeDriver: true},
-                            )}>
+                                    ],
+                                    {useNativeDriver: true},
+                                );
+                            }}>
                             {!!branchList &&
                                 branchList.map((region, index) => {
                                     return (
@@ -412,12 +391,13 @@ const styles = StyleSheet.create({
         // top: -40,
         width: 40,
         height: 40,
-        backgroundColor: colors.ultraLightBlue,
+        backgroundColor: colors.white,
         borderColor: colors.gray,
-        borderRadius: 5,
+        borderRadius: 40,
         borderWidth: 0.5,
         justifyContent: 'center',
         alignItems: 'center',
+        overflow: 'hidden',
     },
     locationIcon: {
         padding: 8,
@@ -427,4 +407,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
 });
-export default Map;
+
+const mapStateToProps = ({appState}) => ({appState});
+
+const mapDispatchToProps = {
+    showMapLoading,
+    hideMapLoading,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);

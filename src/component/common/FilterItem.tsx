@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {colors} from '../../constants';
-import Text from '../Text';
+import Text from './Text';
 
 interface FilterItemProps {
     text: string;
