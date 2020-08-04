@@ -208,7 +208,6 @@ const Map = ({showMapLoading, hideMapLoading, appState}) => {
             <MapView
                 showsUserLocation={true}
                 layoutAnimationConf={LayoutAnimation.Presets.easeInEaseOut}
-                a
                 animationEnabled={true}
                 ref={_map}
                 showsBuildings={true}
@@ -276,7 +275,11 @@ const Map = ({showMapLoading, hideMapLoading, appState}) => {
                         <View style={styles.markerWrapper}>
                             <TouchableOpacity onPress={onLocationPress}>
                                 <View style={styles.locationIcon}>
-                                    <Ionicons name="locate-outline" size={24} />
+                                    <Ionicons
+                                        name="locate-outline"
+                                        size={24}
+                                        color={colors.blue}
+                                    />
                                 </View>
                             </TouchableOpacity>
                         </View>

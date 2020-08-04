@@ -18,6 +18,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {colors, deviceHeight} from '../../constants';
 import {MaterialIndicator} from 'react-native-indicators';
 import Text from './Text';
+import {Text as OriginText} from 'react-native';
 
 interface SearchBarProps {
     searchData: Array<object>;
@@ -120,7 +121,11 @@ const SearchBar = ({
                                 }
                             }}>
                             <View>
-                                <Ionicons name="ios-search" size={20} />
+                                <Ionicons
+                                    name="ios-search"
+                                    size={20}
+                                    color={colors.blue}
+                                />
                             </View>
                         </TouchableOpacity>
                     )}
@@ -133,7 +138,11 @@ const SearchBar = ({
                                 setSearchResultText('');
                             }}>
                             <View>
-                                <Ionicons name="close" size={25} />
+                                <Ionicons
+                                    name="close"
+                                    size={25}
+                                    color={colors.red}
+                                />
                             </View>
                         </TouchableOpacity>
                     )}
@@ -144,15 +153,15 @@ const SearchBar = ({
             </View>
             {!!searchResultText ? (
                 <View style={styles.searchResult}>
-                    <Text style={styles.searchResultText}>
+                    <OriginText style={styles.searchResultText}>
                         {searchResultText}
-                    </Text>
+                    </OriginText>
                 </View>
             ) : searchState == 'searched' ? (
                 <View style={styles.searchResult}>
-                    <Text style={styles.searchResultText}>
+                    <OriginText style={styles.searchResultText}>
                         {strings.nothingFound}
-                    </Text>
+                    </OriginText>
                 </View>
             ) : (
                 <View style={styles.searchResult}></View>
@@ -187,7 +196,9 @@ const styles = StyleSheet.create({
     },
     searchResultText: {
         fontSize: 14,
-        fontWeight: '300',
+        // fontWeight: '900',
+        fontStyle: 'italic',
+        color: colors.textGray,
     },
 });
 

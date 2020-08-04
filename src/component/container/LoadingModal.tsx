@@ -13,7 +13,7 @@ const LoadingModal = ({mapLoading}) => {
     return (
         <View style={styles.container}>
             <LottieView
-                source={lotties.selectionLoading}
+                source={lotties.loading}
                 // resizeMode="cover"
                 style={{
                     height: 200,
