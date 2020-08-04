@@ -66,6 +66,7 @@ const Map = ({showMapLoading, hideMapLoading, appState}) => {
 
     const onLocationPress = () => {
         getCurrentLocation(setCurrentRegion);
+
         animateToRegion();
     };
 
@@ -183,7 +184,9 @@ const Map = ({showMapLoading, hideMapLoading, appState}) => {
         });
         // InteractionManager.runAfterInteractions(() => {
         showMapLoading();
-        requestLocationPermission();
+        if (Platform.OS == 'android') {
+            requestLocationPermission();
+        }
         getCurrentLocation(setCurrentRegion);
         animateToRegion();
         Service.get()
@@ -206,6 +209,7 @@ const Map = ({showMapLoading, hideMapLoading, appState}) => {
     return (
         <View style={styles.container}>
             <MapView
+                mapType={Platform.OS == 'android' ? 'none' : 'standard'}
                 showsUserLocation={true}
                 layoutAnimationConf={LayoutAnimation.Presets.easeInEaseOut}
                 animationEnabled={true}
