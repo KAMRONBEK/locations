@@ -1,14 +1,17 @@
 import Geolocation from '@react-native-community/geolocation';
 import {LATITUDE_DELTA, LONGITUDE_DELTA} from '../constants';
 import {PermissionsAndroid} from 'react-native';
+import {act} from 'react-test-renderer';
 
-export const getCurrentLocation = (setValue) => {
+export const getCurrentLocation = (setValue: any) => {
     Geolocation.getCurrentPosition((info) => {
-        setValue({
-            ...info.coords,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
-        });
+        act(() =>
+            setValue({
+                ...info.coords,
+                latitudeDelta: LATITUDE_DELTA,
+                longitudeDelta: LONGITUDE_DELTA,
+            }),
+        );
     });
 };
 

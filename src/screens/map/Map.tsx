@@ -1,6 +1,13 @@
-import {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import {PROVIDER_GOOGLE, Marker, MapViewProps} from 'react-native-maps';
 import MapView from 'react-native-map-clustering';
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import mapType from 'react-native-maps';
+import React, {
+    useState,
+    useEffect,
+    useCallback,
+    useRef,
+    RefObject,
+} from 'react';
 import {
     StyleSheet,
     View,
@@ -13,9 +20,12 @@ import {
     TextInput,
     Animated,
     TouchableWithoutFeedback,
-    Pressable,
     ScrollView,
     InteractionManager,
+    ScrollViewComponent,
+    ViewProps,
+    ScrollViewProps,
+    SectionList,
 } from 'react-native';
 import mapConfig from '../../configs/mapConfig';
 import images from '../../assets/images';
@@ -44,29 +54,46 @@ import SlidingUpPanel from 'rn-sliding-up-panel';
 import SearchBar from '../../component/common/SearchBar';
 import {showMapLoading, hideMapLoading} from '../../redux/actions';
 import {connect} from 'react-redux';
+import {act} from 'react-test-renderer';
 
-const Map = ({showMapLoading, hideMapLoading, appState}) => {
+export interface branchType {
+    id: string;
+    name: string;
+    address: string;
+    location: string;
+    mfo: string;
+    bank: string;
+    phone: string[];
+    trial503: string;
+    latitude: number;
+    longitude: number;
+    type: 'atm' | 'branch' | 'minibanks';
+    tag: string;
+}
+
+const Map = ({showMapLoading, hideMapLoading, appState}: any) => {
     let [currentRegion, setCurrentRegion] = useState({
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
     });
-    let [branchList, setBranchList] = useState([]);
+    let [branchList, setBranchList] = useState<branchType[]>([]);
     let [orignialBranchList, setOriginalBranchList] = useState([]);
     let [searchList, setSearchList] = useState([]);
 
-    const _map = useRef(null);
-    const _scrollView = useRef(null);
-    const _draggablePanel = useRef(null);
+    const _map = useRef<mapType>(null);
+    const _scrollView = useRef<ScrollView>(null);
+    const _draggablePanel = useRef<SlidingUpPanel>(null);
 
     const animateToRegion = useCallback(() => {
-        _map.current.animateToRegion(currentRegion, 500);
+        if (_map.current) {
+            _map.current.animateToRegion(currentRegion, 500);
+        }
     }, [currentRegion]);
 
     const onLocationPress = () => {
         getCurrentLocation(setCurrentRegion);
-
         animateToRegion();
     };
 
@@ -104,12 +131,12 @@ const Map = ({showMapLoading, hideMapLoading, appState}) => {
     //for animation
     let mapIndex = 0;
     let mapAnimation = new Animated.Value(0);
-    const regionTimeout = useRef(false);
+
+    const regionTimeout: any = useRef();
 
     let draggableValue = new Animated.Value(0);
-
-    const mapAnimationListener = ({value}) => {
-        let index = Math.floor(value / (CARD_WIDTH + 20)); // animate 30% away from landing on the next item
+    const mapAnimationListener = ({value}: any) => {
+        let index = Math.floor(value / (CARD_WIDTH + 20)); // animate 20 pixel away from landing on the next item
 
         if (index >= branchList.length) {
             index = branchList.length - 1;
@@ -119,23 +146,24 @@ const Map = ({showMapLoading, hideMapLoading, appState}) => {
             index = 0;
         }
 
-        if (regionTimeout.current !== false)
-            clearTimeout(regionTimeout.current);
+        if (regionTimeout.current) clearTimeout(regionTimeout.current);
         console.log('map animation');
 
         regionTimeout.current = setTimeout(() => {
             if (mapIndex !== index) {
                 mapIndex = index;
                 const {latitude, longitude} = branchList[index];
-                _map.current.animateToRegion(
-                    {
-                        latitude: latitude,
-                        longitude: longitude,
-                        latitudeDelta: LATITUDE_DELTA,
-                        longitudeDelta: LONGITUDE_DELTA,
-                    },
-                    1200,
-                );
+                if (_map.current) {
+                    _map.current.animateToRegion(
+                        {
+                            latitude: latitude,
+                            longitude: longitude,
+                            latitudeDelta: LATITUDE_DELTA,
+                            longitudeDelta: LONGITUDE_DELTA,
+                        },
+                        1200,
+                    );
+                }
             }
         }, 10);
     };
@@ -145,7 +173,7 @@ const Map = ({showMapLoading, hideMapLoading, appState}) => {
         return () => mapAnimation.removeListener(id);
     }, []);
 
-    const onMarkerPress = (mapEventData) => {
+    const onMarkerPress = (mapEventData: any) => {
         const markerID = parseFloat(
             mapEventData._targetInst.return.key.split('$')[1],
         );
@@ -154,9 +182,12 @@ const Map = ({showMapLoading, hideMapLoading, appState}) => {
         if (Platform.OS === 'ios') {
             x = x - SPACING_FOR_CARD_INSET;
         }
-
-        _scrollView.current.scrollTo({x: x, y: 0, animated: true});
-        _draggablePanel.current.show();
+        if (_scrollView.current) {
+            _scrollView.current.scrollTo({x: x, y: 0, animated: true});
+        }
+        if (_draggablePanel.current) {
+            _draggablePanel.current.show();
+        }
     };
 
     const interpolations =
@@ -178,10 +209,12 @@ const Map = ({showMapLoading, hideMapLoading, appState}) => {
         });
 
     useEffect(() => {
-        _draggablePanel.current.show({
-            toValue: CARD_HEIGHT + 60,
-            velocity: 0.1,
-        });
+        if (_draggablePanel.current) {
+            _draggablePanel.current.show({
+                toValue: CARD_HEIGHT + 60,
+                velocity: 0.1,
+            });
+        }
         // InteractionManager.runAfterInteractions(() => {
         showMapLoading();
         if (Platform.OS == 'android') {
@@ -190,9 +223,9 @@ const Map = ({showMapLoading, hideMapLoading, appState}) => {
         getCurrentLocation(setCurrentRegion);
         animateToRegion();
         Service.get()
-            .then((res) => {
-                setBranchList(res);
-                setOriginalBranchList(res);
+            .then((res: any) => {
+                act(() => setBranchList(res));
+                act(() => setOriginalBranchList(res));
                 // setAtmList(res.atms);
                 // setMinibankList(res.minibanks);
             })
@@ -215,8 +248,8 @@ const Map = ({showMapLoading, hideMapLoading, appState}) => {
                 animationEnabled={true}
                 ref={_map}
                 showsBuildings={true}
-                userLocationUpdateInterval={10000}
-                userLocationPriority={'passive'}
+                // userLocationUpdateInterval={10000}
+                // userLocationPriority={'passive'}
                 style={[styles.map]}
                 provider={PROVIDER_GOOGLE}
                 initialRegion={currentRegion}
@@ -227,7 +260,9 @@ const Map = ({showMapLoading, hideMapLoading, appState}) => {
                 showsCompass={false}
                 showsIndoorLevelPicker={true}
                 onPanDrag={() => {
-                    _draggablePanel.current.hide();
+                    if (_draggablePanel.current) {
+                        _draggablePanel.current.hide();
+                    }
                 }}>
                 {branchMarkers()}
             </MapView>
@@ -328,17 +363,19 @@ const Map = ({showMapLoading, hideMapLoading, appState}) => {
                                     return (
                                         <MarkerCard
                                             onPress={() => {
-                                                _map.current.animateToRegion(
-                                                    {
-                                                        latitude:
-                                                            region.latitude,
-                                                        longitude:
-                                                            region.longitude,
-                                                        latitudeDelta: LATITUDE_DELTA,
-                                                        longitudeDelta: LONGITUDE_DELTA,
-                                                    },
-                                                    1200,
-                                                );
+                                                if (_map.current) {
+                                                    _map.current.animateToRegion(
+                                                        {
+                                                            latitude:
+                                                                region.latitude,
+                                                            longitude:
+                                                                region.longitude,
+                                                            latitudeDelta: LATITUDE_DELTA,
+                                                            longitudeDelta: LONGITUDE_DELTA,
+                                                        },
+                                                        1200,
+                                                    );
+                                                }
                                             }}
                                             key={index}
                                             {...region}
@@ -372,6 +409,7 @@ const styles = StyleSheet.create({
         width: 25,
         resizeMode: 'contain',
     },
+    top: {},
     content: {
         flex: 1,
         justifyContent: 'space-between',
@@ -415,7 +453,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const mapStateToProps = ({appState}) => ({appState});
+const mapStateToProps = ({appState}: any) => ({appState});
 
 const mapDispatchToProps = {
     showMapLoading,

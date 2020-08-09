@@ -22,9 +22,9 @@ interface MarkerCardProps {
     longitude: number;
     mfo: string;
     bank: string;
-    phone: [];
+    phone: string[];
     trial503: string;
-    x: number;
+    x?: number;
     onPress: any;
 }
 
@@ -45,7 +45,7 @@ const MarkerCard = ({name, address, phone, onPress}: MarkerCardProps) => {
                         {address}
                     </Text>
                     <Text numberOfLines={1} style={styles.cardDescription}>
-                        {phone && phone[0]}
+                        {/* {phone && phone[0]} */}
                     </Text>
                 </View>
             </Animated.View>

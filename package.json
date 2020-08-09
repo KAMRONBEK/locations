@@ -42,7 +42,7 @@
         "@babel/core": "^7.10.4",
         "@babel/runtime": "^7.10.4",
         "@react-native-community/eslint-config": "^2.0.0",
-        "@types/jest": "^26.0.4",
+        "@types/jest": "^26.0.9",
         "@types/react": "^16.9.41",
         "@types/react-native": "^0.62.17",
         "@types/react-test-renderer": "^16.9.2",
@@ -51,6 +51,7 @@
         "jest": "^26.1.0",
         "metro-react-native-babel-preset": "^0.60.0",
         "react-test-renderer": "16.13.1",
+        "ts-jest": "^26.1.4",
         "typescript": "^3.9.6"
     },
     "jest": {

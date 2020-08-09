@@ -1,8 +1,23 @@
 import source from '../assets/branches';
+// import branchType from '../screens/map/Map';
 
+interface branchType {
+    id: string;
+    name: string;
+    address: string;
+    location: string;
+    mfo: string;
+    bank: string;
+    phone: string[];
+    trial503: string;
+    latitude: number;
+    longitude: number;
+    type: 'atm' | 'branch' | 'minibanks';
+    tag: string;
+}
 interface searchProps {
     searchKey: string;
-    list: Array<{}>;
+    list: branchType[];
 }
 class Service {
     static get() {
@@ -62,7 +77,7 @@ class Service {
 
     static search = ({searchKey, list}: searchProps) => {
         return new Promise((resolve, reject) => {
-            let resultList = [];
+            let resultList: branchType[] = [];
             let key = searchKey.toLowerCase().replace(/ /gi, '|');
             console.log('^(' + key + ')');
 

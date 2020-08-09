@@ -5,7 +5,11 @@ import {colors} from '../../constants';
 import LottieView from 'lottie-react-native';
 import lotties from '../../assets/lotties';
 
-const LoadingModal = ({mapLoading}) => {
+interface LoadingModalProps {
+    mapLoading: string;
+}
+
+const LoadingModal = ({mapLoading}: LoadingModalProps) => {
     if (!mapLoading) {
         return null;
     }
@@ -41,7 +45,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const mapStateToProps = ({appState}) => ({
+const mapStateToProps = ({appState}: any) => ({
     mapLoading: appState.mapLoading,
 });
 

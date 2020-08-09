@@ -1,6 +1,6 @@
 import {SHOW_FLASH_MESSAGE, SHOW_MAP_LOADING, HIDE_MAP_LOADING} from '../types';
 
-export const showFlashMessage = (payload) => ({
+export const showFlashMessage = (payload: any) => ({
     type: SHOW_FLASH_MESSAGE,
     payload,
 });

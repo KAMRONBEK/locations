@@ -4,6 +4,7 @@ import React, {
     SetStateAction,
     MutableRefObject,
     useEffect,
+    RefObject,
 } from 'react';
 import {
     StyleSheet,
@@ -19,13 +20,16 @@ import {colors, deviceHeight} from '../../constants';
 import {MaterialIndicator} from 'react-native-indicators';
 import Text from './Text';
 import {Text as OriginText} from 'react-native';
+import MapView, {LatLng} from 'react-native-maps';
+import SlidingUpPanel from 'rn-sliding-up-panel';
+import {branchType} from '../../screens/map/Map';
 
 interface SearchBarProps {
-    searchData: Array<object>;
-    onSearch: Dispatch<SetStateAction<never[]>>;
-    mapRef: MutableRefObject<null>;
-    searchResultList: Array<object>;
-    slidePanelRef: MutableRefObject<null>;
+    searchData: branchType[];
+    onSearch: any;
+    mapRef: RefObject<MapView | null>;
+    searchResultList: LatLng[];
+    slidePanelRef: RefObject<SlidingUpPanel | null>;
 }
 
 const SearchBar = ({
@@ -46,14 +50,18 @@ const SearchBar = ({
             'keyboardDidShow',
             () => {
                 setKeyboardVisible(true);
-                slidePanelRef.current.hide();
+                if (slidePanelRef.current) {
+                    slidePanelRef.current.hide();
+                }
             },
         );
         const keyboardDidHideListener = Keyboard.addListener(
             'keyboardDidHide',
             () => {
                 setKeyboardVisible(false);
-                slidePanelRef.current.show();
+                if (slidePanelRef.current) {
+                    slidePanelRef.current.show();
+                }
             },
         );
 
@@ -69,21 +77,23 @@ const SearchBar = ({
             searchKey: searchKey,
             list: searchData,
         })
-            .then((res) => {
+            .then((res: any) => {
                 setSearchResultCount(res.length);
                 setSearchResultText(
                     strings.found + ' ' + res.length + ' ' + strings.results,
                 );
                 onSearch(res);
-                mapRef.current.fitToCoordinates(searchResultList, {
-                    edgePadding: {
-                        top: 20,
-                        left: 20,
-                        right: 20,
-                        bottom: 20,
-                    },
-                    animated: true,
-                });
+                if (mapRef.current) {
+                    mapRef.current.fitToCoordinates(searchResultList, {
+                        edgePadding: {
+                            top: 20,
+                            left: 20,
+                            right: 20,
+                            bottom: 20,
+                        },
+                        animated: true,
+                    });
+                }
             })
             .catch((err) => {
                 setSearchResultCount(0);
