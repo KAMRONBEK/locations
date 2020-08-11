@@ -1,6 +1,9 @@
-import {PROVIDER_GOOGLE, Marker, MapViewProps} from 'react-native-maps';
+import mapType, {
+    PROVIDER_GOOGLE,
+    Marker,
+    MapViewProps,
+} from 'react-native-maps';
 import MapView from 'react-native-map-clustering';
-import mapType from 'react-native-maps';
 import React, {
     useState,
     useEffect,
@@ -242,14 +245,13 @@ const Map = ({showMapLoading, hideMapLoading, appState}: any) => {
     return (
         <View style={styles.container}>
             <MapView
-                mapType={Platform.OS == 'android' ? 'none' : 'standard'}
+                // userLocationUpdateInterval={10000}
+                // userLocationPriority={'passive'}
                 showsUserLocation={true}
                 layoutAnimationConf={LayoutAnimation.Presets.easeInEaseOut}
                 animationEnabled={true}
                 ref={_map}
                 showsBuildings={true}
-                // userLocationUpdateInterval={10000}
-                // userLocationPriority={'passive'}
                 style={[styles.map]}
                 provider={PROVIDER_GOOGLE}
                 initialRegion={currentRegion}

@@ -90,7 +90,7 @@ class Service {
                         .match(new RegExp('^.*(' + key + ').*$', 'g'))
                 )
                     resultList.push(marker);
-                console.log(marker);
+                console.log(marker.tag);
             });
             if (resultList.length > 0) {
                 setTimeout(() => {

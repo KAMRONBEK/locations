@@ -24,7 +24,11 @@ const App = () => {
     let store = configureStore();
     return (
         <>
-            <StatusBar barStyle="dark-content" backgroundColor={'white'} />
+            <StatusBar
+                barStyle="dark-content"
+                backgroundColor={'transparent'}
+                translucent={true}
+            />
             {/* <SafeAreaView style={{flex: 1}}> */}
             <Provider store={store}>
                 <AppRouter />
