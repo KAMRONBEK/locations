@@ -13,10 +13,7 @@ const AppRouter = () => {
         <View style={{flex: 1}}>
             <NavigationContainer>
                 <Stack.Navigator headerMode="none">
-                    {/* <Stack.Screen
-                        name={SCREENS.mapStack}
-                        component={MapStack}
-                    /> */}
+                    {/* <Stack.Screen name={SCREENS.mapStack} component={MapStack} /> */}
                     <Stack.Screen
                         name={SCREENS.map}
                         component={MapController}

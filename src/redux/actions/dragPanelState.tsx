@@ -4,9 +4,9 @@ import {
     HIDE_DRAGGABLE_PANEL,
 } from '../types';
 
-export const showPanel = (payload) => ({
+export const showPanel = () => ({
     type: SHOW_DRAGGABLE_PANEL,
-    payload,
+    // payload,
 });
 
 export const hidePanel = () => ({

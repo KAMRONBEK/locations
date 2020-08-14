@@ -12,6 +12,12 @@ export const CARD_HEIGHT = 200;
 export const CARD_WIDTH = deviceWidth - 80;
 export const SPACING_FOR_CARD_INSET = 30;
 
+//searchStatus
 export const INITIAL = 'initial';
 export const SEARCHING = 'searching';
 export const DONE_SEARCHING = 'done_searching';
+
+//mapState
+export const FREE_MAP = 'free_map';
+export const MAP_WITH_CARD_INFO = 'map_with_card_info';
+export const MAP_WITH_SEARCH = 'map_with_search';

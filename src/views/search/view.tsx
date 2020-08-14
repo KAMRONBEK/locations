@@ -13,8 +13,15 @@ import {
     setSearchResultText,
     setDisplayData,
     setSearchKeyword,
+    mapPressed,
 } from '../../redux/actions';
-import {INITIAL, DONE_SEARCHING, colors, SEARCHING} from '../../constants';
+import {
+    INITIAL,
+    DONE_SEARCHING,
+    colors,
+    SEARCHING,
+    MAP_WITH_SEARCH,
+} from '../../constants';
 import {search} from '../../redux/thunks';
 import {strings} from '../../locales/strings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -30,6 +37,7 @@ const Search = ({
     searchResultText,
     setDisplayData,
     setSearchKeyword,
+    mapPressed,
 }) => {
     return (
         <View>
@@ -46,6 +54,7 @@ const Search = ({
                     onFocus={() => {
                         setSearchStatus(INITIAL);
                         setSearchResultText('');
+                        mapPressed(MAP_WITH_SEARCH);
                     }}
                 />
                 <View style={{}}>
@@ -120,6 +129,7 @@ const mapDispatchToProps = (dispatch) => ({
     setSearchResultText: (text) => dispatch(setSearchResultText(text)),
     search: (keyword, data) => dispatch(search(keyword, data)),
     setDisplayData: (data) => dispatch(setDisplayData(data)),
+    mapPressed: (state) => dispatch(mapPressed(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {

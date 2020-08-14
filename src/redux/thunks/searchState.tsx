@@ -1,8 +1,8 @@
 import {setSearchStatus, setSearchResultText} from '../actions/searchState';
-import {SEARCHING, DONE_SEARCHING} from '../../constants';
+import {SEARCHING, DONE_SEARCHING, MAP_WITH_CARD_INFO} from '../../constants';
 import Service from '../../services/service';
 import {strings} from '../../locales/strings';
-import {setDisplayData} from '../actions/mapState';
+import {setDisplayData, mapPressed} from '../actions/mapState';
 
 export const search = (keyword, searchData) => async (dispatch) => {
     dispatch(setSearchStatus(SEARCHING));
@@ -16,6 +16,7 @@ export const search = (keyword, searchData) => async (dispatch) => {
                 strings.found + ' ' + result.length + ' ' + strings.results,
             ),
         );
+        dispatch(mapPressed(MAP_WITH_CARD_INFO));
         dispatch(setDisplayData(result));
     } catch (error) {
         console.log(error, 'in search');
