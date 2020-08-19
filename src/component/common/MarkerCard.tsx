@@ -7,12 +7,13 @@ import {
     TouchableOpacity,
     Animated,
 } from 'react-native';
-import {CARD_HEIGHT, CARD_WIDTH} from '../../constants';
+import {CARD_HEIGHT, CARD_WIDTH, BORDER_RADIUS, colors} from '../../constants';
 import images from '../../assets/images';
 import {
     PanGestureHandler,
     TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
+import {strings} from '../../locales/strings';
 
 interface MarkerCardProps {
     id: string;
@@ -28,25 +29,36 @@ interface MarkerCardProps {
     onPress: any;
 }
 
-const MarkerCard = ({name, address, phone, onPress}: MarkerCardProps) => {
+const MarkerCard = ({
+    name,
+    address,
+    phone,
+    onPress,
+    distance,
+}: MarkerCardProps) => {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
             <Animated.View style={styles.container}>
-                <Image
-                    source={images.temp}
-                    style={styles.cardImage}
-                    resizeMode="cover"
-                />
-                <View style={styles.textContent}>
-                    <Text numberOfLines={1} style={styles.cardtitle}>
-                        {name}
-                    </Text>
-                    <Text numberOfLines={1} style={styles.cardDescription}>
-                        {address}
-                    </Text>
-                    <Text numberOfLines={1} style={styles.cardDescription}>
-                        {/* {phone && phone[0]} */}
-                    </Text>
+                <View style={styles.content}>
+                    <Image
+                        source={images.temp}
+                        style={styles.cardImage}
+                        resizeMode="cover"
+                    />
+                    <View style={styles.textContent}>
+                        <Text numberOfLines={3} style={styles.cardtitle}>
+                            {name}
+                        </Text>
+                        <Text numberOfLines={3} style={styles.cardDescription}>
+                            {address}
+                        </Text>
+                        <Text numberOfLines={3} style={styles.cardDescription}>
+                            {phone && phone[0]}
+                        </Text>
+                        <Text numberOfLines={3} style={styles.cardDescription}>
+                            {strings.bestDistance} {distance} {strings.km}
+                        </Text>
+                    </View>
                 </View>
             </Animated.View>
         </TouchableWithoutFeedback>
@@ -55,35 +67,44 @@ const MarkerCard = ({name, address, phone, onPress}: MarkerCardProps) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFF',
-        borderRadius: 5,
         marginHorizontal: 10,
-        shadowColor: '#000',
-        shadowRadius: 5,
-        shadowOpacity: 0.3,
-        // shadowOffset: {x: 2, y: -2},
         height: CARD_HEIGHT,
         width: CARD_WIDTH,
         overflow: 'hidden',
+        flexDirection: 'row',
+        borderRadius: BORDER_RADIUS,
     },
     cardImage: {
-        flex: 2,
-        width: '100%',
-        height: '100%',
+        width: 120,
+        height: 120,
         alignSelf: 'center',
+        borderRadius: BORDER_RADIUS,
+        marginLeft: -30,
+    },
+    content: {
+        padding: 10,
+        backgroundColor: colors.lightDark,
+        borderRadius: BORDER_RADIUS,
+        shadowColor: colors.black,
+        shadowRadius: 5,
+        shadowOpacity: 0.3,
+        flexDirection: 'row',
+        marginLeft: 30,
     },
     textContent: {
-        flex: 2,
         padding: 10,
+        justifyContent: 'space-between',
     },
     cardtitle: {
         fontSize: 12,
-        // marginTop: 5,
         fontWeight: 'bold',
+        color: colors.textLightGray,
+        width: CARD_WIDTH - 150,
     },
     cardDescription: {
         fontSize: 12,
-        color: '#444',
+        color: colors.textLightGray,
+        width: CARD_WIDTH - 150,
     },
 });
 

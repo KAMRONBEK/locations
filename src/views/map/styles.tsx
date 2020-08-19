@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {colors} from '../../constants';
 
 export default StyleSheet.create({
     container: {
@@ -17,5 +18,12 @@ export default StyleSheet.create({
         height: 80,
         width: 80,
         resizeMode: 'contain',
+    },
+    callout: {
+        backgroundColor: colors.lightDark,
+        minWidth: 100,
+    },
+    calloutText: {
+        color: colors.textLightGray,
     },
 });

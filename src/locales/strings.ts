@@ -9,6 +9,10 @@ export let strings = new LocalizedStrings({
         found: 'Found',
         results: 'results',
         nothingFound: 'Nothing found',
+        bestDistance: 'Best distance:',
+        km: 'km',
+        share: 'Share',
+        call: 'Call',
     },
     ru: {
         atm: 'ATM',

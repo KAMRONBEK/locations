@@ -14,6 +14,7 @@ import {
     setDisplayData,
     setSearchKeyword,
     mapPressed,
+    setDestinationCoords,
 } from '../../redux/actions';
 import {
     INITIAL,
@@ -21,6 +22,7 @@ import {
     colors,
     SEARCHING,
     MAP_WITH_SEARCH,
+    FREE_MAP,
 } from '../../constants';
 import {search} from '../../redux/thunks';
 import {strings} from '../../locales/strings';
@@ -38,6 +40,7 @@ const Search = ({
     setDisplayData,
     setSearchKeyword,
     mapPressed,
+    setDestinationCoords,
 }) => {
     return (
         <View>
@@ -50,7 +53,8 @@ const Search = ({
                     }}
                     value={keyword}
                     placeholder={strings.searchHere}
-                    style={{flex: 1, padding: 0}}
+                    placeholderTextColor={colors.textGray}
+                    style={{flex: 1, padding: 0, color: colors.white}}
                     onFocus={() => {
                         setSearchStatus(INITIAL);
                         setSearchResultText('');
@@ -70,7 +74,7 @@ const Search = ({
                                 <Ionicons
                                     name="ios-search"
                                     size={20}
-                                    color={colors.blue}
+                                    color={colors.lightBlue}
                                 />
                             </View>
                         </TouchableOpacity>
@@ -83,12 +87,14 @@ const Search = ({
                                 console.log('press x');
                                 setSearchKeyword('');
                                 setSearchResultText('');
+                                mapPressed(FREE_MAP);
+                                setDestinationCoords(null);
                             }}>
                             <View>
                                 <Ionicons
                                     name="close"
                                     size={25}
-                                    color={colors.red}
+                                    color={colors.pink}
                                 />
                             </View>
                         </TouchableOpacity>
@@ -130,6 +136,8 @@ const mapDispatchToProps = (dispatch) => ({
     search: (keyword, data) => dispatch(search(keyword, data)),
     setDisplayData: (data) => dispatch(setDisplayData(data)),
     mapPressed: (state) => dispatch(mapPressed(state)),
+    setDestinationCoords: (location) =>
+        dispatch(setDestinationCoords(location)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {

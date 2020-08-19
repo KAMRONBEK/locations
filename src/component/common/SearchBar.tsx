@@ -134,7 +134,7 @@ const SearchBar = ({
                                 <Ionicons
                                     name="ios-search"
                                     size={20}
-                                    color={colors.blue}
+                                    color={colors.lightBlue}
                                 />
                             </View>
                         </TouchableOpacity>

@@ -5,6 +5,7 @@ import mapState from './reducers/mapState';
 import searchState from './reducers/searchState';
 import dragPanelState from './reducers/dragPanelState';
 import scrollViewState from './reducers/scrollViewState';
+import descState from './reducers/descState';
 
 let configureStore = () => {
     return createStore(
@@ -14,6 +15,7 @@ let configureStore = () => {
             searchState,
             dragPanelState,
             scrollViewState,
+            descState,
         }),
         applyMiddleware(thunk),
     );

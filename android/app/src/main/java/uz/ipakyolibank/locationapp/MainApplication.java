@@ -1,4 +1,4 @@
-package com.locationapp;
+package uz.ipakyolibank.locationapp;
 
 import android.app.Application;
 import android.content.Context;

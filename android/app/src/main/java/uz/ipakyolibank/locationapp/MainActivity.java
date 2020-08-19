@@ -1,4 +1,4 @@
-package com.locationapp;
+package uz.ipakyolibank.locationapp;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

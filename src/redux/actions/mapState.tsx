@@ -7,6 +7,7 @@ import {
     SET_MAP_STATE,
     MARKER_PRESSED,
     MAP_PRESSED,
+    SET_DESTINATION_COORDS,
 } from '../types';
 import {Platform} from 'react-native';
 
@@ -46,5 +47,10 @@ export const markerPressed = (payload) => ({
 
 export const mapPressed = (payload) => ({
     type: MAP_PRESSED,
+    payload,
+});
+
+export const setDestinationCoords = (payload) => ({
+    type: SET_DESTINATION_COORDS,
     payload,
 });

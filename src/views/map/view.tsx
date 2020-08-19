@@ -1,8 +1,13 @@
 import React, {useCallback, useEffect, useRef} from 'react';
-import {View, LayoutAnimation} from 'react-native';
+import {View, Text, LayoutAnimation} from 'react-native';
 import styles from './styles';
 import MapView from 'react-native-map-clustering';
-import mapType, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import mapType, {
+    PROVIDER_GOOGLE,
+    Marker,
+    Polyline,
+    Callout,
+} from 'react-native-maps';
 import {connect} from 'react-redux';
 import {
     colors,
@@ -10,6 +15,8 @@ import {
     LONGITUDE_DELTA,
     FREE_MAP,
     MAP_WITH_CARD_INFO,
+    MAP_WITH_SEARCH,
+    DIRECTION_API_KEY,
 } from '../../constants';
 import mapConfig from '../../configs/mapConfig';
 import images from '../../assets/images';
@@ -18,8 +25,13 @@ import {
     mapDragStarted,
     markerPressed,
     mapPressed,
+    setMapState,
+    hideDescription,
+    showMapLoading,
+    hideMapLoading,
+    setDestinationCoords,
 } from '../../redux/actions';
-import mapState from '../../redux/reducers/mapState';
+import MapViewDirections from 'react-native-maps-directions';
 
 const Map = ({
     myRegion,
@@ -30,6 +42,12 @@ const Map = ({
     markerPressed,
     mapPressed,
     mapMode,
+    hideDescription,
+    dirCoordinates,
+    endLocation,
+    showMapLoading,
+    hideMapLoading,
+    setDestinationCoords,
 }: any) => {
     let branchMarkers = useCallback(() => {
         return (
@@ -54,19 +72,20 @@ const Map = ({
                             ? images.atm
                             : images.bank
                     }
-                    title={region.name}
-                />
+                    title={region.name}>
+                    <Callout tooltip={true}>
+                        <View style={styles.callout}>
+                            <Text numberOfLines={3} style={styles.calloutText}>
+                                {region.name}
+                            </Text>
+                        </View>
+                    </Callout>
+                </Marker>
             ))
         );
     }, [displayDataList]);
 
     const _map = useRef<mapType>(null);
-
-    const animateToRegion = useCallback(() => {
-        if (_map.current) {
-            _map.current.animateToRegion(myRegion, 1000);
-        }
-    }, [myRegion]);
 
     useEffect(() => {
         console.log(mapMode, 'mapState');
@@ -80,10 +99,20 @@ const Map = ({
             mapPressed(FREE_MAP);
         }
     };
-    useEffect(() => {
-        console.log(panelVisibility);
-    }, [panelVisibility]);
-    console.log('focusRegion', focusRegion);
+
+    const onMapReady = () => {
+        console.log('mapready');
+    };
+
+    const onDirecionStart = () => {
+        showMapLoading();
+    };
+
+    const onDirectionReady = (result) => {
+        console.log(result.distance, 'km', result.duration, 'min');
+        hideMapLoading();
+    };
+
     useEffect(() => {
         if (focusRegion !== null && _map.current) {
             _map.current.animateToRegion(
@@ -96,13 +125,6 @@ const Map = ({
                 1200,
             );
         }
-        // setRegionSelected((old) => {
-        // 	if(focusRegion && old !== focusRegion) {
-        // 		console.log(focusRegion);
-        //
-        // 	}
-        // 	return focusRegion;
-        // });
     }, [focusRegion]);
 
     useEffect(() => {
@@ -134,13 +156,27 @@ const Map = ({
                 layoutAnimationConf={LayoutAnimation.Presets.easeInEaseOut}
                 ref={_map}
                 showsBuildings={true}
-                clusterColor={colors.blue}
+                clusterColor={colors.lightBlue}
                 showsMyLocationButton={false}
                 onPress={onMapPress}
                 onPanDrag={mapDragStarted}
                 onMarkerDragEnd={(data) => console.log(data)}
-                showsIndoorLevelPicker={true}>
+                showsIndoorLevelPicker={true}
+                onMapReady={onMapReady}>
                 {branchMarkers()}
+                {myRegion && endLocation && (
+                    <MapViewDirections
+                        origin={myRegion}
+                        destination={endLocation}
+                        mode={'DRIVING'}
+                        precision={'low'}
+                        apikey={DIRECTION_API_KEY}
+                        strokeWidth={8}
+                        strokeColor={colors.blue}
+                        onStart={onDirecionStart}
+                        onReady={onDirectionReady}
+                    />
+                )}
             </MapView>
         </View>
     );
@@ -152,13 +188,24 @@ const mapStateToProps = ({mapState, dragPanelState}: any) => ({
     panelVisibility: dragPanelState.panelVisibility,
     focusRegion: mapState.focusRegion,
     mapMode: mapState.mapMode,
+    dirCoordinates: mapState.dirCoordinates,
+    endLocation: mapState.endLocation,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     hidePanel: () => dispatch(hidePanel()),
     mapDragStarted: () => dispatch(mapDragStarted()),
-    markerPressed: (mapEvent) => dispatch(markerPressed(mapEvent)),
-    mapPressed: (state) => dispatch(mapPressed(state)),
+    markerPressed: (mapEvent) => {
+        dispatch(mapPressed(MAP_WITH_CARD_INFO));
+        dispatch(setDestinationCoords(null));
+        dispatch(markerPressed(mapEvent));
+    },
+    showMapLoading: () => dispatch(showMapLoading()),
+    hideMapLoading: () => dispatch(hideMapLoading()),
+    mapPressed: (state) => {
+        dispatch(hideDescription());
+        dispatch(mapPressed(state));
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {

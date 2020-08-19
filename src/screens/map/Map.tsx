@@ -319,7 +319,7 @@ const Map = ({showMapLoading, hideMapLoading, appState}: any) => {
                                     <Ionicons
                                         name="locate-outline"
                                         size={24}
-                                        color={colors.blue}
+                                        color={colors.lightBlue}
                                     />
                                 </View>
                             </TouchableOpacity>

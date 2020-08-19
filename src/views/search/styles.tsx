@@ -1,11 +1,11 @@
 import {StyleSheet} from 'react-native';
-import {colors, deviceHeight} from '../../constants';
+import {colors, deviceHeight, BORDER_RADIUS} from '../../constants';
 
 export const styles = StyleSheet.create({
     searchbar: {
         flexDirection: 'row',
-        backgroundColor: colors.white,
-        borderRadius: 20,
+        backgroundColor: colors.lightDark,
+        borderRadius: BORDER_RADIUS,
         padding: 10,
         shadowColor: colors.gray,
         shadowOffset: {width: 0, height: 3},
@@ -29,6 +29,6 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         // fontWeight: '900',
         fontStyle: 'italic',
-        color: colors.textGray,
+        color: colors.textLightGray,
     },
 });

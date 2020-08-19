@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         right: 0,
         left: 0,
         position: 'absolute',
-        backgroundColor: colors.white,
+        // backgroundColor: colors.white,
         justifyContent: 'center',
         alignItems: 'center',
     },

@@ -1,4 +1,6 @@
 import source from '../assets/branches';
+import {getDistance, getPreciseDistance} from 'geolib';
+import {sortArrayAsc} from './functions';
 // import branchType from '../screens/map/Map';
 
 interface branchType {
@@ -20,7 +22,7 @@ interface searchProps {
     list: branchType[];
 }
 class Service {
-    static get() {
+    static get(myLocation) {
         return new Promise((resolve, reject) => {
             console.log(source.data.branches.length, 'ta branch');
             console.log(source.data.atms.length, 'ta atm');
@@ -40,6 +42,13 @@ class Service {
                         ' ' +
                         branch.bank
                     } `,
+                    distance:
+                        getPreciseDistance(myLocation, {
+                            latitude: parseFloat(branch.location.split(',')[0]),
+                            longitude: parseFloat(
+                                branch.location.split(',')[1],
+                            ),
+                        }) / 1000,
                 };
             });
 
@@ -55,6 +64,15 @@ class Service {
                         ' ' +
                         minibank.type
                     } `,
+                    distance:
+                        getPreciseDistance(myLocation, {
+                            latitude: parseFloat(
+                                minibank.location.split(',')[0],
+                            ),
+                            longitude: parseFloat(
+                                minibank.location.split(',')[1],
+                            ),
+                        }) / 1000,
                 };
             });
 
@@ -66,12 +84,18 @@ class Service {
                     tag: `atm ${
                         atm.name + ' ' + atm.address + ' ' + atm.type
                     } `,
+                    distance:
+                        getPreciseDistance(myLocation, {
+                            latitude: parseFloat(atm.location.split(',')[0]),
+                            longitude: parseFloat(atm.location.split(',')[1]),
+                        }) / 1000,
                 };
             });
 
+            let sorted = sortArrayAsc([...branches, ...minibanks, ...atms]); //sorted by distance
             setTimeout(() => {
-                resolve([...branches, ...minibanks, ...atms]);
-            }, 200);
+                resolve(sorted);
+            }, 0);
         });
     }
 
@@ -95,7 +119,7 @@ class Service {
             if (resultList.length > 0) {
                 setTimeout(() => {
                     resolve(resultList);
-                }, 200);
+                }, 300);
             } else
                 setTimeout(() => {
                     reject('404');

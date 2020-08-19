@@ -8,13 +8,21 @@ import {
     colors,
     LATITUDE_DELTA,
     LONGITUDE_DELTA,
+    MAP_WITH_DESC,
 } from '../../constants';
 import styles from './styles';
 import {TouchableOpacity, ScrollView} from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux';
-import {setMyRegion, regionSelected, showPanel} from '../../redux/actions';
+import {
+    setMyRegion,
+    regionSelected,
+    showPanel,
+    showDescription,
+    mapPressed,
+} from '../../redux/actions';
 import MarkerCard from '../../component/common/MarkerCard';
+import {getDirections} from '../../redux/thunks';
 
 const DraggableList = ({
     myRegion,
@@ -24,6 +32,10 @@ const DraggableList = ({
     setMyRegion,
     pressedMarkerId,
     showPanel,
+    showDescription,
+    mapPressed,
+    endLocation,
+    getDirections,
 }) => {
     let draggableValue = new Animated.Value(0);
     let mapAnimation = new Animated.Value(0);
@@ -31,22 +43,24 @@ const DraggableList = ({
     const _scrollView = useRef<ScrollView>(null);
     const _draggablePanel = useRef<SlidingUpPanel>(null);
 
-    useEffect(() => {
-        console.log(panelVisibility, 'panel');
-        if (_draggablePanel.current && panelVisibility) {
-            console.log('panel show');
-            _draggablePanel.current.show();
-        } else if (_draggablePanel.current && !panelVisibility) {
-            _draggablePanel.current.hide();
-        }
-    }, [panelVisibility]);
+    // useEffect(() => {
+    //     console.log(panelVisibility, 'panel');
+    //     if (_draggablePanel.current && panelVisibility) {
+    //         console.log('panel show');
+    //         _draggablePanel.current.show();
+    //     } else if (_draggablePanel.current && !panelVisibility) {
+    //         _draggablePanel.current.hide();
+    //     }
+    // }, [panelVisibility]);
 
     useEffect(() => {
         let x = pressedMarkerId * CARD_WIDTH + pressedMarkerId * 20;
         if (Platform.OS === 'ios') {
             x = x - SPACING_FOR_CARD_INSET;
         }
-        showPanel();
+        if (_draggablePanel.current) {
+            _draggablePanel.current.show();
+        }
         if (_scrollView.current) {
             _scrollView.current.scrollTo({x: x, y: 0, animated: true});
         }
@@ -66,19 +80,47 @@ const DraggableList = ({
             friction={0.3}
             animatedValue={draggableValue}>
             <View style={styles.footer}>
-                <View style={styles.markerWrapper}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            regionSelected(myRegion);
-                        }}>
-                        <View style={styles.locationIcon}>
-                            <Ionicons
-                                name="locate-outline"
-                                size={24}
-                                color={colors.blue}
-                            />
+                <View style={styles.row}>
+                    {/* {endLocation && (
+                        <View style={styles.markerWrapper}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    getDirections(myRegion, endLocation);
+                                }}>
+                                <View
+                                    style={[
+                                        styles.locationIcon,
+                                        {
+                                            transform: [
+                                                {rotate: '-120deg'},
+                                                {translateY: 2},
+                                                {translateX: -2},
+                                            ],
+                                        },
+                                    ]}>
+                                    <Ionicons
+                                        name="navigate"
+                                        size={24}
+                                        color={colors.blue}
+                                    />
+                                </View>
+                            </TouchableOpacity>
                         </View>
-                    </TouchableOpacity>
+                    )} */}
+                    <View style={styles.markerWrapper}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                regionSelected(myRegion);
+                            }}>
+                            <View style={styles.locationIcon}>
+                                <Ionicons
+                                    name="locate-outline"
+                                    size={24}
+                                    color={colors.lightBlue}
+                                />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
                 <Animated.ScrollView
@@ -121,8 +163,10 @@ const DraggableList = ({
                             return (
                                 <MarkerCard
                                     onPress={() => {
-                                        console.log(region, 'pressed');
                                         regionSelected(region);
+                                        // showPanel();
+                                        showDescription(region);
+                                        mapPressed(MAP_WITH_DESC);
                                     }}
                                     key={index}
                                     {...region}
@@ -140,12 +184,16 @@ const mapStateToProps = ({mapState, dragPanelState}) => ({
     displayData: mapState.displayDataList,
     panelVisibility: dragPanelState.panelVisibility,
     pressedMarkerId: mapState.pressedMarkerId,
+    endLocation: mapState.endLocation,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     regionSelected: (region) => dispatch(regionSelected(region)),
     setMyRegion: (region) => dispatch(setMyRegion(region)),
     showPanel: () => dispatch(showPanel()),
+    showDescription: (region) => dispatch(showDescription(region)),
+    mapPressed: (mode) => dispatch(mapPressed(mode)),
+    getDirections: (start, end) => dispatch(getDirections(start, end)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {

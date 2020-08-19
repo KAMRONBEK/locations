@@ -7,6 +7,9 @@ import {
     MAP_DRAG_STARTED,
     MARKER_PRESSED,
     MAP_PRESSED,
+    SET_DIRECTION,
+    SET_DIRECTION_LOADING,
+    SET_DESTINATION_COORDS,
 } from '../types';
 import {
     LATITUDE,
@@ -42,6 +45,9 @@ const initialState = {
     focusRegion: null,
     pressedMarkerId: 0,
     mapMode: FREE_MAP, //FREE_MAP,MAP_WITH_SEARCH,MAP_WITH_CARD_INFO
+    dirCoordinates: [],
+    endLocation: null,
+    loadingDirections: false,
 };
 export default (state = initialState, {type, payload}: any) => {
     switch (type) {
@@ -70,11 +76,27 @@ export default (state = initialState, {type, payload}: any) => {
             let markerID = parseFloat(
                 payload._targetInst.return.key.split('$')[1],
             );
-            // console.log(payload._targetInst.return.memoizedProps.coordinate);
-            return {...state, pressedMarkerId: markerID};
+            // focusRegion:
+            // state.originalDataList[
+            // 	payload._targetInst.return.key.split('$')[1]
+            // ],
+
+            return {
+                ...state,
+                pressedMarkerId: markerID,
+            };
         }
         case MAP_PRESSED: {
             return {...state, mapMode: payload};
+        }
+        case SET_DESTINATION_COORDS: {
+            return {
+                ...state,
+                endLocation: payload,
+            };
+        }
+        case SET_DIRECTION_LOADING: {
+            return {...state, loadingDirections: payload};
         }
         default:
             return state;
