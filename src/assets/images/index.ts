@@ -9,4 +9,9 @@ export default {
     banner1: require('./banner1.jpg'),
     banner2: require('./banner2.jpg'),
     banner3: require('./banner3.jpg'),
+    menu: require('./menu.png'),
+    logo: require('./logo.png'),
+    uz: require('./uz.png'),
+    ru: require('./ru.png'),
+    eng: require('./uk.png'),
 };

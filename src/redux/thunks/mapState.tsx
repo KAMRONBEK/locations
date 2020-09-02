@@ -1,10 +1,12 @@
 import Service from '../../services/service';
-import {showMapLoading, hideMapLoading} from '../actions';
+import {showMapLoading, hideMapLoading, showDescription} from '../actions';
 import {
     setOriginalData,
     setDisplayData,
     setMyRegion,
     setDestinationCoords,
+    setMapMode,
+    markerSelected,
 } from '../actions/mapState';
 import {Platform} from 'react-native';
 import {
@@ -12,8 +14,9 @@ import {
     getCurrentPosition,
 } from '../../services/functions';
 import Geolocation from '@react-native-community/geolocation';
-import {LATITUDE_DELTA, LONGITUDE_DELTA} from '../../constants';
+import {LATITUDE_DELTA, LONGITUDE_DELTA, MAP_WITH_DESC} from '../../constants';
 import Polyline from '@mapbox/polyline';
+import {loadPartialConfig} from '@babel/core';
 
 /**
  * Draggable list
@@ -33,22 +36,30 @@ import Polyline from '@mapbox/polyline';
 
 export const init = () => async (dispatch) => {
     dispatch(showMapLoading());
+
+    let myPosition;
+    let myLocation;
     try {
         if (Platform.OS == 'android') {
-            requestLocationPermission();
+            try {
+                let granted = await requestLocationPermission();
+                myPosition = await getCurrentPosition();
+                myLocation = myPosition.coords;
+                dispatch(
+                    setMyRegion({
+                        ...myLocation,
+                        latitudeDelta: LATITUDE_DELTA,
+                        longitudeDelta: LONGITUDE_DELTA,
+                    }),
+                );
+                let result = await Service.get(myLocation);
+                dispatch(setOriginalData(result));
+                dispatch(setDisplayData(result));
+            } catch (e) {
+                // not permitted
+            }
         }
-        let myPosition = await getCurrentPosition();
-        let myLocation = myPosition.coords;
-        dispatch(
-            setMyRegion({
-                ...myLocation,
-                latitudeDelta: LATITUDE_DELTA,
-                longitudeDelta: LONGITUDE_DELTA,
-            }),
-        );
-        let result = await Service.get(myLocation);
-        dispatch(setOriginalData(result));
-        dispatch(setDisplayData(result));
+        // let myPosition = await getCurrentPosition();
     } catch (error) {
         console.log(error, 'in LoadOriginalData');
     } finally {
@@ -95,4 +106,21 @@ export const getDirections = (startLocation, endLocation) => async (
     } finally {
         dispatch(hideMapLoading());
     }
+};
+
+export const markerPressed = (mapEvent) => (dispatch, getState) => {
+    let region;
+    let markerID = parseFloat(mapEvent._targetInst.return.key.split('$')[1]);
+
+    region = getState().mapState.displayDataList.filter((item) => {
+        if (item.id == markerID) {
+            return item;
+        }
+    });
+    console.log(region[0]);
+
+    dispatch(showDescription(region[0]));
+    dispatch(setMapMode(MAP_WITH_DESC));
+    dispatch(setDestinationCoords(null));
+    dispatch(markerSelected(mapEvent));
 };

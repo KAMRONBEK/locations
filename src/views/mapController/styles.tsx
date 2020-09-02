@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {colors} from '../../constants';
 
 export const styles = StyleSheet.create({
     container: {
@@ -7,6 +8,7 @@ export const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
+        // padding: 20,
         justifyContent: 'space-between',
     },
     top: {
@@ -14,5 +16,16 @@ export const styles = StyleSheet.create({
         paddingTop: 30,
         top: 0,
     },
-    bottom: {},
+    bottom: {
+        paddingBottom: 20,
+    },
+    listWrapper: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0,
+        borderWidth: 1,
+        borderColor: colors.pink,
+    },
 });

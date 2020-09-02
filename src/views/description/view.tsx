@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {
     View,
     Image,
@@ -6,6 +6,9 @@ import {
     Linking,
     TouchableOpacity,
     Platform,
+    Animated,
+    StatusBar,
+    LayoutAnimation,
 } from 'react-native';
 import {styles} from './styles';
 import {connect} from 'react-redux';
@@ -18,29 +21,74 @@ import {
     BORDER_RADIUS,
     SPACING_FOR_CARD_INSET,
     FREE_MAP,
+    deviceHeight,
+    deviceWidth,
+    MAP_WITH_SEARCH,
+    heightDiff,
+    deviceHeightW,
+    SCREENS,
 } from '../../constants';
 import images from '../../assets/images';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {callPress, locationPress} from '../../redux/thunks';
-import {setDestinationCoords, mapPressed} from '../../redux/actions';
+import {callPress, locationPress, getDirections} from '../../redux/thunks';
+import {
+    setDestinationCoords,
+    mapPressed,
+    setMapMode,
+} from '../../redux/actions';
 import {ScrollView} from 'react-native-gesture-handler';
 import {strings} from '../../locales/strings';
 import RectangleButton from '../../component/common/RectangleButton';
-import dragPanelState from '../../redux/reducers/dragPanelState';
+import {navigate} from '../../services/navigationServices';
 
 const Description = ({
     currentRegion,
     callPress,
     locationPress,
     setDestinationCoords,
-    mapPressed,
+    setMapMode,
     descVisibility,
-    panelVisibility,
+    // getDirections,
+    // myRegion,
 }) => {
     const _cardPanel = useRef<SlidingUpPanel>(null);
+    let [allowDragging, setAllowDragging] = useState(true);
+
+    let [animatedValue] = useState(new Animated.Value(0));
+    let imageHeight = animatedValue.interpolate({
+        inputRange: [140, deviceHeightW],
+        outputRange: [100, 200],
+    });
+    let imageWidth = animatedValue.interpolate({
+        inputRange: [140, deviceHeightW],
+        outputRange: [CARD_WIDTH + 20, deviceWidth - 40],
+    });
+    let imagePadding = animatedValue.interpolate({
+        inputRange: [140, deviceHeightW],
+        outputRange: [20, 0],
+    });
+    let backgroundColor = animatedValue.interpolate({
+        inputRange: [140, deviceHeightW],
+        outputRange: [colors.lightPink, colors.ultraLightBlue],
+    });
+    let borderRadius = animatedValue.interpolate({
+        inputRange: [140, deviceHeightW],
+        outputRange: [BORDER_RADIUS, 0],
+    });
+    let notchVisibility = animatedValue.interpolate({
+        inputRange: [140, deviceHeightW],
+        outputRange: [1, 0],
+    });
+    let paddingTop = animatedValue.interpolate({
+        inputRange: [140, deviceHeightW],
+        outputRange: [10, 0],
+    });
 
     const onRoutePress = () => {
-        mapPressed(FREE_MAP);
+        if (_cardPanel.current) {
+            _cardPanel.current.hide();
+        }
+        // getDirections(myRegion, currentRegion);
         setDestinationCoords(currentRegion);
     };
 
@@ -53,9 +101,11 @@ const Description = ({
 
     const onCallPress = () => {};
 
-    useEffect(() => {
-        _cardPanel.current.show();
-    }, [currentRegion]);
+    const onChatPress = () => {
+        navigate(SCREENS.chat, {});
+    };
+
+    const onSavePress = () => {};
 
     let temp = {
         address: '"210100, г. Навои, 17-б микрорайон, Торговый центр 104"',
@@ -76,134 +126,227 @@ const Description = ({
     let imgs = [images.banner1, images.banner2, images.banner3];
 
     useEffect(() => {
-        console.log(panelVisibility);
-
-        if (!panelVisibility) {
-            if (_cardPanel.current) {
-                _cardPanel.current.hide();
-            }
-        }
-    }, [panelVisibility]);
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    }, [descVisibility]);
 
     return (
-        <View style={styles.container}>
-            <SlidingUpPanel
-                ref={_cardPanel}
-                draggableRange={{
-                    top: DESC_HEIGHT,
-                    bottom: 140,
-                }}
-                minimumVelocityThreshold={100}
-                height={DESC_HEIGHT}
-                snappingPoints={[140, DESC_HEIGHT]}
-                allowMomentum={true}
-                friction={0.3}
-                // animatedValue={}
-            >
-                <View style={styles.content}>
-                    <View style={styles.notch}>
-                        <View
-                            style={{
-                                borderWidth: 2,
-                                width: 40,
-                                borderColor: colors.gray,
-                                borderRadius: BORDER_RADIUS,
-                            }}
-                        />
-                    </View>
-                    <View style={styles.row}>
-                        <ScrollView
-                            horizontal
-                            pagingEnabled
-                            scrollEventThrottle={1}
-                            showsHorizontalScrollIndicator={false}
-                            snapToInterval={CARD_WIDTH + 40}
-                            snapToAlignment="center"
-                            style={styles.scrollView}
-                            contentInset={{
-                                top: 0,
-                                left: 20,
-                                bottom: 0,
-                                right: 20,
-                            }}
-                            contentContainerStyle={{
-                                paddingHorizontal:
-                                    Platform.OS === 'android' ? 20 : 0,
-                            }}>
-                            {imgs.map((image) => {
-                                return (
-                                    <Image
-                                        style={styles.bannerImage}
-                                        source={image}
+        <>
+            {descVisibility ? (
+                <View style={styles.container}>
+                    <SlidingUpPanel
+                        ref={_cardPanel}
+                        draggableRange={{
+                            top: DESC_HEIGHT,
+                            bottom: 145,
+                        }}
+                        minimumVelocityThreshold={100}
+                        height={DESC_HEIGHT}
+                        snappingPoints={[140]}
+                        allowMomentum={true}
+                        friction={0.1}
+                        minimumDistanceThreshold={30}
+                        allowDragging={allowDragging}
+                        animatedValue={animatedValue}>
+                        <Animated.View
+                            style={[
+                                styles.content,
+                                {
+                                    backgroundColor: backgroundColor,
+                                    borderTopRightRadius: borderRadius,
+                                    borderTopLeftRadius: borderRadius,
+                                    paddingTop: paddingTop,
+                                },
+                            ]}>
+                            <Animated.View
+                                style={[
+                                    styles.notch,
+                                    {
+                                        opacity: notchVisibility,
+                                    },
+                                ]}>
+                                <View
+                                    style={{
+                                        borderWidth: 2,
+                                        width: 40,
+                                        borderColor: colors.gray,
+                                        borderRadius: BORDER_RADIUS,
+                                    }}
+                                />
+                            </Animated.View>
+                            <Animated.View
+                                style={[
+                                    styles.row,
+                                    {
+                                        paddingTop: paddingTop,
+                                    },
+                                ]}>
+                                <Animated.ScrollView
+                                    horizontal
+                                    pagingEnabled
+                                    scrollEventThrottle={1}
+                                    showsHorizontalScrollIndicator={false}
+                                    snapToInterval={CARD_WIDTH + 40}
+                                    snapToAlignment="end"
+                                    style={[
+                                        styles.scrollView,
+                                        {
+                                            // paddingTop: paddingTop,
+                                        },
+                                    ]}
+                                    contentInset={{
+                                        top: 0,
+                                        left: imagePadding,
+                                        bottom: 0,
+                                        right: imagePadding,
+                                    }}
+                                    contentContainerStyle={{
+                                        paddingHorizontal:
+                                            Platform.OS === 'android' ? 20 : 0,
+                                    }}>
+                                    {imgs.map((image, index) => {
+                                        return (
+                                            <Animated.Image
+                                                key={index}
+                                                style={[
+                                                    styles.bannerImage,
+                                                    {
+                                                        height: imageHeight,
+                                                        marginRight: imagePadding,
+                                                        borderRadius: borderRadius,
+                                                        width: imageWidth,
+                                                    },
+                                                ]}
+                                                source={image}
+                                            />
+                                        );
+                                    })}
+                                </Animated.ScrollView>
+                            </Animated.View>
+                            <ScrollView
+                                onTouchStart={() => setAllowDragging(false)}
+                                onTouchEnd={() => setAllowDragging(true)}
+                                onTouchCancel={() => setAllowDragging(true)}>
+                                <View style={styles.column}>
+                                    <Text style={styles.title}>
+                                        {currentRegion?.name}
+                                    </Text>
+                                </View>
+                                <View style={styles.column}>
+                                    <Text style={styles.text}>
+                                        {currentRegion?.address}
+                                    </Text>
+                                </View>
+                                <View style={styles.column}>
+                                    <Text style={styles.text}>
+                                        {currentRegion?.type}
+                                    </Text>
+                                </View>
+                                <View
+                                    style={[
+                                        styles.row,
+                                        {
+                                            justifyContent: 'space-around',
+                                        },
+                                    ]}>
+                                    <TouchableOpacity onPress={onRoutePress}>
+                                        <Animated.View style={[styles.card]}>
+                                            <Ionicons
+                                                name="car-outline"
+                                                size={20}
+                                                color={colors.green}
+                                            />
+                                            <Text style={styles.text}>
+                                                {currentRegion?.distance}{' '}
+                                                {strings.km}
+                                            </Text>
+                                        </Animated.View>
+                                    </TouchableOpacity>
+                                    <View style={styles.card}>
+                                        <Ionicons
+                                            name="alarm-outline"
+                                            size={20}
+                                            color={colors.green}
+                                        />
+                                        <Text style={styles.text}>
+                                            9:00 - 18:00
+                                        </Text>
+                                    </View>
+                                    <TouchableOpacity
+                                        onPress={() =>
+                                            locationPress(_cardPanel.current)
+                                        }>
+                                        <View style={styles.card}>
+                                            <Ionicons
+                                                name="share-social-outline"
+                                                size={20}
+                                                color={colors.green}
+                                            />
+                                            <Text style={styles.text}>
+                                                {strings.share}
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                                <View
+                                    style={[
+                                        styles.row,
+                                        {
+                                            justifyContent: 'space-evenly',
+                                        },
+                                    ]}>
+                                    <TouchableOpacity onPress={onChatPress}>
+                                        <View style={styles.card}>
+                                            <Ionicons
+                                                name="chatbubble-ellipses-outline"
+                                                size={20}
+                                                color={colors.green}
+                                            />
+                                            <Text style={styles.text}>
+                                                {strings.sendMessage}
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={onSavePress}>
+                                        <View style={styles.card}>
+                                            <Ionicons
+                                                name="ios-save-outline"
+                                                size={20}
+                                                color={colors.green}
+                                            />
+                                            <Text style={styles.text}>
+                                                {strings.save}
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                                <View
+                                    style={[
+                                        styles.column,
+                                        {
+                                            // paddingTop: 200,
+                                        },
+                                    ]}>
+                                    <RectangleButton
+                                        onPress={callPress}
+                                        backColor={colors.lightBlue}
+                                        buttonText={strings.call}
+                                        buttonTextColor={colors.textLightGray}
                                     />
-                                );
-                            })}
-                        </ScrollView>
-                    </View>
-
-                    <View style={styles.column}>
-                        <Text style={styles.title}>{currentRegion.name}</Text>
-                    </View>
-                    <View style={styles.column}>
-                        <Text style={styles.text}>{currentRegion.address}</Text>
-                    </View>
-                    <View
-                        style={[
-                            styles.row,
-                            {
-                                justifyContent: 'space-around',
-                            },
-                        ]}>
-                        <TouchableOpacity onPress={onRoutePress}>
-                            <View style={styles.card}>
-                                <Ionicons
-                                    name="car-outline"
-                                    size={20}
-                                    color={colors.textLightGray}
-                                />
-                                <Text style={styles.text}>
-                                    {currentRegion.distance} {strings.km}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <View style={styles.card}>
-                            <Ionicons
-                                name="alarm-outline"
-                                size={20}
-                                color={colors.textLightGray}
-                            />
-                            <Text style={styles.text}>9:00 - 18:00</Text>
-                        </View>
-                        <TouchableOpacity
-                            onPress={() => locationPress(_cardPanel.current)}>
-                            <View style={styles.card}>
-                                <Ionicons
-                                    name="share-social-outline"
-                                    size={20}
-                                    color={colors.textLightGray}
-                                />
-                                <Text style={styles.text}>{strings.share}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.column}>
-                        <RectangleButton
-                            onPress={callPress}
-                            backColor={colors.lightBlue}
-                            buttonText={strings.call}
-                            buttonTextColor={colors.textLightGray}
-                        />
-                    </View>
+                                </View>
+                            </ScrollView>
+                        </Animated.View>
+                    </SlidingUpPanel>
                 </View>
-            </SlidingUpPanel>
-        </View>
+            ) : null}
+        </>
     );
 };
 
-const mapStateToProps = ({descState, dragPanelState}) => ({
+const mapStateToProps = ({descState, listState, mapState}) => ({
     descVisibility: descState.descVisibility,
     currentRegion: descState.currentRegion,
-    panelVisibility: dragPanelState.panelVisibility,
+    panelVisibility: listState.panelVisibility,
+    myRegion: mapState.myRegion,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -211,7 +354,8 @@ const mapDispatchToProps = (dispatch) => ({
     locationPress: (ref) => dispatch(locationPress(ref)),
     setDestinationCoords: (location) =>
         dispatch(setDestinationCoords(location)),
-    mapPressed: (mode) => dispatch(mapPressed(mode)),
+    setMapMode: (mode) => dispatch(setMapMode(mode)),
+    // getDirections: (start, end) => dispatch(getDirections(start, end)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Description);

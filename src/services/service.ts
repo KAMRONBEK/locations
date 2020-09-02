@@ -1,6 +1,7 @@
 import source from '../assets/branches';
 import {getDistance, getPreciseDistance} from 'geolib';
 import {sortArrayAsc} from './functions';
+import {strings} from '../locales/strings';
 // import branchType from '../screens/map/Map';
 
 interface branchType {
@@ -40,7 +41,9 @@ class Service {
                         ' ' +
                         branch.address +
                         ' ' +
-                        branch.bank
+                        branch.bank +
+                        ' ' +
+                        strings.branches
                     } `,
                     distance:
                         getPreciseDistance(myLocation, {
@@ -62,7 +65,9 @@ class Service {
                         ' ' +
                         minibank.address +
                         ' ' +
-                        minibank.type
+                        minibank.type +
+                        ' ' +
+                        strings.minibanks
                     } `,
                     distance:
                         getPreciseDistance(myLocation, {
@@ -82,7 +87,13 @@ class Service {
                     longitude: parseFloat(atm.location.split(',')[1]),
                     latitude: parseFloat(atm.location.split(',')[0]),
                     tag: `atm ${
-                        atm.name + ' ' + atm.address + ' ' + atm.type
+                        atm.name +
+                        ' ' +
+                        atm.address +
+                        ' ' +
+                        atm.type +
+                        ' ' +
+                        strings.atm
                     } `,
                     distance:
                         getPreciseDistance(myLocation, {

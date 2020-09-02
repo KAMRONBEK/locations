@@ -1,201 +1,150 @@
-import React, {useEffect, forwardRef, useRef} from 'react';
-import {StyleSheet, Text, View, Animated, Platform} from 'react-native';
-import SlidingUpPanel from 'rn-sliding-up-panel';
+import React, {useEffect, useState, memo} from 'react';
 import {
-    CARD_HEIGHT,
-    CARD_WIDTH,
-    SPACING_FOR_CARD_INSET,
-    colors,
-    LATITUDE_DELTA,
-    LONGITUDE_DELTA,
-    MAP_WITH_DESC,
-} from '../../constants';
-import styles from './styles';
-import {TouchableOpacity, ScrollView} from 'react-native-gesture-handler';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+    StyleSheet,
+    Text,
+    View,
+    Animated,
+    TouchableOpacity,
+    FlatList,
+} from 'react-native';
 import {connect} from 'react-redux';
-import {
-    setMyRegion,
-    regionSelected,
-    showPanel,
-    showDescription,
-    mapPressed,
-} from '../../redux/actions';
-import MarkerCard from '../../component/common/MarkerCard';
-import {getDirections} from '../../redux/thunks';
+import {colors, deviceHeight, deviceWidth} from '../../constants';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {hideList} from '../../redux/actions';
+import {ScrollView} from 'react-native-gesture-handler';
+import ListItem from '../../component/mapRelated/ListItem';
+import {strings} from '../../locales/strings';
 
-const DraggableList = ({
-    myRegion,
-    displayData,
-    panelVisibility,
-    regionSelected,
-    setMyRegion,
-    pressedMarkerId,
-    showPanel,
-    showDescription,
-    mapPressed,
-    endLocation,
-    getDirections,
-}) => {
-    let draggableValue = new Animated.Value(0);
-    let mapAnimation = new Animated.Value(0);
-
-    const _scrollView = useRef<ScrollView>(null);
-    const _draggablePanel = useRef<SlidingUpPanel>(null);
-
+const List = ({panelVisibility, hideList, displayData}) => {
+    let [animatedRadius, setRadius] = useState(new Animated.Value(0));
+    let [opacity, setOpacity] = useState(new Animated.Value(0));
+    let [translateY, setTanslateY] = useState(new Animated.Value(deviceHeight));
+    // let [xAlign, setXAlign] = useState(new Animated.Value('center'));
+    let [translateX, setTranslateX] = useState(new Animated.Value(0));
     // useEffect(() => {
-    //     console.log(panelVisibility, 'panel');
-    //     if (_draggablePanel.current && panelVisibility) {
-    //         console.log('panel show');
-    //         _draggablePanel.current.show();
-    //     } else if (_draggablePanel.current && !panelVisibility) {
-    //         _draggablePanel.current.hide();
-    //     }
+    if (panelVisibility) {
+        Animated.parallel([
+            Animated.timing(translateY, {
+                toValue: 0,
+                duration: 500,
+                useNativeDriver: true,
+            }),
+            Animated.timing(animatedRadius, {
+                toValue: 0,
+                useNativeDriver: true,
+                duration: 500,
+            }),
+            Animated.timing(opacity, {
+                toValue: 1,
+                useNativeDriver: true,
+                duration: 500,
+            }),
+            Animated.timing(translateX, {
+                toValue: 100,
+                useNativeDriver: true,
+                duration: 500,
+            }),
+        ]).start();
+    } else {
+        Animated.parallel([
+            Animated.timing(translateY, {
+                toValue: deviceHeight,
+                useNativeDriver: true,
+                duration: 500,
+            }),
+            Animated.timing(animatedRadius, {
+                toValue: 100,
+                useNativeDriver: true,
+                duration: 500,
+            }),
+            Animated.timing(opacity, {
+                toValue: 0,
+                useNativeDriver: true,
+                duration: 500,
+            }),
+            Animated.timing(translateX, {
+                toValue: 0,
+                useNativeDriver: true,
+                duration: 500,
+            }),
+        ]).start();
+    }
     // }, [panelVisibility]);
 
-    useEffect(() => {
-        let x = pressedMarkerId * CARD_WIDTH + pressedMarkerId * 20;
-        if (Platform.OS === 'ios') {
-            x = x - SPACING_FOR_CARD_INSET;
-        }
-        if (_draggablePanel.current) {
-            _draggablePanel.current.show();
-        }
-        if (_scrollView.current) {
-            _scrollView.current.scrollTo({x: x, y: 0, animated: true});
-        }
-    }, [pressedMarkerId]);
+    const closeList = () => hideList();
 
     return (
-        <SlidingUpPanel
-            ref={_draggablePanel}
-            draggableRange={{
-                top: CARD_HEIGHT + 60,
-                bottom: CARD_HEIGHT / 2 + 40,
-            }}
-            minimumVelocityThreshold={100}
-            height={CARD_HEIGHT + 60}
-            snappingPoints={[CARD_HEIGHT / 3 + 60]}
-            allowMomentum={true}
-            friction={0.3}
-            animatedValue={draggableValue}>
-            <View style={styles.footer}>
-                <View style={styles.row}>
-                    {/* {endLocation && (
-                        <View style={styles.markerWrapper}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    getDirections(myRegion, endLocation);
-                                }}>
-                                <View
-                                    style={[
-                                        styles.locationIcon,
-                                        {
-                                            transform: [
-                                                {rotate: '-120deg'},
-                                                {translateY: 2},
-                                                {translateX: -2},
-                                            ],
-                                        },
-                                    ]}>
-                                    <Ionicons
-                                        name="navigate"
-                                        size={24}
-                                        color={colors.blue}
-                                    />
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    )} */}
-                    <View style={styles.markerWrapper}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                regionSelected(myRegion);
-                            }}>
-                            <View style={styles.locationIcon}>
-                                <Ionicons
-                                    name="locate-outline"
-                                    size={24}
-                                    color={colors.lightBlue}
-                                />
-                            </View>
-                        </TouchableOpacity>
+        <Animated.View
+            style={[
+                styles.container,
+                {
+                    transform: [{translateY}],
+                    borderRadius: animatedRadius,
+                    opacity: opacity,
+                },
+            ]}>
+            <View style={[styles.top]}>
+                <Text style={styles.text}>
+                    {strings.placesCount}: {displayData.length}
+                </Text>
+                <TouchableOpacity onPress={hideList}>
+                    <View style={styles.closeWrapper}>
+                        <Ionicons
+                            name="close-outline"
+                            size={35}
+                            color={colors.pink}
+                        />
                     </View>
-                </View>
-
-                <Animated.ScrollView
-                    ref={_scrollView}
-                    horizontal
-                    pagingEnabled
-                    scrollEventThrottle={1}
-                    showsHorizontalScrollIndicator={false}
-                    snapToInterval={CARD_WIDTH + 20}
-                    snapToAlignment="center"
-                    style={styles.scrollView}
-                    contentInset={{
-                        top: 0,
-                        left: SPACING_FOR_CARD_INSET,
-                        bottom: 0,
-                        right: SPACING_FOR_CARD_INSET,
-                    }}
-                    contentContainerStyle={{
-                        paddingHorizontal:
-                            Platform.OS === 'android'
-                                ? SPACING_FOR_CARD_INSET
-                                : 0,
-                    }}
-                    onScroll={() => {
-                        Animated.event(
-                            [
-                                {
-                                    nativeEvent: {
-                                        contentOffset: {
-                                            x: mapAnimation,
-                                        },
-                                    },
-                                },
-                            ],
-                            {useNativeDriver: true},
-                        );
-                    }}>
-                    {!!displayData &&
-                        displayData.map((region, index) => {
-                            return (
-                                <MarkerCard
-                                    onPress={() => {
-                                        regionSelected(region);
-                                        // showPanel();
-                                        showDescription(region);
-                                        mapPressed(MAP_WITH_DESC);
-                                    }}
-                                    key={index}
-                                    {...region}
-                                />
-                            );
-                        })}
-                </Animated.ScrollView>
+                </TouchableOpacity>
             </View>
-        </SlidingUpPanel>
+            <FlatList
+                showsVerticalScrollIndicator={false}
+                data={displayData}
+                keyExtractor={(item, index) => (item + index).toString()}
+                contentContainerStyle={styles.listWrapper}
+                renderItem={({item, index}) => (
+                    <ListItem item={item} index={index} />
+                )}
+            />
+        </Animated.View>
     );
 };
 
-const mapStateToProps = ({mapState, dragPanelState}) => ({
-    myRegion: mapState.myRegion,
+const styles = StyleSheet.create({
+    container: {
+        position: 'absolute',
+        backgroundColor: colors.ultraLightBlue,
+        borderColor: colors.black,
+        bottom: 0,
+        right: 0,
+        left: 0,
+        top: 0,
+        height: deviceHeight,
+        paddingTop: 30,
+    },
+    top: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+        alignItems: 'center',
+    },
+    listWrapper: {
+        paddingHorizontal: 15,
+        marginTop: 10,
+    },
+    text: {
+        fontSize: 18,
+        color: colors.darkBlack,
+    },
+});
+
+const mapStateToProps = ({listState, mapState}) => ({
+    panelVisibility: listState.panelVisibility,
     displayData: mapState.displayDataList,
-    panelVisibility: dragPanelState.panelVisibility,
-    pressedMarkerId: mapState.pressedMarkerId,
-    endLocation: mapState.endLocation,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    regionSelected: (region) => dispatch(regionSelected(region)),
-    setMyRegion: (region) => dispatch(setMyRegion(region)),
-    showPanel: () => dispatch(showPanel()),
-    showDescription: (region) => dispatch(showDescription(region)),
-    mapPressed: (mode) => dispatch(mapPressed(mode)),
-    getDirections: (start, end) => dispatch(getDirections(start, end)),
+    hideList: () => dispatch(hideList()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {
-    forwardRef: true,
-})(DraggableList);
+export default connect(mapStateToProps, mapDispatchToProps)(memo(List));

@@ -21,6 +21,8 @@ target 'LocationApp' do
 
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
   target 'LocationAppTests' do
     inherit! :complete
     # Pods for testing

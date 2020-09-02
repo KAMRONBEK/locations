@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef} from 'react';
-import {View, Text, LayoutAnimation} from 'react-native';
+import {View, Text, LayoutAnimation, Keyboard} from 'react-native';
 import styles from './styles';
 import MapView from 'react-native-map-clustering';
 import mapType, {
@@ -14,24 +14,27 @@ import {
     LATITUDE_DELTA,
     LONGITUDE_DELTA,
     FREE_MAP,
-    MAP_WITH_CARD_INFO,
+    MAP_WITH_LIST,
     MAP_WITH_SEARCH,
     DIRECTION_API_KEY,
+    MAP_WITH_DESC,
 } from '../../constants';
 import mapConfig from '../../configs/mapConfig';
 import images from '../../assets/images';
 import {
-    hidePanel,
     mapDragStarted,
-    markerPressed,
-    mapPressed,
-    setMapState,
+    setMapMode,
     hideDescription,
     showMapLoading,
     hideMapLoading,
     setDestinationCoords,
+    showDescription,
 } from '../../redux/actions';
+import {markerPressed} from '../../redux/thunks';
 import MapViewDirections from 'react-native-maps-directions';
+import Bank from '../../assets/vectors/Bank';
+import Branch from '../../assets/vectors/Branch';
+import Atm from '../../assets/vectors/Atm';
 
 const Map = ({
     myRegion,
@@ -40,50 +43,114 @@ const Map = ({
     focusRegion,
     mapDragStarted,
     markerPressed,
-    mapPressed,
+    setMapMode,
     mapMode,
     hideDescription,
-    dirCoordinates,
-    endLocation,
+    routeDestination,
     showMapLoading,
     hideMapLoading,
     setDestinationCoords,
+    mapPressed,
+    showDescription,
 }: any) => {
-    let branchMarkers = useCallback(() => {
-        return (
-            displayDataList &&
-            displayDataList.map((region, index) => (
-                <Marker
-                    onPress={markerPressed}
-                    key={index}
-                    style={{
-                        width: 15,
-                        height: 15,
-                    }}
-                    tracksViewChanges={false}
-                    coordinate={{
-                        latitude: region.latitude,
-                        longitude: region.longitude,
-                    }}
-                    icon={
-                        region.type == 'branch'
-                            ? images.branch
-                            : region.type == 'atm'
-                            ? images.atm
-                            : images.bank
-                    }
-                    title={region.name}>
-                    <Callout tooltip={true}>
-                        <View style={styles.callout}>
-                            <Text numberOfLines={3} style={styles.calloutText}>
-                                {region.name}
-                            </Text>
+    let branchMarkers =
+        // useCallback(
+        () => {
+            return (
+                displayDataList &&
+                displayDataList.map((region, index) => (
+                    <Marker
+                        onPress={markerPressed}
+                        key={region.id}
+                        tracksViewChanges={false}
+                        coordinate={{
+                            latitude: region.latitude,
+                            longitude: region.longitude,
+                        }}
+                        // icon={
+                        //     region.type == 'branch'
+                        //         ? images.branch
+                        //         : region.type == 'atm'
+                        //         ? images.atm
+                        //         : images.bank
+                        // }
+                        title={region.name}>
+                        <View
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}>
+                            {region.type == 'branch' ? (
+                                <Branch
+                                    height={25}
+                                    width={25}
+                                    style={{
+                                        height: 25,
+                                        width: 25,
+                                    }}
+                                />
+                            ) : region.type == 'atm' ? (
+                                <Atm
+                                    height={25}
+                                    width={25}
+                                    style={{
+                                        height: 25,
+                                        width: 25,
+                                    }}
+                                />
+                            ) : (
+                                <Bank
+                                    height={25}
+                                    width={25}
+                                    style={{
+                                        height: 25,
+                                        width: 25,
+                                    }}
+                                />
+                            )}
                         </View>
-                    </Callout>
-                </Marker>
-            ))
-        );
-    }, [displayDataList]);
+                        <Callout tooltip={true}>
+                            <View style={styles.callout}>
+                                <Text
+                                    numberOfLines={3}
+                                    style={styles.calloutText}>
+                                    {region.type == 'branch' ? (
+                                        <Branch
+                                            height={25}
+                                            width={25}
+                                            style={{
+                                                height: 25,
+                                                width: 25,
+                                            }}
+                                        />
+                                    ) : region.type == 'atm' ? (
+                                        <Atm
+                                            height={25}
+                                            width={25}
+                                            style={{
+                                                height: 25,
+                                                width: 25,
+                                            }}
+                                        />
+                                    ) : (
+                                        <Bank
+                                            height={25}
+                                            width={25}
+                                            style={{
+                                                height: 25,
+                                                width: 25,
+                                            }}
+                                        />
+                                    )}
+                                    {region.name} {region.id}
+                                </Text>
+                            </View>
+                        </Callout>
+                    </Marker>
+                ))
+            );
+        };
+    // , [displayDataList]);
 
     const _map = useRef<mapType>(null);
 
@@ -93,11 +160,8 @@ const Map = ({
 
     const onMapPress = () => {
         console.log(mapMode, 'mapState');
-        if (mapMode == FREE_MAP) {
-            mapPressed(MAP_WITH_CARD_INFO);
-        } else {
-            mapPressed(FREE_MAP);
-        }
+        Keyboard.dismiss();
+        mapPressed(MAP_WITH_SEARCH);
     };
 
     const onMapReady = () => {
@@ -152,7 +216,7 @@ const Map = ({
                 animationEnabled={true}
                 clusteringEnabled={true}
                 radius={30}
-                customMapStyle={mapConfig}
+                // customMapStyle={mapConfig}
                 layoutAnimationConf={LayoutAnimation.Presets.easeInEaseOut}
                 ref={_map}
                 showsBuildings={true}
@@ -164,10 +228,10 @@ const Map = ({
                 showsIndoorLevelPicker={true}
                 onMapReady={onMapReady}>
                 {branchMarkers()}
-                {myRegion && endLocation && (
+                {myRegion && routeDestination && (
                     <MapViewDirections
                         origin={myRegion}
-                        destination={endLocation}
+                        destination={routeDestination}
                         mode={'DRIVING'}
                         precision={'low'}
                         apikey={DIRECTION_API_KEY}
@@ -182,29 +246,24 @@ const Map = ({
     );
 };
 
-const mapStateToProps = ({mapState, dragPanelState}: any) => ({
+const mapStateToProps = ({mapState, listState}: any) => ({
     myRegion: mapState.myRegion,
     displayDataList: mapState.displayDataList,
-    panelVisibility: dragPanelState.panelVisibility,
+    panelVisibility: listState.panelVisibility,
     focusRegion: mapState.focusRegion,
     mapMode: mapState.mapMode,
-    dirCoordinates: mapState.dirCoordinates,
-    endLocation: mapState.endLocation,
+    routeDestination: mapState.routeDestination,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     hidePanel: () => dispatch(hidePanel()),
     mapDragStarted: () => dispatch(mapDragStarted()),
-    markerPressed: (mapEvent) => {
-        dispatch(mapPressed(MAP_WITH_CARD_INFO));
-        dispatch(setDestinationCoords(null));
-        dispatch(markerPressed(mapEvent));
-    },
+    markerPressed: (mapEvent) => dispatch(markerPressed(mapEvent)),
     showMapLoading: () => dispatch(showMapLoading()),
     hideMapLoading: () => dispatch(hideMapLoading()),
     mapPressed: (state) => {
         dispatch(hideDescription());
-        dispatch(mapPressed(state));
+        dispatch(setMapMode(state));
     },
 });
 

@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import appState from './reducers/appState';
 import mapState from './reducers/mapState';
 import searchState from './reducers/searchState';
-import dragPanelState from './reducers/dragPanelState';
+import listState from './reducers/listState';
 import scrollViewState from './reducers/scrollViewState';
 import descState from './reducers/descState';
 
@@ -13,7 +13,7 @@ let configureStore = () => {
             appState,
             mapState,
             searchState,
-            dragPanelState,
+            listState,
             scrollViewState,
             descState,
         }),

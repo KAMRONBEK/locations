@@ -7,8 +7,8 @@ interface FilterItemProps {
     text: string;
 }
 
-const FilterItem = ({text}: FilterItemProps) => {
-    const onPress = () => {};
+const FilterItem = ({text, onPress}: FilterItemProps) => {
+    // const onPress = () => {};
 
     return (
         <TouchableOpacity onPress={onPress}>
@@ -21,12 +21,10 @@ const FilterItem = ({text}: FilterItemProps) => {
 
 const styles = StyleSheet.create({
     container: {
-        borderWidth: 0.5,
-        borderColor: colors.gray,
         borderRadius: 20,
         paddingVertical: 10,
         paddingHorizontal: 15,
-        backgroundColor: colors.ultraLightBlue,
+        backgroundColor: colors.lightPink,
         marginRight: 10,
     },
 });

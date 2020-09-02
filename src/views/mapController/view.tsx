@@ -3,7 +3,7 @@ import {View, ScrollView, Keyboard, LayoutAnimation} from 'react-native';
 import {styles} from './styles';
 import Map from '../map';
 import Search from '../search';
-import DraggableList from '../list/view';
+import List from '../list/view';
 import {connect} from 'react-redux';
 import {init} from '../../redux/thunks/mapState';
 import mapType from 'react-native-maps';
@@ -12,108 +12,90 @@ import SlidingUpPanel from 'rn-sliding-up-panel';
 import {
     FREE_MAP,
     MAP_WITH_SEARCH,
-    MAP_WITH_CARD_INFO,
+    MAP_WITH_LIST,
     MAP_WITH_DESC,
 } from '../../constants';
 import Description from '../description';
+import {strings} from '../../locales/strings';
+import MapButtons from '../../component/mapRelated/MapButtons';
+import {
+    showList,
+    hideList,
+    setSearchFocus,
+    regionSelected,
+} from '../../redux/actions';
 
-const MapController = ({init, mapMode, descVisibility, descRegion}: any) => {
-    let [searchOffset, setSearchOffset] = useState(0);
-    let [listOffset, setListOffset] = useState(0);
-    let [descOffset, setDescOffset] = useState(-400);
-
+const MapController = ({
+    init,
+    mapMode,
+    descVisibility,
+    currentRegion,
+    language,
+    route,
+    showList,
+    hideList,
+    setSearchFocus,
+    regionSelected,
+    myRegion,
+}: any) => {
     useEffect(() => {
+        setImmediate(() => hideList());
         init();
-    }, []);
-
-    useEffect(() => {
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        if (mapMode == FREE_MAP) {
-            console.log('freemap');
-            setSearchOffset(-300);
-            setDescOffset(-400);
-            setListOffset(-300);
-            Keyboard.dismiss();
-        } else if (mapMode == MAP_WITH_SEARCH) {
-            setSearchOffset(0);
-            setListOffset(-300);
-            setDescOffset(-400);
-        } else if (mapMode == MAP_WITH_CARD_INFO) {
-            setSearchOffset(0);
-            setDescOffset(-400);
-            setListOffset(0);
-        } else if (mapMode == MAP_WITH_DESC) {
-            setListOffset(-400);
-            setDescOffset(0);
+        console.log(route.params.action);
+        switch (route.params.action) {
+            case 'list': {
+                setTimeout(() => {
+                    showList();
+                }, 100);
+                return;
+            }
+            case 'search': {
+                setSearchFocus(true);
+                return;
+            }
+            case 'location': {
+                {
+                    setTimeout(() => {
+                        regionSelected(myRegion);
+                    }, 400);
+                    return;
+                }
+            }
+            default:
+                return;
         }
-    }, [mapMode]);
-
-    // useEffect(() => {
-    //     const keyboardDidShowListener = Keyboard.addListener(
-    //         'keyboardDidShow',
-    //         () => {
-    //             if (_draggablePanel.current) {
-    //                 _draggablePanel.current.hide();
-    //             }
-    //         },
-    //     );
-    //     const keyboardDidHideListener = Keyboard.addListener(
-    //         'keyboardDidHide',
-    //         () => {
-    //             if (_draggablePanel.current) {
-    //                 _draggablePanel.current.show();
-    //             }
-    //         },
-    //     );
-
-    //     return () => {
-    //         keyboardDidHideListener.remove();
-    //         keyboardDidShowListener.remove();
-    //     };
-    // }, []);
+    }, [language]);
 
     return (
         <View style={styles.container}>
             <Map />
             <View style={styles.content}>
-                <View
-                    style={[
-                        styles.top,
-                        {
-                            top: searchOffset,
-                        },
-                    ]}>
-                    <Search />
-                </View>
-                <View style={[styles.bottom]}>
-                    <View
-                        style={{
-                            bottom: listOffset,
-                        }}>
-                        <DraggableList />
-                    </View>
-                    <View
-                        style={{
-                            bottom: descOffset,
-                        }}>
-                        {descRegion && <Description />}
-                    </View>
+                <Search />
+                <View>
+                    <MapButtons />
+                    <Description />
                 </View>
             </View>
+            <List />
         </View>
     );
 };
 
-const mapStateToProps = ({mapState, descState}) => ({
+const mapStateToProps = ({mapState, descState, appState}) => ({
     myRegion: mapState.myRegion,
     displayDataList: mapState.displayDataList,
     mapMode: mapState.mapMode,
     descVisibility: descState.descVisibility,
-    descRegion: descState.currentRegion,
+    currentRegion: descState.currentRegion,
+    language: appState.language,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
     init: () => dispatch(init()),
+    showList: () => dispatch(showList()),
+    hideList: () => dispatch(hideList()),
+    setSearchFocus: (mode) => dispatch(setSearchFocus(mode)),
+    regionSelected: (region) => dispatch(regionSelected(region)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapController);

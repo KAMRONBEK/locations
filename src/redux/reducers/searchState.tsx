@@ -3,6 +3,7 @@ import {
     SET_SEARCH_RESULT_TEXT,
     SET_SEARCH_RESULT_LIST,
     SET_SEARCH_KEYWORD,
+    SET_SEARCH_FOCUS,
 } from '../types';
 import {INITIAL} from '../../constants';
 
@@ -15,6 +16,7 @@ const initialState = {
     searchResultText: '',
     searchResultList: [],
     searchKeyword: '',
+    focusSearch: false,
 };
 export default (state = initialState, {type, payload}: any) => {
     switch (type) {
@@ -27,6 +29,11 @@ export default (state = initialState, {type, payload}: any) => {
             return {...state, searchResultText: payload};
         case SET_SEARCH_RESULT_LIST: {
             return {...state, searchResultList: payload};
+        }
+        case SET_SEARCH_FOCUS: {
+            console.log(payload);
+
+            return {...state, focusSearch: payload};
         }
         default:
             return state;

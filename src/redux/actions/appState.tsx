@@ -1,4 +1,10 @@
-import {SHOW_FLASH_MESSAGE, SHOW_MAP_LOADING, HIDE_MAP_LOADING} from '../types';
+import {
+    SHOW_FLASH_MESSAGE,
+    SHOW_MAP_LOADING,
+    HIDE_MAP_LOADING,
+    TOGGLE_MENU,
+    SET_LANGUAGE,
+} from '../types';
 
 export const showFlashMessage = (payload: any) => ({
     type: SHOW_FLASH_MESSAGE,
@@ -11,4 +17,13 @@ export const showMapLoading = () => ({
 
 export const hideMapLoading = () => ({
     type: HIDE_MAP_LOADING,
+});
+
+export const toggleMenu = () => ({
+    type: TOGGLE_MENU,
+});
+
+export const setLanguage = (payload) => ({
+    type: SET_LANGUAGE,
+    payload,
 });

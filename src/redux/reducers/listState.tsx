@@ -1,21 +1,26 @@
-import {SHOW_DRAGGABLE_PANEL, HIDE_DRAGGABLE_PANEL} from '../types';
+import {SHOW_LIST, HIDE_LIST, TOGGLE_LIST} from '../types';
 
 const initialState = {
     panelVisibility: false,
 };
 export default (state = initialState, {type, payload}: any) => {
     switch (type) {
-        case SHOW_DRAGGABLE_PANEL: {
+        case SHOW_LIST: {
             return {
                 ...state,
                 panelVisibility: true,
             };
         }
-        case HIDE_DRAGGABLE_PANEL: {
-            console.log(payload);
+        case HIDE_LIST: {
             return {
                 ...state,
                 panelVisibility: false,
+            };
+        }
+        case TOGGLE_LIST: {
+            return {
+                ...state,
+                panelVisibility: !state.panelVisibility,
             };
         }
         default:

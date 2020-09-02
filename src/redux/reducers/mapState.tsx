@@ -7,9 +7,8 @@ import {
     MAP_DRAG_STARTED,
     MARKER_PRESSED,
     MAP_PRESSED,
-    SET_DIRECTION,
-    SET_DIRECTION_LOADING,
-    SET_DESTINATION_COORDS,
+    SET_ROUTE_DESTINATION,
+    SET_MAP_MODE,
 } from '../types';
 import {
     LATITUDE,
@@ -19,6 +18,7 @@ import {
     INITIAL,
     FREE_MAP,
     MAP_WITH_SEARCH,
+    MAP_WITH_LIST,
 } from '../../constants';
 
 export interface appStateProps {
@@ -44,10 +44,8 @@ const initialState = {
     displayDataList: [],
     focusRegion: null,
     pressedMarkerId: 0,
-    mapMode: FREE_MAP, //FREE_MAP,MAP_WITH_SEARCH,MAP_WITH_CARD_INFO
-    dirCoordinates: [],
-    endLocation: null,
-    loadingDirections: false,
+    mapMode: MAP_WITH_SEARCH, //FREE_MAP,MAP_WITH_SEARCH,MAP_WITH_LIST
+    routeDestination: null,
 };
 export default (state = initialState, {type, payload}: any) => {
     switch (type) {
@@ -76,27 +74,19 @@ export default (state = initialState, {type, payload}: any) => {
             let markerID = parseFloat(
                 payload._targetInst.return.key.split('$')[1],
             );
-            // focusRegion:
-            // state.originalDataList[
-            // 	payload._targetInst.return.key.split('$')[1]
-            // ],
-
             return {
                 ...state,
                 pressedMarkerId: markerID,
             };
         }
-        case MAP_PRESSED: {
+        case SET_MAP_MODE: {
             return {...state, mapMode: payload};
         }
-        case SET_DESTINATION_COORDS: {
+        case SET_ROUTE_DESTINATION: {
             return {
                 ...state,
-                endLocation: payload,
+                routeDestination: payload,
             };
-        }
-        case SET_DIRECTION_LOADING: {
-            return {...state, loadingDirections: payload};
         }
         default:
             return state;

@@ -3,6 +3,7 @@ import {
     SET_SEARCH_RESULT_TEXT,
     SET_SEARCH_RESULT_LIST,
     SET_SEARCH_KEYWORD,
+    SET_SEARCH_FOCUS,
 } from '../types';
 
 export const setSearchKeyword = (payload) => ({
@@ -22,5 +23,10 @@ export const setSearchResultText = (payload) => ({
 
 export const setSearchRelustList = (payload) => ({
     type: SET_SEARCH_RESULT_LIST,
+    payload,
+});
+
+export const setSearchFocus = (payload) => ({
+    type: SET_SEARCH_FOCUS,
     payload,
 });

@@ -4,10 +4,10 @@ import {
     SET_DISPLAY_DATA,
     MAP_REGION_SELECTED,
     MAP_DRAG_STARTED,
-    SET_MAP_STATE,
-    MARKER_PRESSED,
     MAP_PRESSED,
-    SET_DESTINATION_COORDS,
+    SET_ROUTE_DESTINATION,
+    SET_MAP_MODE,
+    MARKER_SELECTED,
 } from '../types';
 import {Platform} from 'react-native';
 
@@ -35,13 +35,13 @@ export const mapDragStarted = () => ({
     type: MAP_DRAG_STARTED,
 });
 
-export const setMapState = (payload) => ({
-    type: SET_MAP_STATE,
+export const setMapMode = (payload) => ({
+    type: SET_MAP_MODE,
     payload,
 });
 
-export const markerPressed = (payload) => ({
-    type: MARKER_PRESSED,
+export const markerSelected = (payload) => ({
+    type: MARKER_SELECTED,
     payload,
 });
 
@@ -51,6 +51,6 @@ export const mapPressed = (payload) => ({
 });
 
 export const setDestinationCoords = (payload) => ({
-    type: SET_DESTINATION_COORDS,
+    type: SET_ROUTE_DESTINATION,
     payload,
 });

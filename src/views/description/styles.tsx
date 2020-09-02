@@ -5,19 +5,22 @@ import {
     DESC_HEIGHT,
     CARD_WIDTH,
     BORDER_RADIUS,
+    deviceHeightW,
+    deviceHeight,
 } from '../../constants';
 
 export const styles = StyleSheet.create({
     container: {
         // borderWidth: 1,
+        flex: 1,
     },
     content: {
         borderTopRightRadius: 14,
-        backgroundColor: colors.dark,
+        backgroundColor: colors.ultraLightBlue,
         borderTopLeftRadius: 14,
         overflow: 'hidden',
-        flex: 1,
         paddingTop: 10,
+        height: deviceHeight,
     },
     notch: {
         alignItems: 'center',
@@ -39,16 +42,14 @@ export const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         fontWeight: '600',
-        color: colors.textLightGray,
+        color: colors.darkBlack,
     },
     text: {
         fontWeight: '300',
         fontSize: 13,
         color: colors.textGray,
     },
-    scrollView: {
-        paddingTop: 5,
-    },
+    scrollView: {},
     bannerImage: {
         width: CARD_WIDTH + 20,
         height: 100,
@@ -57,7 +58,7 @@ export const styles = StyleSheet.create({
         marginRight: 20,
     },
     card: {
-        backgroundColor: colors.lightDark,
+        backgroundColor: colors.lightViolet,
         width: 100,
         height: 75,
         borderRadius: BORDER_RADIUS,

@@ -2,7 +2,7 @@ import {SHOW_DESCRIPTION, HIDE_DESCRIPTION} from '../types';
 
 const initialState = {
     currentRegion: null,
-    descVisibility: false,
+    descVisibility: false, //false
 };
 
 export default (state = initialState, {type, payload}: any) => {

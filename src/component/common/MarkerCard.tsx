@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
     StyleSheet,
     Text,
@@ -14,6 +14,7 @@ import {
     TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
 import {strings} from '../../locales/strings';
+import {connect} from 'react-redux';
 
 interface MarkerCardProps {
     id: string;
@@ -35,6 +36,7 @@ const MarkerCard = ({
     phone,
     onPress,
     distance,
+    language,
 }: MarkerCardProps) => {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
@@ -108,4 +110,10 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MarkerCard;
+const mapStateToProps = ({appState}) => ({
+    language: appState.language,
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MarkerCard);

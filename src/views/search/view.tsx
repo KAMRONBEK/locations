@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
     View,
     TextInput,
     TouchableOpacity,
     Keyboard,
     Text as OriginText,
+    Image,
 } from 'react-native';
 import {styles} from './styles';
 import {connect} from 'react-redux';
@@ -13,8 +14,11 @@ import {
     setSearchResultText,
     setDisplayData,
     setSearchKeyword,
-    mapPressed,
+    setMapMode,
     setDestinationCoords,
+    toggleMenu,
+    hideDescription,
+    setSearchFocus,
 } from '../../redux/actions';
 import {
     INITIAL,
@@ -23,11 +27,14 @@ import {
     SEARCHING,
     MAP_WITH_SEARCH,
     FREE_MAP,
+    MAP_WITH_LIST,
 } from '../../constants';
 import {search} from '../../redux/thunks';
 import {strings} from '../../locales/strings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MaterialIndicator} from 'react-native-indicators';
+import images from '../../assets/images';
+import FilterItem from '../../component/common/FilterItem';
 
 const Search = ({
     setSearchStatus,
@@ -39,13 +46,36 @@ const Search = ({
     searchResultText,
     setDisplayData,
     setSearchKeyword,
-    mapPressed,
+    setMapMode,
     setDestinationCoords,
+    toggleMenu,
+    language,
+    hideDescription,
+    setSearchFocus,
+    focus,
 }) => {
+    // useEffect(() => {}, [language]);
+
+    let _searchInput = useRef<TextInput>(null);
+
+    useEffect(() => {
+        console.log(focus, 'search');
+
+        if (focus) {
+            _searchInput.current?.focus();
+        }
+    }, [focus]);
+
     return (
-        <View>
+        <View style={styles.plane}>
             <View style={styles.searchbar}>
+                <TouchableOpacity onPress={toggleMenu}>
+                    <View>
+                        <Image style={styles.menu} source={images.menu} />
+                    </View>
+                </TouchableOpacity>
                 <TextInput
+                    ref={_searchInput}
                     onChangeText={(text) => {
                         setSearchKeyword(text);
                         setSearchStatus(INITIAL);
@@ -53,12 +83,22 @@ const Search = ({
                     }}
                     value={keyword}
                     placeholder={strings.searchHere}
-                    placeholderTextColor={colors.textGray}
-                    style={{flex: 1, padding: 0, color: colors.white}}
+                    // placeholderTextColor={colors.textGray}
+                    style={{flex: 1, padding: 0, color: colors.black}}
+                    keyboardAppearance={'dark'}
                     onFocus={() => {
+                        setSearchFocus(true);
                         setSearchStatus(INITIAL);
                         setSearchResultText('');
-                        mapPressed(MAP_WITH_SEARCH);
+                        hideDescription();
+                        console.log('focus');
+                    }}
+                    onSubmitEditing={() => {
+                        if (!!keyword) {
+                            Keyboard.dismiss();
+                            search(keyword, originalData);
+                        }
+                        setSearchFocus(false);
                     }}
                 />
                 <View style={{}}>
@@ -69,12 +109,13 @@ const Search = ({
                                     Keyboard.dismiss();
                                     search(keyword, originalData);
                                 }
+                                setSearchFocus(false);
                             }}>
                             <View>
                                 <Ionicons
                                     name="ios-search"
                                     size={20}
-                                    color={colors.lightBlue}
+                                    color={colors.green}
                                 />
                             </View>
                         </TouchableOpacity>
@@ -87,7 +128,7 @@ const Search = ({
                                 console.log('press x');
                                 setSearchKeyword('');
                                 setSearchResultText('');
-                                mapPressed(FREE_MAP);
+                                setMapMode(MAP_WITH_LIST);
                                 setDestinationCoords(null);
                             }}>
                             <View>
@@ -104,6 +145,42 @@ const Search = ({
                     )}
                 </View>
             </View>
+            {focus && (
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        paddingVertical: 10,
+                        justifyContent: 'center',
+                    }}>
+                    <FilterItem
+                        text={strings.atm}
+                        onPress={() => {
+                            Keyboard.dismiss();
+                            setSearchKeyword(strings.atm);
+                            search(keyword, originalData);
+                            setSearchFocus(false);
+                        }}
+                    />
+                    <FilterItem
+                        text={strings.branches}
+                        onPress={() => {
+                            Keyboard.dismiss();
+                            setSearchKeyword(strings.branches);
+                            search(keyword, originalData);
+                            setSearchFocus(false);
+                        }}
+                    />
+                    <FilterItem
+                        text={strings.minibanks}
+                        onPress={() => {
+                            Keyboard.dismiss();
+                            setSearchKeyword(strings.minibanks);
+                            search(keyword, originalData);
+                            setSearchFocus(false);
+                        }}
+                    />
+                </View>
+            )}
             {!!searchResultText ? (
                 <View style={styles.searchResult}>
                     <OriginText style={styles.searchResultText}>
@@ -123,11 +200,13 @@ const Search = ({
     );
 };
 
-const mapStateToProps = ({searchState, mapState}) => ({
+const mapStateToProps = ({searchState, mapState, appState}) => ({
     keyword: searchState.searchKeyword,
     searchStatus: searchState.searchStatus,
     originalData: mapState.originalDataList,
     searchResultText: searchState.searchResultText,
+    language: appState.language,
+    focus: searchState.focusSearch,
 });
 const mapDispatchToProps = (dispatch) => ({
     setSearchKeyword: (text) => dispatch(setSearchKeyword(text)),
@@ -135,9 +214,12 @@ const mapDispatchToProps = (dispatch) => ({
     setSearchResultText: (text) => dispatch(setSearchResultText(text)),
     search: (keyword, data) => dispatch(search(keyword, data)),
     setDisplayData: (data) => dispatch(setDisplayData(data)),
-    mapPressed: (state) => dispatch(mapPressed(state)),
+    setMapMode: (state) => dispatch(setMapMode(state)),
     setDestinationCoords: (location) =>
         dispatch(setDestinationCoords(location)),
+    toggleMenu: () => dispatch(toggleMenu()),
+    hideDescription: () => dispatch(hideDescription()),
+    setSearchFocus: (mode) => dispatch(setSearchFocus(mode)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {

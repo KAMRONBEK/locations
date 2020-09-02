@@ -7,7 +7,8 @@ export const LONGITUDE = 69.2401;
 export const LONGITUDE_DELTA = 0.01222;
 export const LATITUDE_DELTA = 0.00721;
 
-export const deviceHeight = Dimensions.get('window').height;
+export const deviceHeight = Dimensions.get('screen').height;
+export const deviceHeightW = Dimensions.get('window').height;
 export const deviceWidth = Dimensions.get('window').width;
 
 export const CARD_HEIGHT = 150;
@@ -21,12 +22,18 @@ export const DONE_SEARCHING = 'done_searching';
 
 //mapState
 export const FREE_MAP = 'free_map';
-export const MAP_WITH_CARD_INFO = 'map_with_card_info';
+export const MAP_WITH_LIST = 'map_with_list';
 export const MAP_WITH_SEARCH = 'map_with_search';
 export const MAP_WITH_DESC = 'map_with_desc';
 
 //descPanle
-export const DESC_HEIGHT = 400;
+export const DESC_HEIGHT = Dimensions.get('window').height; //+13
 export const DESC_WIDTH = deviceWidth;
 
+//custom style
 export const BORDER_RADIUS = 12;
+
+// language enum
+export const UZ = 'uz';
+export const RU = 'ru';
+export const ENG = 'eng';
