@@ -1,5 +1,11 @@
 import React, {useCallback, useEffect, useRef} from 'react';
-import {View, Text, LayoutAnimation, Keyboard} from 'react-native';
+import {
+    View,
+    Text,
+    LayoutAnimation,
+    Keyboard,
+    ImageBackground,
+} from 'react-native';
 import styles from './styles';
 import MapView from 'react-native-map-clustering';
 import mapType, {
@@ -29,6 +35,8 @@ import {
     hideMapLoading,
     setDestinationCoords,
     showDescription,
+    setZoomLevel,
+    setSearchFocus,
 } from '../../redux/actions';
 import {markerPressed} from '../../redux/thunks';
 import MapViewDirections from 'react-native-maps-directions';
@@ -52,105 +60,88 @@ const Map = ({
     setDestinationCoords,
     mapPressed,
     showDescription,
+    zoomLevel,
+    setZoomLevel,
 }: any) => {
-    let branchMarkers =
-        // useCallback(
-        () => {
-            return (
-                displayDataList &&
-                displayDataList.map((region, index) => (
-                    <Marker
-                        onPress={markerPressed}
-                        key={region.id}
-                        tracksViewChanges={false}
-                        coordinate={{
-                            latitude: region.latitude,
-                            longitude: region.longitude,
-                        }}
-                        // icon={
-                        //     region.type == 'branch'
-                        //         ? images.branch
-                        //         : region.type == 'atm'
-                        //         ? images.atm
-                        //         : images.bank
-                        // }
-                        title={region.name}>
-                        <View
-                            style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}>
-                            {region.type == 'branch' ? (
-                                <Branch
-                                    height={25}
-                                    width={25}
-                                    style={{
-                                        height: 25,
-                                        width: 25,
-                                    }}
-                                />
-                            ) : region.type == 'atm' ? (
-                                <Atm
-                                    height={25}
-                                    width={25}
-                                    style={{
-                                        height: 25,
-                                        width: 25,
-                                    }}
-                                />
-                            ) : (
-                                <Bank
-                                    height={25}
-                                    width={25}
-                                    style={{
-                                        height: 25,
-                                        width: 25,
-                                    }}
-                                />
-                            )}
+    let branchMarkers = () => {
+        //  useCallback(
+        return (
+            displayDataList &&
+            displayDataList.map((region, index) => (
+                <Marker
+                    onPress={markerPressed}
+                    key={region.id}
+                    tracksViewChanges={false}
+                    coordinate={{
+                        latitude: region.latitude,
+                        longitude: region.longitude,
+                    }}
+                    // icon={
+                    //     region.type == 'branch'
+                    //         ? images.branch
+                    //         : region.type == 'atm'
+                    //         ? images.atm
+                    //         : images.bank
+                    // }
+                    title={region.name}>
+                    <View
+                        style={{
+                            justifyContent: 'center',
+                            padding: 10,
+                            paddingTop: 4,
+                            alignItems: 'center',
+                            height: 40,
+                            width: 35,
+                            overflow: 'hidden',
+                        }}>
+                        {region.type == 'branch' ? (
+                            <Branch height={25} width={25} />
+                        ) : region.type == 'atm' ? (
+                            <Atm height={25} width={25} />
+                        ) : (
+                            <Bank height={25} width={25} />
+                        )}
+                    </View>
+                    <Callout tooltip={true}>
+                        <View style={styles.callout}>
+                            <Text numberOfLines={3} style={styles.calloutText}>
+                                {region.type == 'branch' ? (
+                                    <Branch
+                                        height={25}
+                                        width={25}
+                                        style={{
+                                            height: 25,
+                                            width: 25,
+                                        }}
+                                    />
+                                ) : region.type == 'atm' ? (
+                                    <Atm
+                                        height={25}
+                                        width={25}
+                                        style={{
+                                            height: 25,
+                                            width: 25,
+                                        }}
+                                    />
+                                ) : (
+                                    <Bank
+                                        height={25}
+                                        width={25}
+                                        style={{
+                                            height: 25,
+                                            width: 25,
+                                        }}
+                                    />
+                                )}
+                                {region.name} {region.id}
+                            </Text>
                         </View>
-                        <Callout tooltip={true}>
-                            <View style={styles.callout}>
-                                <Text
-                                    numberOfLines={3}
-                                    style={styles.calloutText}>
-                                    {region.type == 'branch' ? (
-                                        <Branch
-                                            height={25}
-                                            width={25}
-                                            style={{
-                                                height: 25,
-                                                width: 25,
-                                            }}
-                                        />
-                                    ) : region.type == 'atm' ? (
-                                        <Atm
-                                            height={25}
-                                            width={25}
-                                            style={{
-                                                height: 25,
-                                                width: 25,
-                                            }}
-                                        />
-                                    ) : (
-                                        <Bank
-                                            height={25}
-                                            width={25}
-                                            style={{
-                                                height: 25,
-                                                width: 25,
-                                            }}
-                                        />
-                                    )}
-                                    {region.name} {region.id}
-                                </Text>
-                            </View>
-                        </Callout>
-                    </Marker>
-                ))
-            );
-        };
-    // , [displayDataList]);
+                    </Callout>
+                </Marker>
+            ))
+        );
+    };
+    // }, [displayDataList, zoomLevel]);
 
     const _map = useRef<mapType>(null);
 
@@ -215,7 +206,10 @@ const Map = ({
                 showsCompass={false}
                 animationEnabled={true}
                 clusteringEnabled={true}
-                radius={30}
+                onRegionChangeComplete={(event) =>
+                    setZoomLevel(event.longitudeDelta)
+                }
+                radius={10}
                 // customMapStyle={mapConfig}
                 layoutAnimationConf={LayoutAnimation.Presets.easeInEaseOut}
                 ref={_map}
@@ -253,6 +247,7 @@ const mapStateToProps = ({mapState, listState}: any) => ({
     focusRegion: mapState.focusRegion,
     mapMode: mapState.mapMode,
     routeDestination: mapState.routeDestination,
+    zoomLevel: mapState.zoomLevel,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -264,6 +259,10 @@ const mapDispatchToProps = (dispatch) => ({
     mapPressed: (state) => {
         dispatch(hideDescription());
         dispatch(setMapMode(state));
+        dispatch(setSearchFocus(false));
+    },
+    setZoomLevel: (delta) => {
+        dispatch(setZoomLevel(delta));
     },
 });
 

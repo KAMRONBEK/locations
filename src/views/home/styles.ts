@@ -3,25 +3,47 @@ import {colors, BORDER_RADIUS} from '../../constants';
 
 export const styles = StyleSheet.create({
     container: {
-        paddingTop: 30,
         backgroundColor: colors.white,
         flex: 1,
+        borderWidth: 1,
+        resizeMode: 'contain',
+    },
+    imageBanner: {
+        position: 'absolute',
+        borderWidth: 10,
+        top: 0,
     },
     top: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 20,
+        padding: 10,
+        paddingTop: 40,
+        paddingBottom: 0,
+        backgroundColor: 'white',
+    },
+    logoWrapper: {
+        borderRadius: 150,
+        elevation: 5,
+        shadowColor: colors.black,
+        shadowRadius: 5,
+        shadowOpacity: 0.3,
+        overflow: 'hidden',
+        height: 80,
+        width: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 10,
     },
     logo: {
-        height: 150,
-        width: 150,
-        borderRadius: 150,
+        height: 100,
+        width: 100,
+        resizeMode: 'contain',
     },
     titleWrapper: {
         paddingHorizontal: 0,
     },
     descWrapper: {
-        paddingBottom: 20,
+        padding: 10,
         paddingHorizontal: 20,
     },
 
@@ -39,9 +61,11 @@ export const styles = StyleSheet.create({
         fontSize: 25,
         color: colors.green,
     },
-    decText: {
+    link: {
         fontSize: 14,
-        color: colors.black,
+        color: colors.blue,
+        textDecorationLine: 'underline',
+        opacity: 0.7,
     },
     text: {
         paddingTop: 10,
@@ -62,28 +86,36 @@ export const styles = StyleSheet.create({
         paddingVertical: 10,
         justifyContent: 'space-around',
     },
-    bottom: {
-        flex: 1,
+    selectWrapper: {
+        position: 'absolute',
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
         padding: 20,
+        right: 0,
+        top: 5,
     },
-
     round: {
-        width: 90,
-        height: 40,
-        backgroundColor: colors.lightGreen,
-        borderRadius: 40,
+        width: 70,
+        height: 30,
+        backgroundColor: colors.ultraLightBlue,
+        borderRadius: BORDER_RADIUS,
         justifyContent: 'space-evenly',
         alignItems: 'center',
         flexDirection: 'row',
     },
     roundText: {
         textTransform: 'uppercase',
-        fontSize: 20,
+        fontSize: 16,
     },
     languageImg: {
-        width: 25,
-        height: 25,
+        width: 20,
+        height: 20,
+    },
+    socialWrapper: {
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingVertical: 10,
+        paddingHorizontal: 40,
     },
 });

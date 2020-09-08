@@ -11,7 +11,6 @@ import {
 
 export const styles = StyleSheet.create({
     container: {
-        // borderWidth: 1,
         flex: 1,
     },
     content: {
@@ -19,8 +18,8 @@ export const styles = StyleSheet.create({
         backgroundColor: colors.ultraLightBlue,
         borderTopLeftRadius: 14,
         overflow: 'hidden',
-        paddingTop: 10,
-        height: deviceHeight,
+        // paddingTop: 10,
+        height: deviceHeight + 10,
     },
     notch: {
         alignItems: 'center',
@@ -32,8 +31,9 @@ export const styles = StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
-        paddingVertical: 10,
+        paddingTop: 10,
         alignItems: 'center',
+        // paddingHorizontal: 20,
     },
     column: {
         paddingHorizontal: 10,
@@ -43,6 +43,7 @@ export const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600',
         color: colors.darkBlack,
+        maxWidth: '80%',
     },
     text: {
         fontWeight: '300',
@@ -64,5 +65,67 @@ export const styles = StyleSheet.create({
         borderRadius: BORDER_RADIUS,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    typeWrapper: {
+        borderRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 5,
+    },
+    type: {
+        fontSize: 12,
+        textTransform: 'capitalize',
+    },
+    bankingWrapper: {
+        backgroundColor: colors.white,
+        marginHorizontal: 10,
+        borderRadius: BORDER_RADIUS,
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 10,
+    },
+    bankingImage: {
+        width: 50,
+        height: 30,
+        resizeMode: 'contain',
+    },
+    bankingText: {
+        fontSize: 20,
+        fontStyle: 'italic',
+        color: colors.green,
+        paddingLeft: 20,
+    },
+    bankingTag: {
+        position: 'absolute',
+        top: 5,
+        right: 5,
+        borderRadius: 2 * BORDER_RADIUS,
+        backgroundColor: colors.redTrans,
+        paddingHorizontal: 5,
+    },
+    bankingTagText: {
+        color: colors.orange,
+        fontSize: 12,
+    },
+    buttonWrapper: {
+        paddingVertical: 10,
+        paddingTop: 20,
+    },
+    servicesWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        paddingVertical: 10,
+    },
+    infoWrapper: {
+        paddingHorizontal: 20,
+        paddingBottom: 10,
+    },
+    infoTextWrapper: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+    },
+    infoText: {
+        fontSize: 12,
+        color: colors.darkGray,
     },
 });

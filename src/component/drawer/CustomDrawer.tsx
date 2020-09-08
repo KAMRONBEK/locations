@@ -9,7 +9,6 @@ import {
     Keyboard,
     TouchableWithoutFeedback,
     TouchableOpacity,
-    Text,
     NativeModules,
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -33,6 +32,7 @@ import Buble from './Buble';
 import appState from '../../redux/reducers/appState';
 import DrawerItem from './DrawerItem';
 import {navigate} from '../../services/navigationServices';
+import Text from '../../component/common/Text';
 
 type DrawerProps = {
     children: any;
@@ -216,7 +216,7 @@ const CustomDrawer = ({
 
 const styles = StyleSheet.create({
     plane: {
-        backgroundColor: colors.lightGreen,
+        backgroundColor: colors.ultraLightBlue,
         flex: 1,
     },
     row: {

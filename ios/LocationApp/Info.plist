@@ -64,6 +64,34 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>HelveticaNowText-Black.otf</string>
+		<string>HelveticaNowText-BlackItalic.otf</string>
+		<string>HelveticaNowText-Bold.otf</string>
+		<string>HelveticaNowText-BoldItalic.otf</string>
+		<string>HelveticaNowText-ExtBdIta.otf</string>
+		<string>HelveticaNowText-ExtLtIta.otf</string>
+		<string>HelveticaNowText-ExtraBold.otf</string>
+		<string>HelveticaNowText-ExtraLight.otf</string>
+		<string>HelveticaNowText-Light.otf</string>
+		<string>HelveticaNowText-LightItalic.otf</string>
+		<string>HelveticaNowText-Medium.otf</string>
+		<string>HelveticaNowText-MediumItalic.otf</string>
+		<string>HelveticaNowText-RegIta.otf</string>
+		<string>HelveticaNowText-Regular.otf</string>
+		<string>HelveticaNowText-Thin.otf</string>
+		<string>HelveticaNowText-ThinItalic.otf</string>
+		<string>Roboto-Black.ttf</string>
+		<string>Roboto-BlackItalic.ttf</string>
+		<string>Roboto-Bold.ttf</string>
+		<string>Roboto-BoldItalic.ttf</string>
+		<string>Roboto-Italic.ttf</string>
+		<string>Roboto-Light.ttf</string>
+		<string>Roboto-LightItalic.ttf</string>
+		<string>Roboto-Medium.ttf</string>
+		<string>Roboto-MediumItalic.ttf</string>
+		<string>Roboto-Regular.ttf</string>
+		<string>Roboto-Thin.ttf</string>
+		<string>Roboto-ThinItalic.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

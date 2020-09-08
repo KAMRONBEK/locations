@@ -36,14 +36,18 @@ class Service {
                     latitude: parseFloat(branch.location.split(',')[0]),
                     type: 'branch',
                     tag: `branch ${
-                        'branch' +
+                        'branches' +
                         branch.name +
                         ' ' +
                         branch.address +
                         ' ' +
                         branch.bank +
                         ' ' +
-                        strings.branches
+                        'Отделений' +
+                        ' ' +
+                        'filial' +
+                        ' ' +
+                        'filiallar'
                     } `,
                     distance:
                         getPreciseDistance(myLocation, {
@@ -67,7 +71,15 @@ class Service {
                         ' ' +
                         minibank.type +
                         ' ' +
-                        strings.minibanks
+                        'Минибанк' +
+                        ' ' +
+                        'Минибанки' +
+                        ' ' +
+                        'bank' +
+                        ' ' +
+                        'minibanklar' +
+                        ' ' +
+                        'minibanks'
                     } `,
                     distance:
                         getPreciseDistance(myLocation, {
@@ -93,7 +105,9 @@ class Service {
                         ' ' +
                         atm.type +
                         ' ' +
-                        strings.atm
+                        'Банкомат' +
+                        ' ' +
+                        'shahobcha'
                     } `,
                     distance:
                         getPreciseDistance(myLocation, {
@@ -104,8 +118,14 @@ class Service {
             });
 
             let sorted = sortArrayAsc([...branches, ...minibanks, ...atms]); //sorted by distance
+
+            let identified = sorted.map((item, index) => {
+                let newItem = {...item, id: index};
+                return newItem;
+            });
+
             setTimeout(() => {
-                resolve(sorted);
+                resolve(identified);
             }, 0);
         });
     }
@@ -114,6 +134,7 @@ class Service {
         return new Promise((resolve, reject) => {
             let resultList: branchType[] = [];
             let key = searchKey.toLowerCase().replace(/ /gi, '|');
+
             console.log('^(' + key + ')');
 
             // let searchRegex=
@@ -123,9 +144,9 @@ class Service {
                     marker.tag
                         .toLowerCase()
                         .match(new RegExp('^.*(' + key + ').*$', 'g'))
-                )
+                ) {
                     resultList.push(marker);
-                console.log(marker.tag);
+                }
             });
             if (resultList.length > 0) {
                 setTimeout(() => {

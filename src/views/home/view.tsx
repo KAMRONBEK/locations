@@ -1,14 +1,26 @@
 import React, {useEffect} from 'react';
-import {Text, View, Image, TouchableOpacity} from 'react-native';
+import {View, Image, TouchableOpacity, Linking, ScrollView} from 'react-native';
 import {styles} from './styles';
 import images from '../../assets/images';
 import {strings} from '../../locales/strings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {colors, UZ, RU, ENG, SCREENS} from '../../constants';
+import {
+    colors,
+    UZ,
+    RU,
+    ENG,
+    SCREENS,
+    deviceHeight,
+    deviceWidth,
+} from '../../constants';
 import {connect} from 'react-redux';
 import {setLanguage, hideList} from '../../redux/actions';
 import RNPickerSelect from 'react-native-picker-select';
 import {navigate} from '../../services/navigationServices';
+import Seperator from '../../component/common/Seperator';
+import Social from '../../component/common/Social';
+import source from '../../assets/branches';
+import Text from '../../component/common/Text';
 
 let languages = [
     {
@@ -61,20 +73,75 @@ let Home = ({navigation, language, setLanguage, hideList}) => {
     return (
         <View style={styles.container}>
             <View style={styles.top}>
-                <Image source={images.logo} style={styles.logo} />
+                <View style={styles.logoWrapper}>
+                    <Image source={images.logo} style={styles.logo} />
+                </View>
                 <View style={styles.titleWrapper}>
                     <Text style={styles.name}>Ipak Yoli Locator</Text>
-                    <Text style={styles.decText}>ipakyulibank.uz</Text>
+                    <Text style={styles.link}>ipakyulibank.uz</Text>
                 </View>
             </View>
-
-            <View style={styles.content}>
-                <View style={styles.descWrapper}>
-                    <Text style={styles.title}>
-                        Ipak Yoli Locator -{' '}
-                        <Text style={styles.descText}>{strings.appDesc}</Text>
+            <View
+                style={{
+                    flexDirection: 'row',
+                    paddingHorizontal: 20,
+                    paddingTop: 5,
+                }}>
+                <Ionicons name="location" size={14} color={colors.green} />
+                <Text
+                    style={{
+                        fontSize: 12,
+                        paddingLeft: 5,
+                        maxWidth: '90%',
+                    }}>
+                    Bank bosh ofisi manzili: O’zbekiston, Toshkent sh. 100017,
+                    A.Qodiriy ko’chasi 2 uy
+                </Text>
+            </View>
+            <TouchableOpacity
+                onPress={() => {
+                    Linking.openURL(`tel:78 140 78 33`);
+                }}>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        paddingHorizontal: 20,
+                        paddingTop: 5,
+                    }}>
+                    <Ionicons name="call" size={14} color={colors.green} />
+                    <Text
+                        style={{
+                            fontSize: 12,
+                            paddingLeft: 5,
+                        }}>
+                        78 140 78 33
                     </Text>
                 </View>
+            </TouchableOpacity>
+            <View style={styles.socialWrapper}>
+                <Social
+                    image={images.instagram}
+                    url="https://www.instagram.com/ipakyulibank/"
+                />
+                <Social
+                    image={images.facebook}
+                    url="https://www.facebook.com/ipakyulibankuz/"
+                />
+                <Social
+                    image={images.telegram}
+                    url="https://t.me/ipakyulibankuz"
+                />
+            </View>
+
+            <Seperator width="90%" />
+            <ScrollView style={styles.content}>
+                <View style={styles.descWrapper}>
+                    {/* <Text style={styles.title}> */}
+                    {/* Ipak Yoli Locator -{' '} */}
+                    <Text style={styles.descText}>{strings.appDesc}</Text>
+                    {/* </Text> */}
+                </View>
+                <Seperator width="90%" />
                 <View style={styles.boxWrapper}>
                     <View style={styles.row}>
                         <TouchableOpacity onPress={onMapPress}>
@@ -130,8 +197,8 @@ let Home = ({navigation, language, setLanguage, hideList}) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View>
-            <View style={styles.bottom}>
+            </ScrollView>
+            <View style={styles.selectWrapper}>
                 <RNPickerSelect
                     placeholder={{}}
                     onValueChange={(value) => {
@@ -140,7 +207,6 @@ let Home = ({navigation, language, setLanguage, hideList}) => {
                     }}
                     items={languages}>
                     <View style={styles.round}>
-                        <Text style={styles.roundText}>{language}</Text>
                         <Image
                             source={
                                 language == UZ
@@ -150,6 +216,12 @@ let Home = ({navigation, language, setLanguage, hideList}) => {
                                     : images.eng
                             }
                             style={styles.languageImg}
+                        />
+                        <Text style={styles.roundText}>{language}</Text>
+                        <Ionicons
+                            name="chevron-down-outline"
+                            color={colors.dimGray}
+                            size={15}
                         />
                     </View>
                 </RNPickerSelect>

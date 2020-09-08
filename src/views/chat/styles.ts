@@ -4,8 +4,23 @@ import {colors} from '../../constants';
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.darkBlack,
+        backgroundColor: colors.gray,
+    },
+    header: {
+        flexDirection: 'row',
         paddingTop: 40,
+        backgroundColor: colors.white,
+        paddingHorizontal: 20,
+        alignItems: 'center',
+        paddingBottom: 10,
+    },
+    backWrapper: {
+        borderRadius: 100,
+        height: 30,
+        width: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.textLightGray,
     },
     chatArea: {
         paddingHorizontal: 15,
@@ -16,8 +31,7 @@ export default StyleSheet.create({
     },
     title: {
         fontSize: 19,
-        color: colors.textLightGray,
-        paddingLeft: 20,
-        paddingBottom: 10,
+        color: colors.darkGray,
+        paddingLeft: 10,
     },
 });

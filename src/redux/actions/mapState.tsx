@@ -8,6 +8,7 @@ import {
     SET_ROUTE_DESTINATION,
     SET_MAP_MODE,
     MARKER_SELECTED,
+    SET_ZOOM_LEVEL,
 } from '../types';
 import {Platform} from 'react-native';
 
@@ -52,5 +53,10 @@ export const mapPressed = (payload) => ({
 
 export const setDestinationCoords = (payload) => ({
     type: SET_ROUTE_DESTINATION,
+    payload,
+});
+
+export const setZoomLevel = (payload) => ({
+    type: SET_ZOOM_LEVEL,
     payload,
 });

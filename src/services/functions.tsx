@@ -52,10 +52,29 @@ export const getCurrentPosition = () => {
 
 export const sortArrayAsc = (array) => {
     return array.sort((prev, curr) => {
+        // console.log(prev.id);
         return curr.distance < prev.distance
             ? 1
             : curr.distance > prev.distance
             ? -1
             : 0;
     });
+};
+
+export const findDuplicates = (arr) => {
+    let sorted_arr = arr.slice().sort(); // You can define the comparing function here.
+    // JS by default uses a crappy string compare.
+    // (we use slice to clone the array so the
+    // original array won't be modified)
+    console.log(sorted_arr);
+    console.log(arr.length);
+    console.log(sorted_arr.length);
+
+    let results = [];
+    for (let i = 0; i < sorted_arr.length - 1; i++) {
+        if (sorted_arr[i + 1].id == sorted_arr[i].id) {
+            results.push(sorted_arr[i]);
+        }
+    }
+    return results;
 };

@@ -6,6 +6,7 @@ import {
     Animated,
     TouchableOpacity,
     FlatList,
+    Modal,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {colors, deviceHeight, deviceWidth} from '../../constants';
@@ -14,6 +15,7 @@ import {hideList} from '../../redux/actions';
 import {ScrollView} from 'react-native-gesture-handler';
 import ListItem from '../../component/mapRelated/ListItem';
 import {strings} from '../../locales/strings';
+import images from '../../assets/images';
 
 const List = ({panelVisibility, hideList, displayData}) => {
     let [animatedRadius, setRadius] = useState(new Animated.Value(0));
@@ -100,7 +102,7 @@ const List = ({panelVisibility, hideList, displayData}) => {
             <FlatList
                 showsVerticalScrollIndicator={false}
                 data={displayData}
-                keyExtractor={(item, index) => (item + index).toString()}
+                keyExtractor={(item) => (item.id + item.location).toString()}
                 contentContainerStyle={styles.listWrapper}
                 renderItem={({item, index}) => (
                     <ListItem item={item} index={index} />

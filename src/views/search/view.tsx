@@ -157,7 +157,7 @@ const Search = ({
                         onPress={() => {
                             Keyboard.dismiss();
                             setSearchKeyword(strings.atm);
-                            search(keyword, originalData);
+                            search(strings.atm, originalData);
                             setSearchFocus(false);
                         }}
                     />
@@ -166,7 +166,7 @@ const Search = ({
                         onPress={() => {
                             Keyboard.dismiss();
                             setSearchKeyword(strings.branches);
-                            search(keyword, originalData);
+                            search(strings.branches, originalData);
                             setSearchFocus(false);
                         }}
                     />
@@ -175,7 +175,7 @@ const Search = ({
                         onPress={() => {
                             Keyboard.dismiss();
                             setSearchKeyword(strings.minibanks);
-                            search(keyword, originalData);
+                            search(strings.minibanks, originalData);
                             setSearchFocus(false);
                         }}
                     />

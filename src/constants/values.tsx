@@ -31,7 +31,7 @@ export const DESC_HEIGHT = Dimensions.get('window').height; //+13
 export const DESC_WIDTH = deviceWidth;
 
 //custom style
-export const BORDER_RADIUS = 12;
+export const BORDER_RADIUS = 5;
 
 // language enum
 export const UZ = 'uz';

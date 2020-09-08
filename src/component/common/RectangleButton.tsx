@@ -30,7 +30,7 @@ const RectangleButton = ({onPress, backColor, buttonTextColor, buttonText}) => {
 const styles = StyleSheet.create({
     plane: {
         borderRadius: BORDER_RADIUS,
-        marginBottom: 20,
+        // marginBottom: 20,
         overflow: 'hidden',
     },
     container: {

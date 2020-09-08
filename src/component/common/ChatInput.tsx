@@ -68,7 +68,7 @@ const ChatInput = ({setMessage, messages}: ChatInputProps) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.dimGray,
+        backgroundColor: colors.white,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-end',

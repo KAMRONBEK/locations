@@ -9,6 +9,7 @@ import {
     MAP_PRESSED,
     SET_ROUTE_DESTINATION,
     SET_MAP_MODE,
+    SET_ZOOM_LEVEL,
 } from '../types';
 import {
     LATITUDE,
@@ -46,6 +47,7 @@ const initialState = {
     pressedMarkerId: 0,
     mapMode: MAP_WITH_SEARCH, //FREE_MAP,MAP_WITH_SEARCH,MAP_WITH_LIST
     routeDestination: null,
+    zoomLevel: 1,
 };
 export default (state = initialState, {type, payload}: any) => {
     switch (type) {
@@ -86,6 +88,12 @@ export default (state = initialState, {type, payload}: any) => {
             return {
                 ...state,
                 routeDestination: payload,
+            };
+        }
+        case SET_ZOOM_LEVEL: {
+            return {
+                ...state,
+                zoomLevel: Math.round(Math.log(360 / payload) / Math.LN2),
             };
         }
         default:

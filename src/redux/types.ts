@@ -6,6 +6,7 @@ export const TOGGLE_MENU = 'TOGGLE_MENU';
 export const SET_LANGUAGE = 'SET_LANGUAGE';
 
 //map
+export const SET_ZOOM_LEVEL = 'SET_ZOON_LEVEL';
 export const SET_MY_REGION = 'SET_MY_REGION';
 export const SET_DEFAULT_REGION = 'SET_DEFAULT_REGION';
 export const SET_ORIGINAL_DATA = 'SET_ORIGINAL_DATA';

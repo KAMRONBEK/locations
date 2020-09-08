@@ -5579,6 +5579,11 @@ mkdirp@^0.5.1, mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.5"
 
+moment@^2.27.0:
+  version "2.27.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
+  integrity sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -6181,7 +6186,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.4"
 
-prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -6250,6 +6255,11 @@ react-devtools-core@^4.6.0:
     shell-quote "^1.6.1"
     ws "^7"
 
+react-fast-compare@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
+  integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
+
 react-is@^16.12.0, react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6, react-is@^16.9.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
@@ -6279,6 +6289,18 @@ react-native-highlight-words@^1.0.1:
   dependencies:
     highlight-words-core "^1.0.3"
     prop-types "^15.5.7"
+
+react-native-image-pan-zoom@^2.1.12:
+  version "2.1.12"
+  resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.1.12.tgz#eb98bf56fb5610379bdbfdb63219cc1baca98fd2"
+  integrity sha512-BF66XeP6dzuANsPmmFsJshM2Jyh/Mo1t8FsGc1L9Q9/sVP8MJULDabB1hms+eAoqgtyhMr5BuXV3E1hJ5U5H6Q==
+
+react-native-image-zoom-viewer@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-zoom-viewer/-/react-native-image-zoom-viewer-3.0.1.tgz#a2bd5fb3bda15e0686ce88fcde8576726495d7fb"
+  integrity sha512-la6s5DNSuq4GCRLsi5CZ29FPjgTpdCuGIRdO5T9rUrAtxrlpBPhhSnHrbmPVxsdtOUvxHacTh2Gfa9+RraMZQA==
+  dependencies:
+    react-native-image-pan-zoom "^2.1.12"
 
 react-native-indicators@^0.17.0:
   version "0.17.0"
@@ -6345,6 +6367,11 @@ react-native-screens@^2.9.0:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.9.0.tgz#ead2843107ba00fee259aa377582e457c74f1f3b"
   integrity sha512-5MaiUD6HA3nzY3JbVI8l3V7pKedtxQF3d8qktTVI0WmWXTI4QzqOU8r8fPVvfKo3MhOXwhWBjr+kQ7DZaIQQeg==
 
+react-native-send-intent@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-send-intent/-/react-native-send-intent-1.2.2.tgz#9ee3d375864e0fe5e10ad8f0cee9c054b0bee08e"
+  integrity sha512-vJUY89b4sgzazPqedKWG+wNEyqSjxJuwU9SP0tXIVvZdHHTt1AzH1GHJ1H3mtLDSdW7c4693L86i4GD10/pZqw==
+
 react-native-splash-screen@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
@@ -6368,6 +6395,11 @@ react-native-svg@^12.1.0:
     css-select "^2.1.0"
     css-tree "^1.0.0-alpha.39"
 
+react-native-tooltip@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-tooltip/-/react-native-tooltip-5.2.0.tgz#4358ea1e9bdcb49dad28bf5881440b0182927422"
+  integrity sha512-3mbPGd/VDfb3dUZmdmgg4eE8idJU4OyYM9ItGifnofz+Cz50Aua+sVGo2Ecc7zHV0S+kM0mOyLL758hhTz2gDw==
+
 react-native-vector-icons@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-7.0.0.tgz#5b92ed363c867645daad48c559e1f99efcfbb813"
@@ -6376,6 +6408,14 @@ react-native-vector-icons@^7.0.0:
     lodash "^4.17.15"
     prop-types "^15.7.2"
     yargs "^15.0.2"
+
+react-native-walkthrough-tooltip@^1.1.10:
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/react-native-walkthrough-tooltip/-/react-native-walkthrough-tooltip-1.1.10.tgz#cfc8865adcab0e0215dfc6bcee4f1958a3aa1ff6"
+  integrity sha512-LB7EUCqYabFR4W+b8ukIUq6hPbKwmjb8Pq2tqairFEECPpWsUkVBl1aF31sIAif54AxsfixUF3i910UNPqtPIA==
+  dependencies:
+    prop-types "^15.6.1"
+    react-fast-compare "^2.0.4"
 
 react-native@0.63.1:
   version "0.63.1"

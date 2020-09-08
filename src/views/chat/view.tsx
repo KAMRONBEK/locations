@@ -4,8 +4,12 @@ import styles from './styles';
 import ChatMessage from '../../component/common/ChatMessage';
 import ChatInput from '../../component/common/ChatInput';
 import {strings} from '../../locales/strings';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {navigate} from '../../services/navigationServices';
+import {SCREENS} from '../../constants';
 
-let Chat = () => {
+let Chat = ({navigation}) => {
     let [messagesList, setMessageList] = useState([
         {
             id: '1',
@@ -33,7 +37,17 @@ let Chat = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{strings.chat}</Text>
+            <View style={styles.header}>
+                <View style={styles.backWrapper}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.goBack();
+                        }}>
+                        <Ionicons name="arrow-back" size={15} />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.title}>{strings.chat}</Text>
+            </View>
             <FlatList
                 ref={flatList}
                 onContentSizeChange={() =>

@@ -8,34 +8,32 @@ export interface DefualtTextProps {
 //light-book-medium-demi-bold-extrabold
 
 const Text = ({style = {}, ...rest}: TextProps & DefualtTextProps) => {
-    let fontFamily = 'FuturaPT-Medium';
+    let fontFamily = 'Roboto-Regular';
     let {fontWeight = ''} = style;
 
     if (fontWeight.toString().toLowerCase() === 'bold')
-        fontFamily = 'FuturaPT-Bold';
+        fontFamily = 'Roboto-Black';
     if (fontWeight == '100' || fontWeight == '200') {
-        fontFamily = 'FuturaPT-Light';
+        fontFamily = 'Roboto-Light';
     } else if (fontWeight === '300') {
-        fontFamily = 'FuturaPT-Book';
+        fontFamily = 'Roboto-Medium';
     } else if (fontWeight == '500' || fontWeight == '600') {
-        fontFamily = 'FuturaPT-Demi';
+        fontFamily = 'Roboto-Bold';
     } else if (fontWeight == '700') {
-        fontFamily = 'FuturaPT-Bold';
+        fontFamily = 'Roboto-Black';
     } else if (fontWeight === '900' || fontWeight === '800') {
-        fontFamily = 'FuturaPT-ExtraBold';
+        fontFamily = 'Roboto-ExtraBold';
     }
 
-    let newStyle = () => {
-        Object.keys(style).map((styleKey, styleIndex) => {
-            if (style[styleKey] !== 'fontWeight') {
-                return style[styleKey];
-            }
-        });
-    };
+    // let newStyle = () => {
+    //     Object.keys(style).map((styleKey, styleIndex) => {
+    //         if (style[styleKey] !== 'fontWeight') {
+    //             return style[styleKey];
+    //         }
+    //     });
+    // };
 
-    return (
-        <DefualtText {...rest} style={[newStyle, {fontFamily}]}></DefualtText>
-    );
+    return <DefualtText {...rest} style={[{fontFamily}, style]}></DefualtText>;
 };
 
 export default Text;

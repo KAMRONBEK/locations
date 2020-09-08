@@ -28,7 +28,7 @@ const ChatMessage = ({item}: ChatMessageProps) => {
                               borderBottomRightRadius: 0,
                           }
                         : {
-                              backgroundColor: colors.dimGray,
+                              backgroundColor: colors.ultraLightBlue,
                               borderBottomLeftRadius: 0,
                           },
                 ]}>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     },
     date: {
         fontSize: 12,
-        color: colors.gray,
+        color: colors.darkBlack,
     },
 });
 

@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     },
     searchbar: {
         flexDirection: 'row',
-        backgroundColor: colors.ultraLightBlue,
+        backgroundColor: colors.white,
         borderWidth: 1,
         borderColor: colors.lightGreen,
         borderRadius: BORDER_RADIUS,
