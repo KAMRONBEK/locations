@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, memo} from 'react';
 import {
     View,
     TextInput,
@@ -25,8 +25,6 @@ import {
     DONE_SEARCHING,
     colors,
     SEARCHING,
-    MAP_WITH_SEARCH,
-    FREE_MAP,
     MAP_WITH_LIST,
 } from '../../constants';
 import {search} from '../../redux/thunks';
@@ -35,6 +33,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MaterialIndicator} from 'react-native-indicators';
 import images from '../../assets/images';
 import FilterItem from '../../component/common/FilterItem';
+
+interface SearchInterface {}
 
 const Search = ({
     setSearchStatus,
@@ -54,8 +54,6 @@ const Search = ({
     setSearchFocus,
     focus,
 }) => {
-    // useEffect(() => {}, [language]);
-
     let _searchInput = useRef<TextInput>(null);
 
     useEffect(() => {
@@ -224,4 +222,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {
     forwardRef: true,
-})(Search);
+})(memo(Search));

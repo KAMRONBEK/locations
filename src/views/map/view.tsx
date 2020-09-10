@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useRef, memo} from 'react';
 import {
     View,
     Text,
@@ -8,22 +8,14 @@ import {
 } from 'react-native';
 import styles from './styles';
 import MapView from 'react-native-map-clustering';
-import mapType, {
-    PROVIDER_GOOGLE,
-    Marker,
-    Polyline,
-    Callout,
-} from 'react-native-maps';
+import mapType, {PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps';
 import {connect} from 'react-redux';
 import {
     colors,
     LATITUDE_DELTA,
     LONGITUDE_DELTA,
-    FREE_MAP,
-    MAP_WITH_LIST,
     MAP_WITH_SEARCH,
     DIRECTION_API_KEY,
-    MAP_WITH_DESC,
 } from '../../constants';
 import mapConfig from '../../configs/mapConfig';
 import images from '../../assets/images';
@@ -33,8 +25,6 @@ import {
     hideDescription,
     showMapLoading,
     hideMapLoading,
-    setDestinationCoords,
-    showDescription,
     setZoomLevel,
     setSearchFocus,
 } from '../../redux/actions';
@@ -63,8 +53,7 @@ const Map = ({
     zoomLevel,
     setZoomLevel,
 }: any) => {
-    let branchMarkers = () => {
-        //  useCallback(
+    let branchMarkers = useCallback(() => {
         return (
             displayDataList &&
             displayDataList.map((region, index) => (
@@ -140,8 +129,7 @@ const Map = ({
                 </Marker>
             ))
         );
-    };
-    // }, [displayDataList, zoomLevel]);
+    }, [displayDataList]);
 
     const _map = useRef<mapType>(null);
 
@@ -187,8 +175,8 @@ const Map = ({
             _map.current.fitToCoordinates(displayDataList, {
                 edgePadding: {
                     top: 20,
-                    left: 20,
-                    right: 20,
+                    left: 40,
+                    right: 40,
                     bottom: 20,
                 },
                 animated: true,
@@ -268,4 +256,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {
     forwardRef: true,
-})(Map);
+})(memo(Map));
