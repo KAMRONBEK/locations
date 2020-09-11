@@ -8,21 +8,21 @@ export interface DefualtTextProps {
 //light-book-medium-demi-bold-extrabold
 
 const Text = ({style = {}, ...rest}: TextProps & DefualtTextProps) => {
-    let fontFamily = 'RobotoRegular';
+    let fontFamily = 'Roboto-Regular';
     let {fontWeight = ''} = style;
 
     if (fontWeight.toString().toLowerCase() === 'bold')
-        fontFamily = 'RobotoBlack';
+        fontFamily = 'Roboto-Black';
     if (fontWeight == '100' || fontWeight == '200') {
-        fontFamily = 'RobotoLight';
+        fontFamily = 'Roboto-Light';
     } else if (fontWeight === '300') {
-        fontFamily = 'RobotoMedium';
+        fontFamily = 'Roboto-Medium';
     } else if (fontWeight == '500' || fontWeight == '600') {
-        fontFamily = 'RobotoBold';
+        fontFamily = 'Roboto-Bold';
     } else if (fontWeight == '700') {
-        fontFamily = 'RobotoBlack';
+        fontFamily = 'Roboto-Black';
     } else if (fontWeight === '900' || fontWeight === '800') {
-        fontFamily = 'RobotoExtraBold';
+        fontFamily = 'Roboto-ExtraBold';
     }
 
     // let newStyle = () => {
