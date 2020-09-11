@@ -6,6 +6,19 @@ import searchState from './reducers/searchState';
 import listState from './reducers/listState';
 import scrollViewState from './reducers/scrollViewState';
 import descState from './reducers/descState';
+import createFlipperDebugger from 'redux-flipper';
+
+let middlewaresToApply = [];
+
+if (__DEV__) {
+    console.log('dev');
+
+    // const createFlipperDebugger = require('redux-flipper').default;
+    middlewaresToApply.push(createFlipperDebugger());
+    middlewaresToApply.push(thunk);
+}
+
+let middleware = applyMiddleware(...middlewaresToApply);
 
 let configureStore = () => {
     return createStore(
@@ -17,7 +30,7 @@ let configureStore = () => {
             scrollViewState,
             descState,
         }),
-        applyMiddleware(thunk),
+        middleware,
     );
 };
 
