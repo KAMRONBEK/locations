@@ -58,10 +58,26 @@ export const init = () => async (dispatch) => {
             } catch (e) {
                 // not permitted
             }
+        } else {
+            myPosition = await getCurrentPosition();
+            myLocation = myPosition.coords;
+            dispatch(
+                setMyRegion({
+                    ...myLocation,
+                    latitudeDelta: LATITUDE_DELTA,
+                    longitudeDelta: LONGITUDE_DELTA,
+                }),
+            );
+            let result = await Service.get(myLocation);
+            dispatch(setOriginalData(result));
+            dispatch(setDisplayData(result));
         }
         // let myPosition = await getCurrentPosition();
     } catch (error) {
         console.log(error, 'in LoadOriginalData');
+        let result = await Service.get(null);
+        dispatch(setOriginalData(result));
+        dispatch(setDisplayData(result));
     } finally {
         dispatch(hideMapLoading());
     }

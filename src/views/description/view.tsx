@@ -101,6 +101,10 @@ const Description = ({
         setDestinationCoords(currentRegion);
     };
 
+    useEffect(() => {
+        console.log(currentRegion);
+    }, [currentRegion]);
+
     const onSharePress = () => {
         console.log('share');
         if (_cardPanel.current) {
@@ -152,7 +156,10 @@ const Description = ({
     };
 
     //render
-    if (!descVisibility) return null;
+    if (!descVisibility) {
+        console.log('desc is not visible');
+        return null;
+    }
 
     return (
         <View style={styles.container}>
@@ -356,7 +363,7 @@ const Description = ({
                                             size={15}
                                             color={colors.green}
                                         />{' '}
-                                        {currentRegion.distance} {strings.km}
+                                        {currentRegion?.distance} {strings.km}
                                     </Text>
                                 </View>
                             </View>
@@ -432,7 +439,7 @@ const Description = ({
                                 <ActionButton
                                     text={strings.callOperator}
                                     image={images.call}
-                                    descText={currentRegion.phone[0]}
+                                    descText={currentRegion?.phone[0]}
                                     onPress={callPress}
                                     alignment
                                     accentColor={colors.lightGreen}

@@ -133,10 +133,6 @@ const Map = ({
 
     const _map = useRef<mapType>(null);
 
-    useEffect(() => {
-        console.log(mapMode, 'mapState');
-    }, [mapMode]);
-
     const onMapPress = () => {
         console.log(mapMode, 'mapState');
         Keyboard.dismiss();
@@ -157,6 +153,8 @@ const Map = ({
     };
 
     useEffect(() => {
+        console.log('marker pressed');
+
         if (focusRegion !== null && _map.current) {
             _map.current.animateToRegion(
                 {

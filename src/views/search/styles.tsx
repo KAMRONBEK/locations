@@ -4,6 +4,11 @@ import {colors, deviceHeight, BORDER_RADIUS} from '../../constants';
 export const styles = StyleSheet.create({
     plane: {
         padding: 20,
+        position: 'absolute',
+        top: 20,
+        right: 0,
+        left: 0,
+        zIndex: 2,
     },
     menu: {
         width: 20,

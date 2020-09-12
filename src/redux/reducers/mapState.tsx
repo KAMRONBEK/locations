@@ -69,6 +69,7 @@ export default (state = initialState, {type, payload}: any) => {
         case MAP_REGION_SELECTED: {
             return {...state, focusRegion: payload};
         }
+
         case MAP_DRAG_STARTED: {
             return {...state, focusRegion: null};
         }
@@ -81,6 +82,7 @@ export default (state = initialState, {type, payload}: any) => {
                 pressedMarkerId: markerID,
             };
         }
+
         case SET_MAP_MODE: {
             return {...state, mapMode: payload};
         }

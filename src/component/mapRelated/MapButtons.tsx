@@ -53,6 +53,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         padding: 20,
+        position: 'absolute',
+        bottom: 0,
+        zIndex: 2,
+        right: 0,
+        left: 0,
     },
     markerWrapper: {
         // position: 'absolute',
@@ -79,7 +84,10 @@ const mapStateToProps = ({mapState}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     regionSelected: (location) => dispatch(regionSelected(location)),
-    showList: () => dispatch(showList()),
+    showList: () => {
+        console.log('list');
+        dispatch(showList());
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapButtons);

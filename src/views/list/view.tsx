@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
         top: 0,
         height: deviceHeight,
         paddingTop: 30,
+        zIndex: 2,
     },
     top: {
         flexDirection: 'row',

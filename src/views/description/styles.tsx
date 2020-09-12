@@ -12,6 +12,11 @@ import {
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
+        zIndex: 3,
+        bottom: 2,
+        right: 0,
+        left: 0,
+        top: 0,
     },
     content: {
         borderTopRightRadius: 14,

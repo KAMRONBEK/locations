@@ -69,13 +69,9 @@ const MapController = ({
     return (
         <View style={styles.container}>
             <Map />
-            <View style={styles.content}>
-                <Search />
-                <View>
-                    <MapButtons />
-                    <Description />
-                </View>
-            </View>
+            <Search />
+            <MapButtons />
+            <Description />
             <List />
         </View>
     );

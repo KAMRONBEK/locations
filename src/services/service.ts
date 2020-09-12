@@ -30,6 +30,7 @@ class Service {
             console.log(source.data.minibanks.length, 'ta minibank');
 
             let branches = source.data.branches.map((branch, index) => {
+                console.log(myLocation, 'location');
                 return {
                     ...branch,
                     longitude: parseFloat(branch.location.split(',')[1]),
@@ -49,13 +50,6 @@ class Service {
                         ' ' +
                         'filiallar'
                     } `,
-                    distance:
-                        getPreciseDistance(myLocation, {
-                            latitude: parseFloat(branch.location.split(',')[0]),
-                            longitude: parseFloat(
-                                branch.location.split(',')[1],
-                            ),
-                        }) / 1000,
                 };
             });
 
@@ -81,15 +75,6 @@ class Service {
                         ' ' +
                         'minibanks'
                     } `,
-                    distance:
-                        getPreciseDistance(myLocation, {
-                            latitude: parseFloat(
-                                minibank.location.split(',')[0],
-                            ),
-                            longitude: parseFloat(
-                                minibank.location.split(',')[1],
-                            ),
-                        }) / 1000,
                 };
             });
 
@@ -109,18 +94,22 @@ class Service {
                         ' ' +
                         'shahobcha'
                     } `,
-                    distance:
-                        getPreciseDistance(myLocation, {
-                            latitude: parseFloat(atm.location.split(',')[0]),
-                            longitude: parseFloat(atm.location.split(',')[1]),
-                        }) / 1000,
                 };
             });
 
             let sorted = sortArrayAsc([...branches, ...minibanks, ...atms]); //sorted by distance
 
             let identified = sorted.map((item, index) => {
-                let newItem = {...item, id: index};
+                let distance =
+                    myLocation == null
+                        ? 0
+                        : getPreciseDistance(myLocation, {
+                              latitude: parseFloat(item.location.split(',')[0]),
+                              longitude: parseFloat(
+                                  item.location.split(',')[1],
+                              ),
+                          }) / 1000;
+                let newItem = {...item, id: index, distance: distance};
                 return newItem;
             });
 

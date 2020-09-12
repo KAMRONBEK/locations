@@ -10,7 +10,6 @@ import {
     MARKER_SELECTED,
     SET_ZOOM_LEVEL,
 } from '../types';
-import {Platform} from 'react-native';
 
 export const setMyRegion = (payload: any) => ({
     type: SET_MY_REGION,

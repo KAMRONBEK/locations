@@ -1,12 +1,23 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {colors, BORDER_RADIUS} from '../../constants';
 
 export const styles = StyleSheet.create({
     container: {
         backgroundColor: colors.white,
         flex: 1,
-        borderWidth: 1,
         resizeMode: 'contain',
+        ...Platform.select({
+            ios: {
+                paddingTop: 30,
+            },
+            android: {
+                paddingTop: 0,
+            },
+            default: {
+                // other platforms, web for example
+                paddingTop: 0,
+            },
+        }),
     },
     imageBanner: {
         position: 'absolute',
@@ -24,9 +35,13 @@ export const styles = StyleSheet.create({
     logoWrapper: {
         borderRadius: 150,
         elevation: 5,
-        shadowColor: colors.black,
+        shadowColor: colors.green,
+        shadowOffset: {
+            width: 2,
+            height: 5,
+        },
+        shadowOpacity: 0.5,
         shadowRadius: 5,
-        shadowOpacity: 0.3,
         overflow: 'hidden',
         height: 80,
         width: 80,
@@ -92,7 +107,18 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-end',
         padding: 20,
         right: 0,
-        top: 5,
+        ...Platform.select({
+            ios: {
+                top: 40,
+            },
+            android: {
+                top: 5,
+            },
+            default: {
+                // other platforms, web for example
+                top: 5,
+            },
+        }),
     },
     round: {
         width: 70,

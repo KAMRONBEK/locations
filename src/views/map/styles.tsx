@@ -4,12 +4,12 @@ import {colors, BORDER_RADIUS} from '../../constants';
 export default StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        position: 'absolute',
-        zIndex: -1,
+        // left: 0,
+        // right: 0,
+        // top: 0,
+        // bottom: 0,
+        // position: 'absolute',
+        zIndex: 1,
     },
     map: {
         ...StyleSheet.absoluteFillObject,
