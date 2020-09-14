@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     banner: {
         height: DESC_HEIGHT / 3,
         width: DESC_WIDTH,
-        resizeMode: 'cover',
+        // resizeMode: 'cover',
     },
     row: {
         flexDirection: 'row',
@@ -59,7 +59,7 @@ export const styles = StyleSheet.create({
     bannerImage: {
         width: CARD_WIDTH + 20,
         height: 100,
-        resizeMode: 'cover',
+        // resizeMode: 'cover',
         borderRadius: BORDER_RADIUS,
         marginRight: 20,
     },
@@ -92,7 +92,7 @@ export const styles = StyleSheet.create({
     bankingImage: {
         width: 50,
         height: 30,
-        resizeMode: 'contain',
+        // resizeMode: 'contain',
     },
     bankingText: {
         fontSize: 20,

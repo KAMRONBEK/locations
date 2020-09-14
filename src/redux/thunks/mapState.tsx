@@ -138,5 +138,6 @@ export const markerPressed = (mapEvent) => (dispatch, getState) => {
     dispatch(showDescription(region[0]));
     dispatch(setMapMode(MAP_WITH_DESC));
     dispatch(setDestinationCoords(null));
+
     dispatch(markerSelected(mapEvent));
 };
