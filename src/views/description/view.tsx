@@ -168,271 +168,284 @@ const Description = ({
 
     return (
         <Swiper animatedValue={animatedValue}>
-            <Animated.View
-                style={[
-                    styles.content,
-                    {
-                        backgroundColor: backgroundColor,
-                        borderTopRightRadius: borderRadius,
-                        borderTopLeftRadius: borderRadius,
-                        paddingTop: paddingTop,
-                    },
-                ]}>
+            <View
+                style={{
+                    zIndex: 3,
+                }}>
                 <Animated.View
                     style={[
-                        styles.notch,
+                        styles.content,
                         {
-                            opacity: notchVisibility,
-                        },
-                    ]}>
-                    <View
-                        style={{
-                            borderWidth: 2,
-                            width: 40,
-                            borderColor: colors.gray,
-                            borderRadius: BORDER_RADIUS,
-                        }}
-                    />
-                </Animated.View>
-                <Animated.View
-                    style={[
-                        styles.row,
-                        {
+                            backgroundColor: backgroundColor,
+                            borderTopRightRadius: borderRadius,
+                            borderTopLeftRadius: borderRadius,
                             paddingTop: paddingTop,
                         },
                     ]}>
-                    <Animated.ScrollView
-                        horizontal
-                        pagingEnabled
-                        showsVerticalScrollIndicator={false}
-                        scrollEventThrottle={1}
-                        showsHorizontalScrollIndicator={false}
-                        snapToInterval={CARD_WIDTH + 40}
-                        snapToAlignment="end"
+                    <Animated.View
                         style={[
-                            styles.scrollView,
+                            styles.notch,
                             {
-                                // paddingTop: paddingTop,
+                                opacity: notchVisibility,
                             },
-                        ]}
-                        contentInset={{
-                            top: 0,
-                            left: 20,
-                            bottom: 0,
-                            right: 20,
-                        }}
-                        contentContainerStyle={{
-                            paddingHorizontal:
-                                Platform.OS === 'android' ? 20 : 0,
-                        }}>
-                        {imgs.map((image, index) => {
-                            return (
-                                <Animated.Image
-                                    key={index}
-                                    style={[
-                                        styles.bannerImage,
-                                        {
-                                            height: imageHeight,
-                                            marginRight: imagePadding,
-                                            // borderRadius: borderRadius,
-                                            width: imageWidth,
-                                        },
-                                    ]}
-                                    source={image}
-                                />
-                            );
-                        })}
-                    </Animated.ScrollView>
-                    <TouchableOpacity
-                        style={{
-                            position: 'absolute',
-                            top: 10,
-                            right: 0,
-                            zIndex: 4,
-                        }}
-                        onPress={() => {
-                            setTimeout(() => {
-                                animatedValue.setValue(0);
-                            }, 500);
-                        }}>
-                        <Animated.View
+                        ]}>
+                        <View
                             style={{
-                                padding: 10,
-                                opacity: closeVisibility,
+                                borderWidth: 2,
+                                width: 40,
+                                borderColor: colors.gray,
+                                borderRadius: BORDER_RADIUS,
+                            }}
+                        />
+                    </Animated.View>
+                    <Animated.View
+                        style={[
+                            styles.row,
+                            {
+                                paddingTop: paddingTop,
+                            },
+                        ]}>
+                        <Animated.ScrollView
+                            horizontal
+                            pagingEnabled
+                            showsVerticalScrollIndicator={false}
+                            scrollEventThrottle={1}
+                            showsHorizontalScrollIndicator={false}
+                            snapToInterval={CARD_WIDTH + 40}
+                            snapToAlignment="end"
+                            style={[styles.scrollView]}
+                            contentInset={{
+                                top: 0,
+                                left: 20,
+                                bottom: 0,
+                                right: 20,
+                            }}
+                            contentContainerStyle={{
+                                paddingHorizontal:
+                                    Platform.OS === 'android' ? 20 : 0,
                             }}>
-                            <Ionicons
-                                name="close"
-                                size={30}
-                                color={colors.pink}
-                            />
-                        </Animated.View>
-                    </TouchableOpacity>
-                </Animated.View>
-
-                <View
-                    style={{
-                        flex: 1,
-                    }}>
-                    <ScrollView {...scollerPanResponder.panHandlers}>
-                        <View style={styles.column}>
-                            <View
-                                style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'flex-start',
-                                }}>
-                                <View
-                                    style={[
-                                        styles.typeWrapper,
-                                        {
-                                            backgroundColor:
-                                                currentRegion?.type == 'atm'
-                                                    ? colors.pinkTrans
-                                                    : currentRegion?.type ==
-                                                      'branch'
-                                                    ? colors.redTrans
-                                                    : colors.violateTrans,
-                                        },
-                                    ]}>
-                                    <Text
+                            {imgs.map((image, index) => {
+                                return (
+                                    <Animated.Image
+                                        key={index}
                                         style={[
-                                            styles.type,
+                                            styles.bannerImage,
                                             {
-                                                color:
+                                                height: imageHeight,
+                                                marginRight: imagePadding,
+                                                borderRadius: borderRadius,
+                                                width: imageWidth,
+                                            },
+                                        ]}
+                                        source={image}
+                                    />
+                                );
+                            })}
+                        </Animated.ScrollView>
+                        <TouchableOpacity
+                            style={{
+                                position: 'absolute',
+                                top: 10,
+                                right: 0,
+                                zIndex: 4,
+                            }}
+                            onPress={() => {
+                                // animatedValue.setValue(deviceHeight);
+                                Animated.timing(animatedValue, {
+                                    toValue: deviceHeightW,
+                                    duration: 500,
+                                    useNativeDriver: false,
+                                }).start();
+                            }}>
+                            <Animated.View
+                                style={{
+                                    padding: 10,
+                                    opacity: closeVisibility,
+                                }}>
+                                <Ionicons
+                                    name="close"
+                                    size={30}
+                                    color={colors.pink}
+                                />
+                            </Animated.View>
+                        </TouchableOpacity>
+                    </Animated.View>
+
+                    <View
+                        style={{
+                            flex: 1,
+                        }}>
+                        <ScrollView {...scollerPanResponder.panHandlers}>
+                            <View style={styles.column}>
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'flex-start',
+                                    }}>
+                                    <View
+                                        style={[
+                                            styles.typeWrapper,
+                                            {
+                                                backgroundColor:
                                                     currentRegion?.type == 'atm'
-                                                        ? colors.pink
+                                                        ? colors.pinkTrans
                                                         : currentRegion?.type ==
                                                           'branch'
-                                                        ? colors.red
-                                                        : colors.violate,
+                                                        ? colors.redTrans
+                                                        : colors.violateTrans,
                                             },
                                         ]}>
-                                        {currentRegion?.type == 'atm'
-                                            ? strings.atm
-                                            : currentRegion?.type == 'branch'
-                                            ? strings.branches
-                                            : strings.minibanks}
+                                        <Text
+                                            style={[
+                                                styles.type,
+                                                {
+                                                    color:
+                                                        currentRegion?.type ==
+                                                        'atm'
+                                                            ? colors.pink
+                                                            : currentRegion?.type ==
+                                                              'branch'
+                                                            ? colors.red
+                                                            : colors.violate,
+                                                },
+                                            ]}>
+                                            {currentRegion?.type == 'atm'
+                                                ? strings.atm
+                                                : currentRegion?.type ==
+                                                  'branch'
+                                                ? strings.branches
+                                                : strings.minibanks}
+                                        </Text>
+                                    </View>
+                                    <Text
+                                        numberOfLines={2}
+                                        style={styles.title}>
+                                        {' '}
+                                        {currentRegion?.name}
                                     </Text>
                                 </View>
-                                <Text numberOfLines={2} style={styles.title}>
-                                    {' '}
-                                    {currentRegion?.name}
-                                </Text>
                             </View>
-                        </View>
-                        <Seperator width={'95%'} />
-                        <View style={styles.infoWrapper}>
-                            <View style={[styles.row]}>
-                                <Ionicons
-                                    name="location"
-                                    size={15}
-                                    color={colors.green}
-                                />
-                                <Text style={styles.text}>
-                                    {currentRegion?.address.split(',')[2]}
-                                </Text>
-                            </View>
-                            <View style={styles.row}>
-                                <Ionicons
-                                    name="time"
-                                    size={15}
-                                    color={colors.green}
-                                />
-                                <Text style={styles.text}> 09:00 - 18:00</Text>
-                            </View>
-                            <View style={styles.row}>
-                                <Text style={styles.text}>
+                            <Seperator width={'95%'} />
+                            <View style={styles.infoWrapper}>
+                                <View style={[styles.row]}>
                                     <Ionicons
-                                        name="bus"
+                                        name="location"
                                         size={15}
                                         color={colors.green}
-                                    />{' '}
-                                    {currentRegion?.distance} {strings.km}
+                                    />
+                                    <Text style={styles.text}>
+                                        {currentRegion?.address.split(',')[2]}
+                                    </Text>
+                                </View>
+                                <View style={styles.row}>
+                                    <Ionicons
+                                        name="time"
+                                        size={15}
+                                        color={colors.green}
+                                    />
+                                    <Text style={styles.text}>
+                                        {' '}
+                                        09:00 - 18:00
+                                    </Text>
+                                </View>
+                                <View style={styles.row}>
+                                    <Text style={styles.text}>
+                                        <Ionicons
+                                            name="bus"
+                                            size={15}
+                                            color={colors.green}
+                                        />{' '}
+                                        {currentRegion?.distance} {strings.km}
+                                    </Text>
+                                </View>
+                            </View>
+                            <Seperator width={'95%'} />
+                            <View style={styles.infoTextWrapper}>
+                                <Text style={styles.infoText}>
+                                    The quality of informational text can be
+                                    judged in a variety of ways. For this award,
+                                    we will examine the texts with an eye on the
+                                    following categories. Accuracy of Content:
+                                    Is the content timely, accurate and direct?
+                                    Is this text likely to advance a young
+                                    child’s world knowledge? Authority of
+                                    Authorship: What are the qualifications of
+                                    the author on this topic? Were collaborators
+                                    consulted?
                                 </Text>
                             </View>
-                        </View>
-                        <Seperator width={'95%'} />
-                        <View style={styles.infoTextWrapper}>
-                            <Text style={styles.infoText}>
-                                The quality of informational text can be judged
-                                in a variety of ways. For this award, we will
-                                examine the texts with an eye on the following
-                                categories. Accuracy of Content: Is the content
-                                timely, accurate and direct? Is this text likely
-                                to advance a young child’s world knowledge?
-                                Authority of Authorship: What are the
-                                qualifications of the author on this topic? Were
-                                collaborators consulted?
-                            </Text>
-                        </View>
-                        <Seperator width={'95%'} />
-                        <View style={styles.servicesWrapper}>
-                            <ServiceItem
-                                text={strings.direction}
-                                icon="directions"
-                                onPress={onRoutePress}
-                            />
-                            <ServiceItem
-                                text={strings.showOnMap}
-                                icon="gps-fixed"
-                                onPress={() => {
-                                    setTimeout(() => {
-                                        animatedValue.setValue(deviceHeightW);
-                                    }, 100);
-                                    locationPress();
-                                }}
-                            />
-                            <ServiceItem
-                                text={strings.call}
-                                icon="call"
-                                onPress={callPress}
-                            />
-                            <ServiceItem
-                                text={strings.chat}
-                                icon="chat"
-                                onPress={onChatPress}
-                            />
-                        </View>
-                        <Seperator width="95%" />
-                        <View style={styles.buttonWrapper}>
-                            <ActionButton
-                                text={strings.mobileBanking}
-                                image={images.logo}
-                                descText={strings.orderCardForFree}
-                                onPress={onBankingPress}
-                                big
-                                accentColor={colors.lightGreen}
-                            />
-                            <ActionButton
-                                text={strings.orderUzcard}
-                                image={images.uzcard}
-                                descText={strings.orderCardForFree}
-                                onPress={onBankingPress}
-                            />
-                            <ActionButton
-                                text={strings.orderHumo}
-                                image={images.humo}
-                                // image={images.visa}
-                                descText={strings.orderCardForFree}
-                                onPress={onBankingPress}
-                            />
-                            <ActionButton
-                                text={strings.orderVisa}
-                                image={images.visa}
-                                descText={strings.orderCardForFree}
-                                onPress={onBankingPress}
-                            />
-                            <ActionButton
-                                text={strings.callOperator}
-                                image={images.call}
-                                descText={currentRegion?.phone[0]}
-                                onPress={callPress}
-                                alignment
-                                accentColor={colors.lightGreen}
-                            />
-                        </View>
-                    </ScrollView>
-                </View>
-            </Animated.View>
+                            <Seperator width={'95%'} />
+                            <View style={styles.servicesWrapper}>
+                                <ServiceItem
+                                    text={strings.direction}
+                                    icon="directions"
+                                    onPress={onRoutePress}
+                                />
+                                <ServiceItem
+                                    text={strings.showOnMap}
+                                    icon="gps-fixed"
+                                    onPress={() => {
+                                        setTimeout(() => {
+                                            animatedValue.setValue(
+                                                deviceHeightW,
+                                            );
+                                        }, 100);
+                                        locationPress();
+                                    }}
+                                />
+                                <ServiceItem
+                                    text={strings.call}
+                                    icon="call"
+                                    onPress={callPress}
+                                />
+                                <ServiceItem
+                                    text={strings.chat}
+                                    icon="chat"
+                                    onPress={onChatPress}
+                                />
+                            </View>
+                            <Seperator width="95%" />
+                            <View style={styles.buttonWrapper}>
+                                <ActionButton
+                                    text={strings.mobileBanking}
+                                    image={images.logo}
+                                    descText={strings.orderCardForFree}
+                                    onPress={onBankingPress}
+                                    big
+                                    accentColor={colors.lightGreen}
+                                />
+                                <ActionButton
+                                    text={strings.orderUzcard}
+                                    image={images.uzcard}
+                                    descText={strings.orderCardForFree}
+                                    onPress={onBankingPress}
+                                />
+                                <ActionButton
+                                    text={strings.orderHumo}
+                                    image={images.humo}
+                                    // image={images.visa}
+                                    descText={strings.orderCardForFree}
+                                    onPress={onBankingPress}
+                                />
+                                <ActionButton
+                                    text={strings.orderVisa}
+                                    image={images.visa}
+                                    descText={strings.orderCardForFree}
+                                    onPress={onBankingPress}
+                                />
+                                <ActionButton
+                                    text={strings.callOperator}
+                                    image={images.call}
+                                    descText={currentRegion?.phone[0]}
+                                    onPress={callPress}
+                                    alignment
+                                    accentColor={colors.lightGreen}
+                                />
+                            </View>
+                        </ScrollView>
+                    </View>
+                </Animated.View>
+            </View>
         </Swiper>
     );
 };

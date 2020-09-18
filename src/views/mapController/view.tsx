@@ -1,5 +1,11 @@
 import React, {useEffect, useRef, useCallback, useState} from 'react';
-import {View, ScrollView, Keyboard, LayoutAnimation} from 'react-native';
+import {
+    View,
+    ScrollView,
+    Keyboard,
+    LayoutAnimation,
+    StyleSheet,
+} from 'react-native';
 import {styles} from './styles';
 import Map from '../map';
 import Search from '../search';
