@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -37,8 +37,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Application needs access to user's location keep track of distance from user to certain marker on the map</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Application needs access to user's location keep track of distance from user to certain marker on the map</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string>Application needs access to user's location in order to calculate distance from user to certain marker on the map</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>FuturaPT-Bold.otf</string>
@@ -102,8 +106,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

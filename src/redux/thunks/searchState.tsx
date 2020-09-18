@@ -11,11 +11,10 @@ export const search = (keyword, searchData) => async (dispatch) => {
             searchKey: keyword,
             list: searchData,
         });
-        dispatch(
-            setSearchResultText(
-                strings.found + ' ' + result.length + ' ' + strings.results,
-            ),
-        );
+        let resultText =
+            strings.found + ' ' + result.length + ' ' + strings.results;
+
+        dispatch(setSearchResultText(resultText));
         dispatch(setMapMode(MAP_WITH_LIST));
         dispatch(setDisplayData(result));
     } catch (error) {

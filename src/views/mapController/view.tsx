@@ -40,8 +40,10 @@ const MapController = ({
 }: any) => {
     useEffect(() => {
         setImmediate(() => hideList());
+    }, [language]);
+
+    useEffect(() => {
         init();
-        console.log(route.params.action);
         switch (route.params.action) {
             case 'list': {
                 setTimeout(() => {
@@ -64,7 +66,7 @@ const MapController = ({
             default:
                 return;
         }
-    }, [language]);
+    }, []);
 
     return (
         <View style={styles.container}>

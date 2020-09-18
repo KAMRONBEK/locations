@@ -8,6 +8,7 @@ const initialState = {
 export default (state = initialState, {type, payload}: any) => {
     switch (type) {
         case SHOW_DESCRIPTION:
+            console.log('show this', payload, 'region');
             return {
                 ...state,
                 descVisibility: true,

@@ -1,13 +1,16 @@
 import Service from '../../services/service';
-import {showMapLoading, hideMapLoading, showDescription} from '../actions';
 import {
+    showMapLoading,
+    hideMapLoading,
+    showDescription,
     setOriginalData,
     setDisplayData,
     setMyRegion,
     setDestinationCoords,
     setMapMode,
     markerSelected,
-} from '../actions/mapState';
+    regionSelected,
+} from '../actions';
 import {Platform} from 'react-native';
 import {
     requestLocationPermission,
@@ -36,45 +39,30 @@ import {loadPartialConfig} from '@babel/core';
 
 export const init = () => async (dispatch) => {
     dispatch(showMapLoading());
-
     let myPosition;
     let myLocation;
     try {
         if (Platform.OS == 'android') {
-            try {
-                let granted = await requestLocationPermission();
-                myPosition = await getCurrentPosition();
-                myLocation = myPosition.coords;
-                dispatch(
-                    setMyRegion({
-                        ...myLocation,
-                        latitudeDelta: LATITUDE_DELTA,
-                        longitudeDelta: LONGITUDE_DELTA,
-                    }),
-                );
-                let result = await Service.get(myLocation);
-                dispatch(setOriginalData(result));
-                dispatch(setDisplayData(result));
-            } catch (e) {
-                // not permitted
-            }
+            let granted = requestLocationPermission();
         } else {
-            myPosition = await getCurrentPosition();
-            myLocation = myPosition.coords;
-            dispatch(
-                setMyRegion({
-                    ...myLocation,
-                    latitudeDelta: LATITUDE_DELTA,
-                    longitudeDelta: LONGITUDE_DELTA,
-                }),
-            );
-            let result = await Service.get(myLocation);
+            Geolocation.requestAuthorization();
+        }
+        myPosition = await getCurrentPosition();
+        console.log(typeof myPosition);
+        myLocation = myPosition.coords;
+        const myLocationRegion = {
+            ...myLocation,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+        };
+        dispatch(setMyRegion(myLocationRegion));
+        let result = await Service.get(myLocation);
+        if (result) {
             dispatch(setOriginalData(result));
             dispatch(setDisplayData(result));
         }
-        // let myPosition = await getCurrentPosition();
     } catch (error) {
-        console.log(error, 'in LoadOriginalData');
+        console.log(error, 'in init Android');
         let result = await Service.get(null);
         dispatch(setOriginalData(result));
         dispatch(setDisplayData(result));
@@ -82,6 +70,17 @@ export const init = () => async (dispatch) => {
         dispatch(hideMapLoading());
     }
 };
+
+// export const populateCategoriesAsync = (id) => (dispatch) => {
+//     let str = !id ? '' : '/' + id;
+//     return api.category
+//         .get(str)
+//         .then((res) => {
+//             dispatch(categoriesLoaded(res.data));
+//             return res;
+//         })
+//         .catch(({data}) => dispatch(serverError(data)));
+// };
 
 export const loadingData = () => async (dispatch) => {
     dispatch(showMapLoading());
@@ -118,13 +117,15 @@ export const getDirections = (startLocation, endLocation) => async (
         });
         dispatch(setDestinationCoords(coords));
     } catch (error) {
-        console.log(error);
+        console.log(error, 'direction');
     } finally {
         dispatch(hideMapLoading());
     }
 };
 
 export const markerPressed = (mapEvent) => (dispatch, getState) => {
+    console.log('marker press');
+
     let region;
     let markerID = parseFloat(mapEvent._targetInst.return.key.split('$')[1]);
 
@@ -133,11 +134,12 @@ export const markerPressed = (mapEvent) => (dispatch, getState) => {
             return item;
         }
     });
-    console.log(region[0]);
 
     dispatch(showDescription(region[0]));
-    dispatch(setMapMode(MAP_WITH_DESC));
+
+    dispatch(regionSelected(region[0]));
+
     dispatch(setDestinationCoords(null));
 
-    dispatch(markerSelected(mapEvent));
+    // dispatch(markerSelected(mapEvent));
 };

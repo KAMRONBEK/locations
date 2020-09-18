@@ -41,13 +41,10 @@ export const requestLocationPermission = () => {
 };
 
 export const getCurrentPosition = () => {
-    if (Geolocation) {
-        return new Promise((resolve, reject) =>
-            Geolocation.getCurrentPosition(resolve, reject),
-        );
-    } else {
-        return new Promise((resolve) => resolve({}));
-    }
+    return new Promise((resolve, reject) =>
+        Geolocation.getCurrentPosition(resolve, reject),
+    );
+    // return new Promise((resolve) => resolve({}));
 };
 
 export const sortArrayAsc = (array) => {

@@ -52,6 +52,7 @@ const Map = ({
     showDescription,
     zoomLevel,
     setZoomLevel,
+    descVis,
 }: any) => {
     let branchMarkers = useCallback(() => {
         return (
@@ -133,14 +134,17 @@ const Map = ({
 
     const _map = useRef<mapType>(null);
 
-    const onMapPress = () => {
-        console.log(mapMode, 'mapState');
-        Keyboard.dismiss();
-        mapPressed(MAP_WITH_SEARCH);
+    const onMapPress = (mapEvent) => {
+        if (mapEvent.nativeEvent.action !== 'marker-press') {
+            mapPressed();
+            console.log('map pressed');
+            Keyboard.dismiss();
+        } else {
+        }
     };
 
     const onMapReady = () => {
-        console.log('mapready');
+        // console.log('mapready');
     };
 
     const onDirecionStart = () => {
@@ -226,7 +230,7 @@ const Map = ({
     );
 };
 
-const mapStateToProps = ({mapState, listState}: any) => ({
+const mapStateToProps = ({mapState, listState, descState}: any) => ({
     myRegion: mapState.myRegion,
     displayDataList: mapState.displayDataList,
     panelVisibility: listState.panelVisibility,
@@ -234,6 +238,7 @@ const mapStateToProps = ({mapState, listState}: any) => ({
     mapMode: mapState.mapMode,
     routeDestination: mapState.routeDestination,
     zoomLevel: mapState.zoomLevel,
+    descVis: descState.descVisibility,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -244,7 +249,6 @@ const mapDispatchToProps = (dispatch) => ({
     hideMapLoading: () => dispatch(hideMapLoading()),
     mapPressed: (state) => {
         dispatch(hideDescription());
-        dispatch(setMapMode(state));
         dispatch(setSearchFocus(false));
     },
     setZoomLevel: (delta) => {

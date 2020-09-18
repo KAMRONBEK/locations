@@ -10,12 +10,14 @@ import createFlipperDebugger from 'redux-flipper';
 
 let middlewaresToApply = [];
 
+middlewaresToApply.push(thunk);
+
 if (__DEV__) {
+    //developer mode only
     console.log('dev');
 
     // const createFlipperDebugger = require('redux-flipper').default;
-    middlewaresToApply.push(createFlipperDebugger());
-    middlewaresToApply.push(thunk);
+    // middlewaresToApply.push(createFlipperDebugger());
 }
 
 let middleware = applyMiddleware(...middlewaresToApply);

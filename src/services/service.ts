@@ -30,7 +30,6 @@ class Service {
             console.log(source.data.minibanks.length, 'ta minibank');
 
             let branches = source.data.branches.map((branch, index) => {
-                console.log(myLocation, 'location');
                 return {
                     ...branch,
                     longitude: parseFloat(branch.location.split(',')[1]),

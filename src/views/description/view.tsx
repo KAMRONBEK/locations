@@ -9,6 +9,7 @@ import {
     Animated,
     StatusBar,
     LayoutAnimation,
+    ScrollView,
     PanResponder,
 } from 'react-native';
 import {styles} from './styles';
@@ -36,7 +37,6 @@ import {
     mapPressed,
     setMapMode,
 } from '../../redux/actions';
-import {ScrollView} from 'react-native-gesture-handler';
 import {strings} from '../../locales/strings';
 import RectangleButton from '../../component/common/RectangleButton';
 import {navigate} from '../../services/navigationServices';
@@ -57,70 +57,54 @@ const Description = ({
     // getDirections,
     // myRegion,
 }) => {
-    const _cardPanel = useRef<SlidingUpPanel>(null);
-    let [allowDragging, setAllowDragging] = useState(true);
-
-    // let [animatedValue] = useState(new Animated.Value(0));
-
     const animatedValue = useRef(new Animated.Value(0)).current;
 
     let imageHeight = animatedValue.interpolate({
-        inputRange: [140, deviceHeight - 140],
+        inputRange: [140, deviceHeightW],
         outputRange: [200, 100],
     });
-    let imageWidth = 200;
-    //  animatedValue.interpolate({
-    //     inputRange: [140, deviceHeightW],
-    //     outputRange: [CARD_WIDTH + 20, deviceWidth - 40],
-    // });
-    let imagePadding = 0;
-    // animatedValue.interpolate({
-    //     inputRange: [140, deviceHeightW],
-    //     outputRange: [20, 0],
-    // });
-    let backgroundColor = colors.ultraLightBlue;
-    // animatedValue.interpolate({
-    //     inputRange: [140, deviceHeightW],
-    //     outputRange: [colors.white, colors.ultraLightBlue],
-    // });
-    let borderRadius = 0;
-    //  animatedValue.interpolate({
-    //     inputRange: [140, deviceHeightW],
-    //     outputRange: [BORDER_RADIUS, 0],
-    // });
-    let notchVisibility = 0;
-    // animatedValue.interpolate({
-    //     inputRange: [140, deviceHeightW],
-    //     outputRange: [1, 0],
-    // });
-    let closeVisibility = 1;
-    // animatedValue.interpolate({
-    //     inputRange: [140, deviceHeightW],
-    //     outputRange: [0, 1],
-    // });
-    let paddingTop = 0;
-    //  animatedValue.interpolate({
-    //     inputRange: [140, deviceHeightW],
-    //     outputRange: [10, 0],
-    // });
+    let imageWidth = animatedValue.interpolate({
+        inputRange: [140, deviceHeightW],
+        outputRange: [deviceWidth - 40, CARD_WIDTH + 20],
+    });
+    let imagePadding = animatedValue.interpolate({
+        inputRange: [140, deviceHeightW],
+        outputRange: [0, 20],
+    });
+    let backgroundColor = animatedValue.interpolate({
+        inputRange: [140, deviceHeightW],
+        outputRange: [colors.ultraLightBlue, colors.white],
+    });
+    let borderRadius = animatedValue.interpolate({
+        inputRange: [140, deviceHeightW],
+        outputRange: [0, BORDER_RADIUS],
+    });
+    let notchVisibility = animatedValue.interpolate({
+        inputRange: [140, deviceHeightW],
+        outputRange: [0, 1],
+    });
+    let closeVisibility = animatedValue.interpolate({
+        inputRange: [140, deviceHeightW],
+        outputRange: [1, 0],
+    });
+    let paddingTop = animatedValue.interpolate({
+        inputRange: [140, deviceHeightW],
+        outputRange: [0, 10],
+    });
 
     const onRoutePress = () => {
-        if (_cardPanel.current) {
-            _cardPanel.current.hide();
-        }
+        setTimeout(() => {
+            animatedValue.setValue(deviceHeight);
+        }, 500);
         // getDirections(myRegion, currentRegion);
         setDestinationCoords(currentRegion);
     };
 
-    useEffect(() => {
-        console.log(currentRegion, descVisibility, 'in desc');
-    }, [currentRegion]);
-
     const onSharePress = () => {
         console.log('share');
-        if (_cardPanel.current) {
-            _cardPanel.current.hide();
-        }
+        setTimeout(() => {
+            animatedValue.setValue(deviceHeight);
+        }, 500);
     };
 
     const onCallPress = () => {};
@@ -145,6 +129,7 @@ const Description = ({
 
     useEffect(() => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        console.log(currentRegion, 'desc region');
     }, [descVisibility]);
 
     const onBankingPress = async () => {
@@ -178,12 +163,11 @@ const Description = ({
 
     //render
     if (!descVisibility) {
-        console.log('desc is not visible');
         return null;
     }
 
     return (
-        <Swiper animatedValue={animatedValue} allowDragging={allowDragging}>
+        <Swiper animatedValue={animatedValue}>
             <Animated.View
                 style={[
                     styles.content,
@@ -198,8 +182,7 @@ const Description = ({
                     style={[
                         styles.notch,
                         {
-                            // opacity: notchVisibility,
-                            opacity: 0,
+                            opacity: notchVisibility,
                         },
                     ]}>
                     <View
@@ -221,6 +204,7 @@ const Description = ({
                     <Animated.ScrollView
                         horizontal
                         pagingEnabled
+                        showsVerticalScrollIndicator={false}
                         scrollEventThrottle={1}
                         showsHorizontalScrollIndicator={false}
                         snapToInterval={CARD_WIDTH + 40}
@@ -233,9 +217,9 @@ const Description = ({
                         ]}
                         contentInset={{
                             top: 0,
-                            left: imagePadding,
+                            left: 20,
                             bottom: 0,
-                            right: imagePadding,
+                            right: 20,
                         }}
                         contentContainerStyle={{
                             paddingHorizontal:
@@ -249,9 +233,9 @@ const Description = ({
                                         styles.bannerImage,
                                         {
                                             height: imageHeight,
-                                            // marginRight: imagePadding,
+                                            marginRight: imagePadding,
                                             // borderRadius: borderRadius,
-                                            // width: imageWidth,
+                                            width: imageWidth,
                                         },
                                     ]}
                                     source={image}
@@ -264,11 +248,12 @@ const Description = ({
                             position: 'absolute',
                             top: 10,
                             right: 0,
+                            zIndex: 4,
                         }}
                         onPress={() => {
-                            if (_cardPanel.current) {
-                                _cardPanel.current.hide();
-                            }
+                            setTimeout(() => {
+                                animatedValue.setValue(0);
+                            }, 500);
                         }}>
                         <Animated.View
                             style={{
@@ -389,9 +374,12 @@ const Description = ({
                             <ServiceItem
                                 text={strings.showOnMap}
                                 icon="gps-fixed"
-                                onPress={() =>
-                                    locationPress(_cardPanel.current)
-                                }
+                                onPress={() => {
+                                    setTimeout(() => {
+                                        animatedValue.setValue(deviceHeightW);
+                                    }, 100);
+                                    locationPress();
+                                }}
                             />
                             <ServiceItem
                                 text={strings.call}
@@ -446,294 +434,6 @@ const Description = ({
                 </View>
             </Animated.View>
         </Swiper>
-        // <View style={styles.container}>
-        //     <SlidingUpPanel
-        //         ref={_cardPanel}
-        //         draggableRange={{
-        //             top: DESC_HEIGHT + 10,
-        //             bottom: 160,
-        //         }}
-        //         minimumVelocityThreshold={100}
-        //         height={DESC_HEIGHT + 10}
-        //         snappingPoints={[140]}
-        //         allowMomentum={true}
-        //         friction={0.1}
-        //         minimumDistanceThreshold={20}
-        //         allowDragging={allowDragging}
-        //         animatedValue={animatedValue}>
-        //         <Animated.View
-        //             style={[
-        //                 styles.content,
-        //                 {
-        //                     backgroundColor: backgroundColor,
-        //                     borderTopRightRadius: borderRadius,
-        //                     borderTopLeftRadius: borderRadius,
-        //                     paddingTop: paddingTop,
-        //                 },
-        //             ]}>
-        //             <Animated.View
-        //                 style={[
-        //                     styles.notch,
-        //                     {
-        //                         opacity: notchVisibility,
-        //                     },
-        //                 ]}>
-        //                 <View
-        //                     style={{
-        //                         borderWidth: 2,
-        //                         width: 40,
-        //                         borderColor: colors.gray,
-        //                         borderRadius: BORDER_RADIUS,
-        //                     }}
-        //                 />
-        //             </Animated.View>
-        //             <Animated.View
-        //                 style={[
-        //                     styles.row,
-        //                     {
-        //                         paddingTop: paddingTop,
-        //                     },
-        //                 ]}>
-        //                 <Animated.ScrollView
-        //                     horizontal
-        //                     pagingEnabled
-        //                     scrollEventThrottle={1}
-        //                     showsHorizontalScrollIndicator={false}
-        //                     snapToInterval={CARD_WIDTH + 40}
-        //                     snapToAlignment="end"
-        //                     style={[
-        //                         styles.scrollView,
-        //                         {
-        //                             // paddingTop: paddingTop,
-        //                         },
-        //                     ]}
-        //                     contentInset={{
-        //                         top: 0,
-        //                         left: imagePadding,
-        //                         bottom: 0,
-        //                         right: imagePadding,
-        //                     }}
-        //                     contentContainerStyle={{
-        //                         paddingHorizontal:
-        //                             Platform.OS === 'android' ? 20 : 0,
-        //                     }}>
-        //                     {imgs.map((image, index) => {
-        //                         return (
-        //                             <Animated.Image
-        //                                 key={index}
-        //                                 style={[
-        //                                     styles.bannerImage,
-        //                                     {
-        //                                         height: imageHeight,
-        //                                         marginRight: imagePadding,
-        //                                         borderRadius: borderRadius,
-        //                                         width: imageWidth,
-        //                                     },
-        //                                 ]}
-        //                                 source={image}
-        //                             />
-        //                         );
-        //                     })}
-        //                 </Animated.ScrollView>
-        //                 <TouchableOpacity
-        //                     style={{
-        //                         position: 'absolute',
-        //                         top: 10,
-        //                         right: 0,
-        //                     }}
-        //                     onPress={() => {
-        //                         if (_cardPanel.current) {
-        //                             _cardPanel.current.hide();
-        //                         }
-        //                     }}>
-        //                     <Animated.View
-        //                         style={{
-        //                             padding: 10,
-        //                             opacity: closeVisibility,
-        //                         }}>
-        //                         <Ionicons
-        //                             name="close"
-        //                             size={30}
-        //                             color={colors.pink}
-        //                         />
-        //                     </Animated.View>
-        //                 </TouchableOpacity>
-        //             </Animated.View>
-
-        //             <View
-        //                 style={{
-        //                     flex: 1,
-        //                 }}>
-        //                 <ScrollView
-        //                     onTouchStart={() => setAllowDragging(false)}
-        //                     onTouchEnd={() => setAllowDragging(true)}
-        //                     onTouchCancel={() => setAllowDragging(true)}>
-        //                     <View style={styles.column}>
-        //                         <View
-        //                             style={{
-        //                                 flexDirection: 'row',
-        //                                 alignItems: 'flex-start',
-        //                             }}>
-        //                             <View
-        //                                 style={[
-        //                                     styles.typeWrapper,
-        //                                     {
-        //                                         backgroundColor:
-        //                                             currentRegion?.type == 'atm'
-        //                                                 ? colors.pinkTrans
-        //                                                 : currentRegion?.type ==
-        //                                                   'branch'
-        //                                                 ? colors.redTrans
-        //                                                 : colors.violateTrans,
-        //                                     },
-        //                                 ]}>
-        //                                 <Text
-        //                                     style={[
-        //                                         styles.type,
-        //                                         {
-        //                                             color:
-        //                                                 currentRegion?.type ==
-        //                                                 'atm'
-        //                                                     ? colors.pink
-        //                                                     : currentRegion?.type ==
-        //                                                       'branch'
-        //                                                     ? colors.red
-        //                                                     : colors.violate,
-        //                                         },
-        //                                     ]}>
-        //                                     {currentRegion?.type == 'atm'
-        //                                         ? strings.atm
-        //                                         : currentRegion?.type ==
-        //                                           'branch'
-        //                                         ? strings.branches
-        //                                         : strings.minibanks}
-        //                                 </Text>
-        //                             </View>
-        //                             <Text
-        //                                 numberOfLines={2}
-        //                                 style={styles.title}>
-        //                                 {' '}
-        //                                 {currentRegion?.name}
-        //                             </Text>
-        //                         </View>
-        //                     </View>
-        //                     <Seperator width={'95%'} />
-        //                     <View style={styles.infoWrapper}>
-        //                         <View style={[styles.row]}>
-        //                             <Ionicons
-        //                                 name="location"
-        //                                 size={15}
-        //                                 color={colors.green}
-        //                             />
-        //                             <Text style={styles.text}>
-        //                                 {currentRegion?.address.split(',')[2]}
-        //                             </Text>
-        //                         </View>
-        //                         <View style={styles.row}>
-        //                             <Ionicons
-        //                                 name="time"
-        //                                 size={15}
-        //                                 color={colors.green}
-        //                             />
-        //                             <Text style={styles.text}>
-        //                                 {' '}
-        //                                 09:00 - 18:00
-        //                             </Text>
-        //                         </View>
-        //                         <View style={styles.row}>
-        //                             <Text style={styles.text}>
-        //                                 <Ionicons
-        //                                     name="bus"
-        //                                     size={15}
-        //                                     color={colors.green}
-        //                                 />{' '}
-        //                                 {currentRegion?.distance} {strings.km}
-        //                             </Text>
-        //                         </View>
-        //                     </View>
-        //                     <Seperator width={'95%'} />
-        //                     <View style={styles.infoTextWrapper}>
-        //                         <Text style={styles.infoText}>
-        //                             The quality of informational text can be
-        //                             judged in a variety of ways. For this award,
-        //                             we will examine the texts with an eye on the
-        //                             following categories. Accuracy of Content:
-        //                             Is the content timely, accurate and direct?
-        //                             Is this text likely to advance a young
-        //                             child’s world knowledge? Authority of
-        //                             Authorship: What are the qualifications of
-        //                             the author on this topic? Were collaborators
-        //                             consulted?
-        //                         </Text>
-        //                     </View>
-        //                     <Seperator width={'95%'} />
-        //                     <View style={styles.servicesWrapper}>
-        //                         <ServiceItem
-        //                             text={strings.direction}
-        //                             icon="directions"
-        //                             onPress={onRoutePress}
-        //                         />
-        //                         <ServiceItem
-        //                             text={strings.showOnMap}
-        //                             icon="gps-fixed"
-        //                             onPress={() =>
-        //                                 locationPress(_cardPanel.current)
-        //                             }
-        //                         />
-        //                         <ServiceItem
-        //                             text={strings.call}
-        //                             icon="call"
-        //                             onPress={callPress}
-        //                         />
-        //                         <ServiceItem
-        //                             text={strings.chat}
-        //                             icon="chat"
-        //                             onPress={onChatPress}
-        //                         />
-        //                     </View>
-        //                     <Seperator width="95%" />
-        //                     <View style={styles.buttonWrapper}>
-        //                         <ActionButton
-        //                             text={strings.mobileBanking}
-        //                             image={images.logo}
-        //                             descText={strings.orderCardForFree}
-        //                             onPress={onBankingPress}
-        //                             big
-        //                             accentColor={colors.lightGreen}
-        //                         />
-        //                         <ActionButton
-        //                             text={strings.orderUzcard}
-        //                             image={images.uzcard}
-        //                             descText={strings.orderCardForFree}
-        //                             onPress={onBankingPress}
-        //                         />
-        //                         <ActionButton
-        //                             text={strings.orderHumo}
-        //                             image={images.humo}
-        //                             // image={images.visa}
-        //                             descText={strings.orderCardForFree}
-        //                             onPress={onBankingPress}
-        //                         />
-        //                         <ActionButton
-        //                             text={strings.orderVisa}
-        //                             image={images.visa}
-        //                             descText={strings.orderCardForFree}
-        //                             onPress={onBankingPress}
-        //                         />
-        //                         <ActionButton
-        //                             text={strings.callOperator}
-        //                             image={images.call}
-        //                             descText={currentRegion?.phone[0]}
-        //                             onPress={callPress}
-        //                             alignment
-        //                             accentColor={colors.lightGreen}
-        //                         />
-        //                     </View>
-        //                 </ScrollView>
-        //             </View>
-        //         </Animated.View>
-        //     </SlidingUpPanel>
-        // </View>
     );
 };
 
@@ -746,11 +446,10 @@ const mapStateToProps = ({descState, listState, mapState}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     callPress: () => dispatch(callPress()),
-    locationPress: (ref) => dispatch(locationPress(ref)),
+    locationPress: () => dispatch(locationPress()),
     setDestinationCoords: (location) =>
         dispatch(setDestinationCoords(location)),
     setMapMode: (mode) => dispatch(setMapMode(mode)),
-    // getDirections: (start, end) => dispatch(getDirections(start, end)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Description);

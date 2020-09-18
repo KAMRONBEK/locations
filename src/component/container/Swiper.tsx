@@ -5,10 +5,9 @@ import {deviceHeight} from '../../constants';
 interface SwiperProps {
     children: any;
     animatedValue: any;
-    allowDragging: boolean;
 }
 
-const Swiper = ({children, animatedValue, allowDragging}: SwiperProps) => {
+const Swiper = ({children, animatedValue}: SwiperProps) => {
     // animatedValue = height;
 
     const panResponder = useRef(
@@ -24,9 +23,7 @@ const Swiper = ({children, animatedValue, allowDragging}: SwiperProps) => {
                 animatedValue.setOffset(animatedValue._value);
             },
             onPanResponderMove: (evt, gestureState) => {
-                if (allowDragging) {
-                    animatedValue.setValue(gestureState.dy * 1);
-                }
+                animatedValue.setValue(gestureState.dy * 1);
             },
             onPanResponderRelease: (evt, gestureState) => {
                 animatedValue.flattenOffset();

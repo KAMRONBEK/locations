@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
         left: 0,
         position: 'absolute',
         // backgroundColor: colors.white,
+        backgroundColor: colors.redTrans,
         justifyContent: 'center',
         alignItems: 'center',
     },
