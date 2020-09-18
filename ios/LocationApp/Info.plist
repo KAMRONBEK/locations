@@ -38,11 +38,11 @@
 		</dict>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Application needs access to user's location keep track of distance from user to certain marker on the map</string>
+	<string>Application needs access to user&apos;s location keep track of distance from user to certain marker on the map</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Application needs access to user's location keep track of distance from user to certain marker on the map</string>
+	<string>Application needs access to user&apos;s location keep track of distance from user to certain marker on the map</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Application needs access to user's location in order to calculate distance from user to certain marker on the map</string>
+	<string>Application needs access to user&apos;s location in order to calculate distance from user to certain marker on the map</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>FuturaPT-Bold.otf</string>
@@ -107,6 +107,8 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
