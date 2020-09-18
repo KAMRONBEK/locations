@@ -25,11 +25,11 @@ const ChatMessage = ({item}: ChatMessageProps) => {
                     item.type === 'send'
                         ? {
                               backgroundColor: colors.blue,
-                              borderBottomRightRadius: 0,
+                              borderBottomRightRadius: 5,
                           }
                         : {
                               backgroundColor: colors.ultraLightBlue,
-                              borderBottomLeftRadius: 0,
+                              borderBottomLeftRadius: 5,
                           },
                 ]}>
                 <Text
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     buble: {
         padding: 10,
         paddingHorizontal: 20,
-        borderRadius: 40,
+        borderRadius: 20,
         width: 300,
         marginTop: 20,
     },
