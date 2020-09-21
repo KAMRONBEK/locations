@@ -2,7 +2,7 @@ import * as React from 'react';
 import Svg, {Rect, Path, Circle, G} from 'react-native-svg';
 import {connect} from 'react-redux';
 
-function Branch(props) {
+function Branch(props: any) {
     return (
         <Svg
             data-name="Layer 1"
@@ -30,10 +30,4 @@ function Branch(props) {
     );
 }
 
-const mapStateToProps = ({mapState}) => ({
-    zoomLevel: mapState.zoomLevel,
-});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Branch);
+export default Branch;

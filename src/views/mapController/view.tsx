@@ -4,7 +4,7 @@ import {
     ScrollView,
     Keyboard,
     LayoutAnimation,
-    StyleSheet,
+    StyleSheet
 } from 'react-native';
 import {styles} from './styles';
 import Map from '../map';
@@ -19,7 +19,7 @@ import {
     FREE_MAP,
     MAP_WITH_SEARCH,
     MAP_WITH_LIST,
-    MAP_WITH_DESC,
+    MAP_WITH_DESC
 } from '../../constants';
 import Description from '../description';
 import {strings} from '../../locales/strings';
@@ -28,7 +28,7 @@ import {
     showList,
     hideList,
     setSearchFocus,
-    regionSelected,
+    regionSelected
 } from '../../redux/actions';
 
 const MapController = ({
@@ -42,7 +42,7 @@ const MapController = ({
     hideList,
     setSearchFocus,
     regionSelected,
-    myRegion,
+    myRegion
 }: any) => {
     useEffect(() => {
         setImmediate(() => hideList());
@@ -85,21 +85,21 @@ const MapController = ({
     );
 };
 
-const mapStateToProps = ({mapState, descState, appState}) => ({
+const mapStateToProps = ({mapState, descState, appState}: any) => ({
     myRegion: mapState.myRegion,
     displayDataList: mapState.displayDataList,
     mapMode: mapState.mapMode,
     descVisibility: descState.descVisibility,
     currentRegion: descState.currentRegion,
-    language: appState.language,
+    language: appState.language
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
     init: () => dispatch(init()),
     showList: () => dispatch(showList()),
     hideList: () => dispatch(hideList()),
-    setSearchFocus: (mode) => dispatch(setSearchFocus(mode)),
-    regionSelected: (region) => dispatch(regionSelected(region)),
+    setSearchFocus: (mode: string) => dispatch(setSearchFocus(mode)),
+    regionSelected: (region: object) => dispatch(regionSelected(region))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapController);

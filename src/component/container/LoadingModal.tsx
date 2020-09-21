@@ -23,7 +23,7 @@ const LoadingModal = ({mapLoading}: LoadingModalProps) => {
                     height: 200,
                     width: 200,
                     padding: 0,
-                    marginBottom: 40,
+                    marginBottom: 40
                 }}
                 autoPlay
                 loop
@@ -40,14 +40,14 @@ const styles = StyleSheet.create({
         left: 0,
         position: 'absolute',
         // backgroundColor: colors.white,
-        backgroundColor: colors.redTrans,
+        backgroundColor: 'rgba(0,0,0,0.5)',
         justifyContent: 'center',
-        alignItems: 'center',
-    },
+        alignItems: 'center'
+    }
 });
 
 const mapStateToProps = ({appState}: any) => ({
-    mapLoading: appState.mapLoading,
+    mapLoading: appState.mapLoading
 });
 
 const mapDispatchToProps = {};

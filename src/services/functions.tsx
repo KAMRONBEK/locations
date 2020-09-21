@@ -23,8 +23,8 @@ export const requestLocationPermission = () => {
                 {
                     title: 'Example App',
                     message: 'Example App access to your location ',
-                    buttonPositive: 'Yes',
-                },
+                    buttonPositive: 'Yes'
+                }
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                 resolve();
@@ -42,13 +42,13 @@ export const requestLocationPermission = () => {
 
 export const getCurrentPosition = () => {
     return new Promise((resolve, reject) =>
-        Geolocation.getCurrentPosition(resolve, reject),
+        Geolocation.getCurrentPosition(resolve, reject)
     );
     // return new Promise((resolve) => resolve({}));
 };
 
-export const sortArrayAsc = (array) => {
-    return array.sort((prev, curr) => {
+export const sortArrayAsc = (array: any) => {
+    return array.sort((prev: any, curr: any) => {
         // console.log(prev.id);
         return curr.distance < prev.distance
             ? 1
@@ -58,7 +58,7 @@ export const sortArrayAsc = (array) => {
     });
 };
 
-export const findDuplicates = (arr) => {
+export const findDuplicates = (arr: any) => {
     let sorted_arr = arr.slice().sort(); // You can define the comparing function here.
     // JS by default uses a crappy string compare.
     // (we use slice to clone the array so the

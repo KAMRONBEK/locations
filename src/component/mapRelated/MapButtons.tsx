@@ -4,8 +4,21 @@ import {connect} from 'react-redux';
 import {colors, BORDER_RADIUS} from '../../constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {regionSelected, showList} from '../../redux/actions';
+import {branchType, regionType} from '../../screens/map/Map';
 
-const MapButtons = ({displayData, myRegion, regionSelected, showList}) => {
+interface mapButtonsProps {
+    displayData: Array<branchType>;
+    myRegion: regionType;
+    regionSelected: any;
+    showList: any;
+}
+
+const MapButtons = ({
+    displayData,
+    myRegion,
+    regionSelected,
+    showList
+}: mapButtonsProps) => {
     const onLocationPress = useCallback(() => {
         regionSelected(myRegion);
     }, [myRegion]);
@@ -19,8 +32,8 @@ const MapButtons = ({displayData, myRegion, regionSelected, showList}) => {
                     style={[
                         styles.markerWrapper,
                         {
-                            marginRight: 10,
-                        },
+                            marginRight: 10
+                        }
                     ]}>
                     <TouchableOpacity onPress={showList}>
                         <View style={styles.locationIcon}>
@@ -57,7 +70,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         zIndex: 2,
         right: 0,
-        left: 0,
+        left: 0
     },
     markerWrapper: {
         // position: 'absolute',
@@ -70,24 +83,25 @@ const styles = StyleSheet.create({
         borderRadius: BORDER_RADIUS,
         justifyContent: 'center',
         alignItems: 'center',
-        overflow: 'hidden',
+        overflow: 'hidden'
     },
     locationIcon: {
-        padding: 8,
-    },
+        padding: 8
+    }
 });
 
-const mapStateToProps = ({mapState}) => ({
+const mapStateToProps = ({mapState}: any) => ({
     displayData: mapState.displayDataList,
-    myRegion: mapState.myRegion,
+    myRegion: mapState.myRegion
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    regionSelected: (location) => dispatch(regionSelected(location)),
+const mapDispatchToProps = (dispatch: any) => ({
+    regionSelected: (location: regionType) =>
+        dispatch(regionSelected(location)),
     showList: () => {
         console.log('list');
         dispatch(showList());
-    },
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapButtons);

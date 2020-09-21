@@ -5,13 +5,13 @@ import {
     View,
     Image,
     TouchableOpacity,
-    Animated,
+    Animated
 } from 'react-native';
 import {CARD_HEIGHT, CARD_WIDTH, BORDER_RADIUS, colors} from '../../constants';
 import images from '../../assets/images';
 import {
     PanGestureHandler,
-    TouchableWithoutFeedback,
+    TouchableWithoutFeedback
 } from 'react-native-gesture-handler';
 import {strings} from '../../locales/strings';
 import {connect} from 'react-redux';
@@ -28,6 +28,8 @@ interface MarkerCardProps {
     trial503: string;
     x?: number;
     onPress: any;
+    distance: number;
+    language: string;
 }
 
 const MarkerCard = ({
@@ -36,7 +38,7 @@ const MarkerCard = ({
     phone,
     onPress,
     distance,
-    language,
+    language
 }: MarkerCardProps) => {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
@@ -74,14 +76,14 @@ const styles = StyleSheet.create({
         width: CARD_WIDTH,
         overflow: 'hidden',
         flexDirection: 'row',
-        borderRadius: BORDER_RADIUS,
+        borderRadius: BORDER_RADIUS
     },
     cardImage: {
         width: 120,
         height: 120,
         alignSelf: 'center',
         borderRadius: BORDER_RADIUS,
-        marginLeft: -30,
+        marginLeft: -30
     },
     content: {
         padding: 10,
@@ -91,27 +93,27 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         shadowOpacity: 0.3,
         flexDirection: 'row',
-        marginLeft: 30,
+        marginLeft: 30
     },
     textContent: {
         padding: 10,
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
     },
     cardtitle: {
         fontSize: 12,
         fontWeight: 'bold',
         color: colors.textLightGray,
-        width: CARD_WIDTH - 150,
+        width: CARD_WIDTH - 150
     },
     cardDescription: {
         fontSize: 12,
         color: colors.textLightGray,
-        width: CARD_WIDTH - 150,
-    },
+        width: CARD_WIDTH - 150
+    }
 });
 
-const mapStateToProps = ({appState}) => ({
-    language: appState.language,
+const mapStateToProps = ({appState}: any) => ({
+    language: appState.language
 });
 
 const mapDispatchToProps = {};

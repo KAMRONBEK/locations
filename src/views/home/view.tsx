@@ -11,7 +11,7 @@ import {
     ENG,
     SCREENS,
     deviceHeight,
-    deviceWidth,
+    deviceWidth
 } from '../../constants';
 import {connect} from 'react-redux';
 import {setLanguage, hideList} from '../../redux/actions';
@@ -21,26 +21,34 @@ import Seperator from '../../component/common/Seperator';
 import Social from '../../component/common/Social';
 import source from '../../assets/branches';
 import Text from '../../component/common/Text';
+import {NavigationProp} from '@react-navigation/native';
 
 let languages = [
     {
         image: images.uz,
         value: UZ,
-        label: UZ,
+        label: UZ
     },
     {
         image: images.ru,
         value: RU,
-        label: RU,
+        label: RU
     },
     {
         image: images.eng,
         value: ENG,
-        label: ENG,
-    },
+        label: ENG
+    }
 ];
 
-let Home = ({navigation, language, setLanguage, hideList}) => {
+interface homeProps {
+    navigation: NavigationProp<{}>;
+    language: string;
+    setLanguage: any;
+    hideList: any;
+}
+
+let Home = ({navigation, language, setLanguage, hideList}: homeProps) => {
     useEffect(() => {
         hideList();
     }, [navigation]);
@@ -54,19 +62,19 @@ let Home = ({navigation, language, setLanguage, hideList}) => {
     };
     const onListPress = () => {
         navigate(SCREENS.map, {
-            action: 'list',
+            action: 'list'
         });
     };
 
     const onSearchPress = () => {
         navigate(SCREENS.map, {
-            action: 'search',
+            action: 'search'
         });
     };
 
     const onLocationPress = () => {
         navigate(SCREENS.map, {
-            action: 'location',
+            action: 'location'
         });
     };
 
@@ -85,14 +93,14 @@ let Home = ({navigation, language, setLanguage, hideList}) => {
                 style={{
                     flexDirection: 'row',
                     paddingHorizontal: 20,
-                    paddingTop: 5,
+                    paddingTop: 5
                 }}>
                 <Ionicons name="location" size={14} color={colors.green} />
                 <Text
                     style={{
                         fontSize: 12,
                         paddingLeft: 5,
-                        maxWidth: '90%',
+                        maxWidth: '90%'
                     }}>
                     Bank bosh ofisi manzili: O’zbekiston, Toshkent sh. 100017,
                     A.Qodiriy ko’chasi 2 uy
@@ -106,13 +114,13 @@ let Home = ({navigation, language, setLanguage, hideList}) => {
                     style={{
                         flexDirection: 'row',
                         paddingHorizontal: 20,
-                        paddingTop: 5,
+                        paddingTop: 5
                     }}>
                     <Ionicons name="call" size={14} color={colors.green} />
                     <Text
                         style={{
                             fontSize: 12,
-                            paddingLeft: 5,
+                            paddingLeft: 5
                         }}>
                         78 140 78 33
                     </Text>
@@ -230,13 +238,13 @@ let Home = ({navigation, language, setLanguage, hideList}) => {
     );
 };
 
-const mapStateToProps = ({appState}) => ({
-    language: appState.language,
+const mapStateToProps = ({appState}: any) => ({
+    language: appState.language
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    setLanguage: (language) => dispatch(setLanguage(language)),
-    hideList: () => dispatch(hideList()),
+const mapDispatchToProps = (dispatch: any) => ({
+    setLanguage: (language: any) => dispatch(setLanguage(language)),
+    hideList: () => dispatch(hideList())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

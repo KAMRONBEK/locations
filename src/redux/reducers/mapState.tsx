@@ -5,11 +5,11 @@ import {
     SET_DISPLAY_DATA,
     MAP_REGION_SELECTED,
     MAP_DRAG_STARTED,
-    MARKER_PRESSED,
+    // MARKER_PRESSED,
     MAP_PRESSED,
     SET_ROUTE_DESTINATION,
     SET_MAP_MODE,
-    SET_ZOOM_LEVEL,
+    SET_ZOOM_LEVEL
 } from '../types';
 import {
     LATITUDE,
@@ -19,7 +19,7 @@ import {
     INITIAL,
     FREE_MAP,
     MAP_WITH_SEARCH,
-    MAP_WITH_LIST,
+    MAP_WITH_LIST
 } from '../../constants';
 
 export interface appStateProps {
@@ -33,13 +33,13 @@ const initialState = {
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA
     },
     myRegion: {
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA
     },
     originalDataList: [],
     displayDataList: [],
@@ -47,14 +47,14 @@ const initialState = {
     pressedMarkerId: 0,
     mapMode: MAP_WITH_SEARCH, //FREE_MAP,MAP_WITH_SEARCH,MAP_WITH_LIST
     routeDestination: null,
-    zoomLevel: 1,
+    zoomLevel: 1
 };
 export default (state = initialState, {type, payload}: any) => {
     switch (type) {
         case SET_DEFAULT_REGION: {
             return {
                 ...state,
-                defaultRegion: {...state.defaultRegion, payload},
+                defaultRegion: {...state.defaultRegion, payload}
             };
         }
         case SET_MY_REGION: {
@@ -73,15 +73,15 @@ export default (state = initialState, {type, payload}: any) => {
         case MAP_DRAG_STARTED: {
             return {...state, focusRegion: null};
         }
-        case MARKER_PRESSED: {
-            let markerID = parseFloat(
-                payload._targetInst.return.key.split('$')[1],
-            );
-            return {
-                ...state,
-                pressedMarkerId: markerID,
-            };
-        }
+        // case MARKER_PRESSED: {
+        //     let markerID = parseFloat(
+        //         payload._targetInst.return.key.split('$')[1],
+        //     );
+        //     return {
+        //         ...state,
+        //         pressedMarkerId: markerID,
+        //     };
+        // }
 
         case SET_MAP_MODE: {
             return {...state, mapMode: payload};
@@ -89,13 +89,13 @@ export default (state = initialState, {type, payload}: any) => {
         case SET_ROUTE_DESTINATION: {
             return {
                 ...state,
-                routeDestination: payload,
+                routeDestination: payload
             };
         }
         case SET_ZOOM_LEVEL: {
             return {
                 ...state,
-                zoomLevel: Math.round(Math.log(360 / payload) / Math.LN2),
+                zoomLevel: Math.round(Math.log(360 / payload) / Math.LN2)
             };
         }
         default:

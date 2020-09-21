@@ -1,6 +1,12 @@
 import React, {useState, useRef} from 'react';
-import {StyleSheet, Text, View, Keyboard} from 'react-native';
-import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
+import {
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+    Text,
+    View,
+    Keyboard
+} from 'react-native';
 import {deviceWidth, BORDER_RADIUS} from '../../constants/values';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {colors} from '../../constants';
@@ -13,7 +19,7 @@ interface ChatInputProps {
 
 const ChatInput = ({setMessage, messages}: ChatInputProps) => {
     //functions
-    const onTextChange = (value) => {
+    const onTextChange = (value: string) => {
         setInput(value);
     };
 
@@ -21,15 +27,17 @@ const ChatInput = ({setMessage, messages}: ChatInputProps) => {
         if (!!input) {
             setMessage([
                 ...messages,
-                {type: 'send', date: '10:15', message: input},
+                {type: 'send', date: '10:15', message: input}
             ]);
         }
         setInput('');
     };
-    const keyboardOn = useRef(null);
+    const _input = useRef<TextInput>(null);
 
     const onEmojiPress = () => {
-        keyboardOn.current.focus();
+        if (_input.current) {
+            _input.current.focus();
+        }
     };
     //variables
     let [input, setInput] = useState('');
@@ -44,7 +52,7 @@ const ChatInput = ({setMessage, messages}: ChatInputProps) => {
                 />
             </TouchableOpacity>
             <TextInput
-                ref={keyboardOn}
+                ref={_input}
                 multiline={true}
                 underlineColorAndroid="transparent"
                 style={styles.input}
@@ -74,13 +82,13 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         padding: 10,
         paddingHorizontal: 15,
-        borderRadius: BORDER_RADIUS,
+        borderRadius: BORDER_RADIUS
     },
     input: {
         paddingHorizontal: 10,
         padding: 0,
-        width: deviceWidth * 0.7,
-    },
+        width: deviceWidth * 0.7
+    }
 });
 
 export default ChatInput;

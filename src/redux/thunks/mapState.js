@@ -9,17 +9,16 @@ import {
     setDestinationCoords,
     setMapMode,
     markerSelected,
-    regionSelected,
+    regionSelected
 } from '../actions';
 import {Platform} from 'react-native';
 import {
     requestLocationPermission,
-    getCurrentPosition,
+    getCurrentPosition
 } from '../../services/functions';
 import Geolocation from '@react-native-community/geolocation';
 import {LATITUDE_DELTA, LONGITUDE_DELTA, MAP_WITH_DESC} from '../../constants';
 import Polyline from '@mapbox/polyline';
-import {loadPartialConfig} from '@babel/core';
 
 /**
  * Draggable list
@@ -53,7 +52,7 @@ export const init = () => async (dispatch) => {
         const myLocationRegion = {
             ...myLocation,
             latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA
         };
         dispatch(setMyRegion(myLocationRegion));
         let result = await Service.get(myLocation);
@@ -93,7 +92,7 @@ export const loadingData = () => async (dispatch) => {
 };
 
 export const getDirections = (startLocation, endLocation) => async (
-    dispatch,
+    dispatch
 ) => {
     dispatch(showMapLoading());
 
@@ -102,17 +101,17 @@ export const getDirections = (startLocation, endLocation) => async (
     try {
         let resp = await fetch(
             //fix API
-            `https://maps.googleapis.com/maps/api/directions/json?origin=${start}&destination=${end}&key=AIzaSyAbI94kGVXviZKmvBCLkNj4zkxX5MilzUM`,
+            `https://maps.googleapis.com/maps/api/directions/json?origin=${start}&destination=${end}&key=AIzaSyAbI94kGVXviZKmvBCLkNj4zkxX5MilzUM`
         );
         let respJson = await resp.json();
         console.log(respJson);
         let points = Polyline.decode(
-            respJson.routes[0].overview_polyline.points,
+            respJson.routes[0].overview_polyline.points
         );
         let coords = points.map((point, index) => {
             return {
                 latitude: point[0],
-                longitude: point[1],
+                longitude: point[1]
             };
         });
         dispatch(setDestinationCoords(coords));

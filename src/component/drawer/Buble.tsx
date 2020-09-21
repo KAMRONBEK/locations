@@ -1,12 +1,18 @@
 import React, {useCallback} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {InteractionManager, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {setLanguage} from '../../redux/actions';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {colors, BORDER_RADIUS} from '../../constants';
 import {strings} from '../../locales/strings';
 
-const Buble = ({state, setLanguage, language}) => {
+interface bubleProps {
+    state: string;
+    setLanguage: any;
+    language: string;
+}
+
+const Buble = ({state, setLanguage, language}: bubleProps) => {
     const onPress = useCallback(() => {
         if (state !== language) {
             strings.setLanguage(state);
@@ -21,8 +27,8 @@ const Buble = ({state, setLanguage, language}) => {
                 style={[
                     styles.container,
                     state == language && {
-                        backgroundColor: colors.lightViolet,
-                    },
+                        backgroundColor: colors.lightViolet
+                    }
                 ]}>
                 <Text style={styles.text}>{state}</Text>
             </View>
@@ -37,20 +43,20 @@ const styles = StyleSheet.create({
         backgroundColor: colors.lightPink,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 40,
+        borderRadius: 40
     },
     text: {
         fontSize: 16,
-        color: colors.darkBlack,
-    },
+        color: colors.darkBlack
+    }
 });
 
-const mapStateToProps = ({appState}) => ({
-    language: appState.language,
+const mapStateToProps = ({appState}: any) => ({
+    language: appState.language
 });
 
 const mapDispatchToProps = {
-    setLanguage,
+    setLanguage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Buble);

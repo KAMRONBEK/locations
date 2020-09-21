@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, {Path, Circle} from 'react-native-svg';
 
-function Bank(props) {
+function Bank(props: any) {
     return (
         <Svg height={512} viewBox="0 0 64 64" width={512} {...props}>
             <Path d="M6 22h38v18H6z" fill="#d7d7e2" />

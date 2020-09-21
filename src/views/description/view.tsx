@@ -47,6 +47,16 @@ import ActionButton from '../../component/common/ActionButton';
 import Seperator from '../../component/common/Seperator';
 import ServiceItem from '../../component/common/ServiceItem';
 import Swiper from '../../component/container/Swiper';
+import {branchType} from '../../screens/map/Map';
+
+interface descriptionProps {
+    currentRegion: branchType;
+    callPress: any;
+    locationPress: any;
+    setDestinationCoords: any;
+    setMapMode: any;
+    descVisibility: boolean;
+}
 
 const Description = ({
     currentRegion,
@@ -55,9 +65,9 @@ const Description = ({
     setDestinationCoords,
     setMapMode,
     descVisibility
-    // getDirections,
-    // myRegion,
-}) => {
+}: // getDirections,
+// myRegion,
+descriptionProps) => {
     const animatedValue = useRef(new Animated.Value(deviceHeight)).current;
 
     let contentTop = animatedValue.interpolate({
@@ -162,7 +172,7 @@ const Description = ({
             onMoveShouldSetPanResponder: (evt, gestureState) => {
                 return !(
                     gestureState.dy === 0 ||
-                    (gestureState.dy < 1 && gestureState.dy > -2)
+                    (gestureState.dy < 10 && gestureState.dy > -10)
                 );
             },
             onPanResponderGrant: (evt, gestureState) => {
@@ -170,7 +180,9 @@ const Description = ({
                 animatedValue.setOffset(animatedValue._value);
             },
             onPanResponderMove: (evt, gestureState) => {
-                animatedValue.setValue(gestureState.dy * 1);
+                if (gestureState.dy > 30 || gestureState.dy < -30) {
+                    animatedValue.setValue(gestureState.dy * 1);
+                }
             },
             onPanResponderRelease: (evt, gestureState) => {
                 animatedValue.flattenOffset();
@@ -489,19 +501,19 @@ const Description = ({
     );
 };
 
-const mapStateToProps = ({descState, listState, mapState}) => ({
+const mapStateToProps = ({descState, listState, mapState}: any) => ({
     descVisibility: descState.descVisibility,
     currentRegion: descState.currentRegion,
     panelVisibility: listState.panelVisibility,
     myRegion: mapState.myRegion
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: any) => ({
     callPress: () => dispatch(callPress()),
     locationPress: () => dispatch(locationPress()),
-    setDestinationCoords: (location) =>
+    setDestinationCoords: (location: any) =>
         dispatch(setDestinationCoords(location)),
-    setMapMode: (mode) => dispatch(setMapMode(mode))
+    setMapMode: (mode: any) => dispatch(setMapMode(mode))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Description);

@@ -3,27 +3,27 @@ import {
     SHOW_MAP_LOADING,
     HIDE_MAP_LOADING,
     TOGGLE_MENU,
-    SET_LANGUAGE,
+    SET_LANGUAGE
 } from '../types';
 
 export const showFlashMessage = (payload: any) => ({
     type: SHOW_FLASH_MESSAGE,
-    payload,
+    payload
 });
 
 export const showMapLoading = () => ({
-    type: SHOW_MAP_LOADING,
+    type: SHOW_MAP_LOADING
 });
 
 export const hideMapLoading = () => ({
-    type: HIDE_MAP_LOADING,
+    type: HIDE_MAP_LOADING
 });
 
 export const toggleMenu = () => ({
-    type: TOGGLE_MENU,
+    type: TOGGLE_MENU
 });
 
-export const setLanguage = (payload) => ({
+export const setLanguage = (payload: any) => ({
     type: SET_LANGUAGE,
-    payload,
+    payload
 });

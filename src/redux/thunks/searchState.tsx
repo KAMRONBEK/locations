@@ -4,12 +4,14 @@ import Service from '../../services/service';
 import {strings} from '../../locales/strings';
 import {setDisplayData, mapPressed, setMapMode} from '../actions/mapState';
 
-export const search = (keyword, searchData) => async (dispatch) => {
+export const search = (keyword: string, searchData: any) => async (
+    dispatch: any
+) => {
     dispatch(setSearchStatus(SEARCHING));
     try {
         let result = await Service.search({
             searchKey: keyword,
-            list: searchData,
+            list: searchData
         });
         let resultText =
             strings.found + ' ' + result.length + ' ' + strings.results;

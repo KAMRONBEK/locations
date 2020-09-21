@@ -8,29 +8,30 @@ export const styles = StyleSheet.create({
         resizeMode: 'contain',
         ...Platform.select({
             ios: {
-                paddingTop: 30,
+                paddingTop: 30
             },
             android: {
-                paddingTop: 0,
+                paddingTop: 0
             },
             default: {
                 // other platforms, web for example
-                paddingTop: 0,
-            },
-        }),
+                paddingTop: 0
+            }
+        })
     },
     imageBanner: {
         position: 'absolute',
         borderWidth: 10,
-        top: 0,
+        top: 0
     },
+    boxWrapper: {},
     top: {
         flexDirection: 'row',
         alignItems: 'center',
         padding: 10,
         paddingTop: 40,
         paddingBottom: 0,
-        backgroundColor: 'white',
+        backgroundColor: 'white'
     },
     logoWrapper: {
         borderRadius: 150,
@@ -38,7 +39,7 @@ export const styles = StyleSheet.create({
         shadowColor: colors.green,
         shadowOffset: {
             width: 2,
-            height: 5,
+            height: 5
         },
         shadowOpacity: 0.5,
         shadowRadius: 5,
@@ -47,45 +48,45 @@ export const styles = StyleSheet.create({
         width: 80,
         justifyContent: 'center',
         alignItems: 'center',
-        marginHorizontal: 10,
+        marginHorizontal: 10
     },
     logo: {
         height: 100,
         width: 100,
-        resizeMode: 'contain',
+        resizeMode: 'contain'
     },
     titleWrapper: {
-        paddingHorizontal: 0,
+        paddingHorizontal: 0
     },
     descWrapper: {
         padding: 10,
-        paddingHorizontal: 20,
+        paddingHorizontal: 20
     },
 
     content: {},
 
     title: {
         fontSize: 20,
-        color: colors.green,
+        color: colors.green
     },
     descText: {
         color: colors.black,
-        fontSize: 14,
+        fontSize: 14
     },
     name: {
         fontSize: 25,
-        color: colors.green,
+        color: colors.green
     },
     link: {
         fontSize: 14,
         color: colors.blue,
         textDecorationLine: 'underline',
-        opacity: 0.7,
+        opacity: 0.7
     },
     text: {
         paddingTop: 10,
         color: colors.darkBlack,
-        textAlign: 'center',
+        textAlign: 'center'
     },
     card: {
         backgroundColor: colors.ultraLightBlue,
@@ -94,12 +95,12 @@ export const styles = StyleSheet.create({
         borderRadius: BORDER_RADIUS,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 10,
+        paddingHorizontal: 10
     },
     row: {
         flexDirection: 'row',
         paddingVertical: 10,
-        justifyContent: 'space-around',
+        justifyContent: 'space-around'
     },
     selectWrapper: {
         position: 'absolute',
@@ -109,16 +110,16 @@ export const styles = StyleSheet.create({
         right: 0,
         ...Platform.select({
             ios: {
-                top: 40,
+                top: 40
             },
             android: {
-                top: 5,
+                top: 5
             },
             default: {
                 // other platforms, web for example
-                top: 5,
-            },
-        }),
+                top: 5
+            }
+        })
     },
     round: {
         width: 70,
@@ -127,21 +128,21 @@ export const styles = StyleSheet.create({
         borderRadius: BORDER_RADIUS,
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        flexDirection: 'row',
+        flexDirection: 'row'
     },
     roundText: {
         textTransform: 'uppercase',
-        fontSize: 16,
+        fontSize: 16
     },
     languageImg: {
         width: 20,
-        height: 20,
+        height: 20
     },
     socialWrapper: {
         justifyContent: 'space-evenly',
         alignItems: 'center',
         flexDirection: 'row',
         paddingVertical: 10,
-        paddingHorizontal: 40,
-    },
+        paddingHorizontal: 40
+    }
 });

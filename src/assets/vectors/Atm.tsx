@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, {Rect, Path, Circle, G} from 'react-native-svg';
 
-function Atm(props) {
+function Atm(props: any) {
     return (
         <Svg height={512} viewBox="0 0 128 128" width={512} {...props}>
             <Rect

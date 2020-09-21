@@ -48,7 +48,7 @@ class Service {
                         'filial' +
                         ' ' +
                         'filiallar'
-                    } `,
+                    } `
                 };
             });
 
@@ -73,7 +73,7 @@ class Service {
                         'minibanklar' +
                         ' ' +
                         'minibanks'
-                    } `,
+                    } `
                 };
             });
 
@@ -92,7 +92,7 @@ class Service {
                         'Банкомат' +
                         ' ' +
                         'shahobcha'
-                    } `,
+                    } `
                 };
             });
 
@@ -104,9 +104,7 @@ class Service {
                         ? 0
                         : getPreciseDistance(myLocation, {
                               latitude: parseFloat(item.location.split(',')[0]),
-                              longitude: parseFloat(
-                                  item.location.split(',')[1],
-                              ),
+                              longitude: parseFloat(item.location.split(',')[1])
                           }) / 1000;
                 let newItem = {...item, id: index, distance: distance};
                 return newItem;

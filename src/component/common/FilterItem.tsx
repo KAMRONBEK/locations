@@ -5,6 +5,7 @@ import Text from './Text';
 
 interface FilterItemProps {
     text: string;
+    onPress: any;
 }
 
 const FilterItem = ({text, onPress}: FilterItemProps) => {
@@ -25,8 +26,8 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 15,
         backgroundColor: colors.lightPink,
-        marginRight: 10,
-    },
+        marginRight: 10
+    }
 });
 
 export default FilterItem;

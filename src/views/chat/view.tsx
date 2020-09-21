@@ -8,32 +8,37 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {navigate} from '../../services/navigationServices';
 import {SCREENS} from '../../constants';
+import {NavigationProp} from '@react-navigation/native';
 
-let Chat = ({navigation}) => {
+interface chatProps {
+    navigation: NavigationProp<{}>;
+}
+
+let Chat = ({navigation}: chatProps) => {
     let [messagesList, setMessageList] = useState([
         {
             id: '1',
             message:
                 'this is me and this is message that you wanted, you happy?',
             date: '10:10',
-            type: 'recieve',
+            type: 'recieve'
         },
         {
             id: '2',
             message:
                 'this is me and this is message that you wanted, you happy? I am asking?',
             date: '10:10',
-            type: 'recieve',
+            type: 'recieve'
         },
         {
             id: '3',
             message: 'yeah I am very very Happy 😀😀😀',
             date: '10:11',
-            type: 'send',
-        },
+            type: 'send'
+        }
     ]);
 
-    let flatList = useRef(null);
+    let flatList = useRef<FlatList>(null);
 
     return (
         <View style={styles.container}>
@@ -50,10 +55,16 @@ let Chat = ({navigation}) => {
             </View>
             <FlatList
                 ref={flatList}
-                onContentSizeChange={() =>
-                    flatList.current.scrollToEnd({animated: true})
-                }
-                onLayout={() => flatList.current.scrollToEnd({animated: true})}
+                onContentSizeChange={() => {
+                    if (flatList.current) {
+                        flatList.current.scrollToEnd({animated: true});
+                    }
+                }}
+                onLayout={() => {
+                    if (flatList.current) {
+                        flatList.current.scrollToEnd({animated: true});
+                    }
+                }}
                 contentContainerStyle={styles.chatArea}
                 data={messagesList}
                 renderItem={({item, index}) => (

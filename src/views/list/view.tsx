@@ -6,7 +6,7 @@ import {
     Animated,
     TouchableOpacity,
     FlatList,
-    Modal,
+    Modal
 } from 'react-native';
 import {connect} from 'react-redux';
 import {colors, deviceHeight, deviceWidth} from '../../constants';
@@ -16,8 +16,15 @@ import {ScrollView} from 'react-native-gesture-handler';
 import ListItem from '../../component/mapRelated/ListItem';
 import {strings} from '../../locales/strings';
 import images from '../../assets/images';
+import {branchType} from '../../screens/map/Map';
 
-const List = ({panelVisibility, hideList, displayData}) => {
+interface listProps {
+    panelVisibility: boolean;
+    hideList: any;
+    displayData: Array<branchType>;
+}
+
+const List = ({panelVisibility, hideList, displayData}: listProps) => {
     let [animatedRadius, setRadius] = useState(new Animated.Value(0));
     let [opacity, setOpacity] = useState(new Animated.Value(0));
     let [translateY, setTanslateY] = useState(new Animated.Value(deviceHeight));
@@ -29,46 +36,46 @@ const List = ({panelVisibility, hideList, displayData}) => {
             Animated.timing(translateY, {
                 toValue: 0,
                 duration: 500,
-                useNativeDriver: true,
+                useNativeDriver: true
             }),
             Animated.timing(animatedRadius, {
                 toValue: 0,
                 useNativeDriver: true,
-                duration: 500,
+                duration: 500
             }),
             Animated.timing(opacity, {
                 toValue: 1,
                 useNativeDriver: true,
-                duration: 500,
+                duration: 500
             }),
             Animated.timing(translateX, {
                 toValue: 100,
                 useNativeDriver: true,
-                duration: 500,
-            }),
+                duration: 500
+            })
         ]).start();
     } else {
         Animated.parallel([
             Animated.timing(translateY, {
                 toValue: deviceHeight,
                 useNativeDriver: true,
-                duration: 500,
+                duration: 500
             }),
             Animated.timing(animatedRadius, {
                 toValue: 100,
                 useNativeDriver: true,
-                duration: 500,
+                duration: 500
             }),
             Animated.timing(opacity, {
                 toValue: 0,
                 useNativeDriver: true,
-                duration: 500,
+                duration: 500
             }),
             Animated.timing(translateX, {
                 toValue: 0,
                 useNativeDriver: true,
-                duration: 500,
-            }),
+                duration: 500
+            })
         ]).start();
     }
     // }, [panelVisibility]);
@@ -82,8 +89,8 @@ const List = ({panelVisibility, hideList, displayData}) => {
                 {
                     transform: [{translateY}],
                     borderRadius: animatedRadius,
-                    opacity: opacity,
-                },
+                    opacity: opacity
+                }
             ]}>
             <View style={[styles.top]}>
                 <Text style={styles.text}>
@@ -123,31 +130,32 @@ const styles = StyleSheet.create({
         top: 0,
         height: deviceHeight,
         paddingTop: 30,
-        zIndex: 2,
+        zIndex: 2
     },
     top: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 20,
-        alignItems: 'center',
+        alignItems: 'center'
     },
     listWrapper: {
         paddingHorizontal: 15,
-        marginTop: 10,
+        marginTop: 10
     },
     text: {
         fontSize: 18,
-        color: colors.darkBlack,
+        color: colors.darkBlack
     },
+    closeWrapper: {}
 });
 
-const mapStateToProps = ({listState, mapState}) => ({
+const mapStateToProps = ({listState, mapState}: any) => ({
     panelVisibility: listState.panelVisibility,
-    displayData: mapState.displayDataList,
+    displayData: mapState.displayDataList
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    hideList: () => dispatch(hideList()),
+const mapDispatchToProps = (dispatch: any) => ({
+    hideList: () => dispatch(hideList())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(memo(List));

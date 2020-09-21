@@ -3,30 +3,30 @@ import {
     SET_SEARCH_RESULT_TEXT,
     SET_SEARCH_RESULT_LIST,
     SET_SEARCH_KEYWORD,
-    SET_SEARCH_FOCUS,
+    SET_SEARCH_FOCUS
 } from '../types';
 
-export const setSearchKeyword = (payload) => ({
+export const setSearchKeyword = (payload: any) => ({
     type: SET_SEARCH_KEYWORD,
-    payload,
+    payload
 });
 
-export const setSearchStatus = (payload) => ({
+export const setSearchStatus = (payload: any) => ({
     type: SET_SEARCH_STATUS,
-    payload,
+    payload
 });
 
-export const setSearchResultText = (payload) => ({
+export const setSearchResultText = (payload: any) => ({
     type: SET_SEARCH_RESULT_TEXT,
-    payload,
+    payload
 });
 
-export const setSearchRelustList = (payload) => ({
+export const setSearchRelustList = (payload: any) => ({
     type: SET_SEARCH_RESULT_LIST,
-    payload,
+    payload
 });
 
-export const setSearchFocus = (payload) => ({
+export const setSearchFocus = (payload: any) => ({
     type: SET_SEARCH_FOCUS,
-    payload,
+    payload
 });
