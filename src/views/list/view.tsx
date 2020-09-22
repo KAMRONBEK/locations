@@ -6,7 +6,7 @@ import {
     Animated,
     TouchableOpacity,
     FlatList,
-    Modal
+    Modal,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {colors, deviceHeight, deviceWidth} from '../../constants';
@@ -36,46 +36,46 @@ const List = ({panelVisibility, hideList, displayData}: listProps) => {
             Animated.timing(translateY, {
                 toValue: 0,
                 duration: 500,
-                useNativeDriver: true
+                useNativeDriver: false,
             }),
             Animated.timing(animatedRadius, {
                 toValue: 0,
-                useNativeDriver: true,
-                duration: 500
+                useNativeDriver: false,
+                duration: 500,
             }),
             Animated.timing(opacity, {
                 toValue: 1,
-                useNativeDriver: true,
-                duration: 500
+                useNativeDriver: false,
+                duration: 500,
             }),
             Animated.timing(translateX, {
                 toValue: 100,
-                useNativeDriver: true,
-                duration: 500
-            })
+                useNativeDriver: false,
+                duration: 500,
+            }),
         ]).start();
     } else {
         Animated.parallel([
             Animated.timing(translateY, {
                 toValue: deviceHeight,
-                useNativeDriver: true,
-                duration: 500
+                useNativeDriver: false,
+                duration: 500,
             }),
             Animated.timing(animatedRadius, {
                 toValue: 100,
-                useNativeDriver: true,
-                duration: 500
+                useNativeDriver: false,
+                duration: 500,
             }),
             Animated.timing(opacity, {
                 toValue: 0,
-                useNativeDriver: true,
-                duration: 500
+                useNativeDriver: false,
+                duration: 500,
             }),
             Animated.timing(translateX, {
                 toValue: 0,
-                useNativeDriver: true,
-                duration: 500
-            })
+                useNativeDriver: false,
+                duration: 500,
+            }),
         ]).start();
     }
     // }, [panelVisibility]);
@@ -89,8 +89,8 @@ const List = ({panelVisibility, hideList, displayData}: listProps) => {
                 {
                     transform: [{translateY}],
                     borderRadius: animatedRadius,
-                    opacity: opacity
-                }
+                    opacity: opacity,
+                },
             ]}>
             <View style={[styles.top]}>
                 <Text style={styles.text}>
@@ -130,32 +130,32 @@ const styles = StyleSheet.create({
         top: 0,
         height: deviceHeight,
         paddingTop: 30,
-        zIndex: 2
+        zIndex: 2,
     },
     top: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 20,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     listWrapper: {
         paddingHorizontal: 15,
-        marginTop: 10
+        marginTop: 10,
     },
     text: {
         fontSize: 18,
-        color: colors.darkBlack
+        color: colors.darkBlack,
     },
-    closeWrapper: {}
+    closeWrapper: {},
 });
 
 const mapStateToProps = ({listState, mapState}: any) => ({
     panelVisibility: listState.panelVisibility,
-    displayData: mapState.displayDataList
+    displayData: mapState.displayDataList,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    hideList: () => dispatch(hideList())
+    hideList: () => dispatch(hideList()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(memo(List));

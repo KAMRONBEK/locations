@@ -14,8 +14,6 @@ middlewaresToApply.push(thunk);
 
 if (__DEV__) {
     //developer mode only
-    console.log('dev');
-
     // const createFlipperDebugger = require('redux-flipper').default;
     // middlewaresToApply.push(createFlipperDebugger());
 }

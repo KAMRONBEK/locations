@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     Modal,
     BackHandler,
-    Linking
+    Linking,
 } from 'react-native';
 import images from '../../assets/images';
 import {BORDER_RADIUS, colors, deviceWidth} from '../../constants';
@@ -15,15 +15,25 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {strings} from '../../locales/strings';
 import {connect} from 'react-redux';
-import {markerPressed} from '../../redux/thunks';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import {cardPressed} from '../../redux/thunks';
 import moment from 'moment';
 import SendIntentAndroid from 'react-native-send-intent';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import Seperator from '../common/Seperator';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {branchType} from '../../screens/map/Map';
+import {
+    BallIndicator,
+    BarIndicator,
+    DotIndicator,
+    MaterialIndicator,
+    PacmanIndicator,
+    PulseIndicator,
+    SkypeIndicator,
+    UIActivityIndicator,
+    WaveIndicator,
+} from 'react-native-indicators';
+import {cardPressed} from '../../redux/thunks';
 
 interface listItemProps {
     item: branchType;
@@ -51,12 +61,12 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
             // You can pass props to <Image />.
             props: {
                 // headers: ...
-            }
+            },
         },
         {
             url:
-                'https://wowslider.net/local-sliders/demo-10/data1/images/road220058.jpg'
-        }
+                'https://wowslider.net/local-sliders/demo-10/data1/images/road220058.jpg',
+        },
     ];
 
     const onBackPress = () => {
@@ -74,7 +84,7 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
     }, []);
 
     let [currentTime, setCurrentTime] = useState(
-        moment(new Date(), 'hh:mm:ss')
+        moment(new Date(), 'hh:mm:ss'),
     );
 
     let [toolTipVis, setToolTipVis] = useState(false);
@@ -82,23 +92,23 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
     const onBankingPress = async () => {
         try {
             let isInstalled = await SendIntentAndroid.isAppInstalled(
-                'com.ipakyulibank.mobile'
+                'com.ipakyulibank.mobile',
             );
             if (isInstalled) {
                 console.log('installed');
                 let isOpen = await SendIntentAndroid.openApp(
                     'com.ipakyulibank.mobile',
-                    {}
+                    {},
                 );
             } else {
                 Linking.canOpenURL(
-                    'market://details?id=com.ipakyulibank.mobile'
+                    'market://details?id=com.ipakyulibank.mobile',
                 )
                     .then((supported) => {
                         if (supported) {
                             console.log('accepted');
                             return Linking.openURL(
-                                'market://details?id=com.ipakyulibank.mobile'
+                                'market://details?id=com.ipakyulibank.mobile',
                             );
                         } else {
                             console.log('an error occured');
@@ -121,7 +131,7 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                                 alignSelf: 'flex-end',
                                 paddingRight: 15,
                                 paddingTop: 15,
-                                marginBottom: -15
+                                marginBottom: -15,
                             }}>
                             <Ionicons
                                 name="close-outline"
@@ -135,7 +145,10 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                 enableSwipeDown
                 enablePreload
                 onSwipeDown={() => setSliderVisible(false)}
-                useNativeDriver={true}
+                useNativeDriver={false}
+                loadingRender={() => (
+                    <SkypeIndicator color={colors.lightViolet} />
+                )}
             />
         </Modal>
     );
@@ -301,8 +314,8 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                             ? colors.pink
                             : item.type == 'branch'
                             ? colors.red
-                            : colors.violate
-                }
+                            : colors.violate,
+                },
             ]}>
             <View style={styles.container}>
                 <View>
@@ -325,12 +338,12 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                             <View style={{flex: 1}}>
                                 {currentTime.isBetween(
                                     moment('09:00:00', 'hh:mm:ss'),
-                                    moment('16:00:00', 'hh:mm:ss')
+                                    moment('16:00:00', 'hh:mm:ss'),
                                 ) ? (
                                     <Text
                                         style={{
                                             fontSize: 12,
-                                            color: colors.gray
+                                            color: colors.gray,
                                         }}>
                                         {Math.round(
                                             moment
@@ -338,11 +351,11 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                                                     currentTime.diff(
                                                         moment(
                                                             '09:00:00',
-                                                            'hh:mm:ss'
-                                                        )
-                                                    )
+                                                            'hh:mm:ss',
+                                                        ),
+                                                    ),
                                                 )
-                                                .asMinutes()
+                                                .asMinutes(),
                                         )}{' '}
                                         {strings.min} {strings.closesAfter}
                                     </Text>
@@ -350,7 +363,7 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                                     <Text
                                         style={{
                                             fontSize: 12,
-                                            color: colors.gray
+                                            color: colors.gray,
                                         }}>
                                         ' (' + `$
                                         {Math.round(
@@ -359,11 +372,11 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                                                     currentTime.diff(
                                                         moment(
                                                             '09:00:00',
-                                                            'hh:mm:ss'
-                                                        )
-                                                    )
+                                                            'hh:mm:ss',
+                                                        ),
+                                                    ),
                                                 )
-                                                .asMinutes()
+                                                .asMinutes(),
                                         )}{' '}
                                         ${strings.min} ${strings.opensAfter})`
                                     </Text>
@@ -379,17 +392,17 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                                     width: 100,
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    paddingTop: 5
+                                    paddingTop: 5,
                                 }}>
                                 <Text
                                     style={{
                                         color: colors.textGray,
                                         textAlign: 'center',
-                                        textTransform: 'capitalize'
+                                        textTransform: 'capitalize',
                                     }}>
                                     {currentTime.isBetween(
                                         moment('09:00:00', 'hh:mm:ss'),
-                                        moment('16:00:00', 'hh:mm:ss')
+                                        moment('16:00:00', 'hh:mm:ss'),
                                     )
                                         ? strings.open
                                         : strings.opensAt}
@@ -410,8 +423,8 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                             style={[
                                 styles.title,
                                 index == 0 && {
-                                    width: deviceWidth * 0.6 - 80
-                                }
+                                    width: deviceWidth * 0.6 - 80,
+                                },
                             ]}>
                             <View
                                 style={[
@@ -422,8 +435,8 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                                                 ? colors.pinkTrans
                                                 : item.type == 'branch'
                                                 ? colors.redTrans
-                                                : colors.violateTrans
-                                    }
+                                                : colors.violateTrans,
+                                    },
                                 ]}>
                                 <Text
                                     style={[
@@ -434,8 +447,8 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                                                     ? colors.pink
                                                     : item.type == 'branch'
                                                     ? colors.red
-                                                    : colors.violate
-                                        }
+                                                    : colors.violate,
+                                        },
                                     ]}>
                                     {item.type == 'atm'
                                         ? strings.atm
@@ -453,7 +466,7 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                             size={12}
                             color={colors.green}
                             style={{
-                                paddingTop: 2
+                                paddingTop: 2,
                             }}
                         />
                         <Text numberOfLines={2} style={styles.text}>
@@ -468,7 +481,7 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                             size={12}
                             color={colors.green}
                             style={{
-                                paddingTop: 2
+                                paddingTop: 2,
                             }}
                         />
                         <Text numberOfLines={2} style={styles.text}>
@@ -486,7 +499,7 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                                         borderRadius: 40,
                                         padding: 5,
                                         marginLeft: -18,
-                                        paddingLeft: 20
+                                        paddingLeft: 20,
                                     }}>
                                     <Text style={styles.transferText}>
                                         {strings.moneyTransfer}
@@ -504,7 +517,7 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                         </TouchableOpacity>
                         <View
                             style={{
-                                flexDirection: 'row'
+                                flexDirection: 'row',
                             }}>
                             <View style={styles.navigateWrapper}>
                                 <TouchableOpacity onPress={onPress}>
@@ -544,7 +557,7 @@ const styles = StyleSheet.create({
         borderRadius: 4 * BORDER_RADIUS,
         // marginBottom: 15,
         paddingLeft: 3,
-        marginBottom: 10
+        marginBottom: 10,
     },
     container: {
         flexDirection: 'row',
@@ -552,16 +565,16 @@ const styles = StyleSheet.create({
         borderRadius: BORDER_RADIUS,
         // paddingVertical: 40
         padding: 8,
-        flex: 1
+        flex: 1,
     },
     titleWrapper: {
         flexDirection: 'row',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
         // justifyContent: 'flex-start',
     },
     row: {
         marginBottom: 3,
-        flexDirection: 'row'
+        flexDirection: 'row',
         // alignItems: 'baseline',
     },
     image: {
@@ -569,19 +582,19 @@ const styles = StyleSheet.create({
         width: 100,
         borderRadius: BORDER_RADIUS,
         marginRight: 10,
-        resizeMode: 'cover'
+        resizeMode: 'cover',
     },
     title: {
         width: deviceWidth * 0.4,
         fontSize: 14,
         color: colors.green,
         textTransform: 'capitalize',
-        paddingLeft: 5
+        paddingLeft: 5,
     },
     text: {
         fontSize: 12,
         color: colors.darkBlack,
-        maxWidth: deviceWidth * 0.5
+        maxWidth: deviceWidth * 0.5,
     },
     accent: {
         color: colors.gray,
@@ -589,30 +602,30 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
         position: 'absolute',
         top: 0,
-        right: 5
+        right: 5,
     },
     bankingImg: {
         width: 35,
-        height: 35
+        height: 35,
     },
     typeWrapper: {
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 5
+        paddingHorizontal: 5,
     },
     type: {
         fontSize: 12,
-        textTransform: 'capitalize'
+        textTransform: 'capitalize',
     },
     content: {
         justifyContent: 'space-between',
         // paddingVertical: 10,
-        flex: 1
+        flex: 1,
     },
     buttonWrapper: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     callWrapper: {
         marginLeft: 5,
@@ -621,7 +634,7 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: colors.lightGreen,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     navigateWrapper: {
         borderRadius: 100,
@@ -629,12 +642,12 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: colors.lightGreen,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     transferWrapper: {
         flexDirection: 'row-reverse',
         // justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     round: {
         width: 40,
@@ -643,23 +656,23 @@ const styles = StyleSheet.create({
         backgroundColor: colors.lightGreen,
         justifyContent: 'center',
         alignItems: 'center',
-        elevation: 5
+        elevation: 5,
     },
     transferText: {
         color: colors.dimGray,
-        fontSize: 13
+        fontSize: 13,
     },
     lupaWrapper: {
         position: 'absolute',
         left: 20,
-        top: 20
-    }
+        top: 20,
+    },
 });
 
 const mapStateToProps = ({}: any) => ({});
 
 const mapDispatchToProps = (dispatch: any) => ({
-    cardPressed: (region: branchType) => dispatch(cardPressed(region))
+    cardPressed: (region: branchType) => dispatch(cardPressed(region)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListItem);

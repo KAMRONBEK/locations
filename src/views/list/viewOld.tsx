@@ -203,7 +203,7 @@ const List = ({
                                     },
                                 },
                             ],
-                            {useNativeDriver: true},
+                            {useNativeDriver: false},
                         );
                     }}>
                     {!!displayData &&

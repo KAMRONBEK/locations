@@ -12,7 +12,6 @@ import {Provider} from 'react-redux';
 import configureStore from './src/redux/configureStore';
 import LoadingModal from './src/component/container/LoadingModal';
 import SplashScreen from 'react-native-splash-screen';
-import {render} from 'react-native-testing-library';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -23,7 +22,7 @@ if (Platform.OS === 'android') {
 const App = () => {
     console.disableYellowBox = true;
     // useEffect(() => {
-    //     SplashScreen.hide();
+    // SplashScreen.hide();
     // }, []);
     let store = configureStore();
     return (

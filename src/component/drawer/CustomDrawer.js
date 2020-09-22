@@ -9,7 +9,7 @@ import {
     Keyboard,
     TouchableWithoutFeedback,
     TouchableOpacity,
-    NativeModules
+    NativeModules,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {
@@ -19,7 +19,7 @@ import {
     UZ,
     RU,
     ENG,
-    deviceWidth
+    deviceWidth,
 } from '../../constants';
 import {toggleMenu} from '../../redux/actions';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -38,7 +38,7 @@ type DrawerProps = {
     children: any,
     menuOpen: boolean,
     toggleMenu: Function,
-    navigation: any
+    navigation: any,
 };
 
 let {width} = Dimensions.get('window');
@@ -49,7 +49,7 @@ const CustomDrawer = ({
     toggleMenu,
     navigation,
     originalDataList,
-    language
+    language,
 }: DrawerProps) => {
     const [animation, setAnimation] = useState(new Animated.Value(0));
     //changing height while keyboard is on
@@ -66,20 +66,20 @@ const CustomDrawer = ({
     useEffect(() => {
         Animated.timing(animation, {
             toValue: Number(menuOpen),
-            useNativeDriver: true
+            useNativeDriver: false,
         }).start();
     }, [menuOpen]);
     let scale = animation.interpolate({
         inputRange: [0, 1],
-        outputRange: [1, 0.7]
+        outputRange: [1, 0.7],
     });
     let translateX = animation.interpolate({
         inputRange: [0, 1],
-        outputRange: [0, width - 20]
+        outputRange: [0, width - 20],
     });
     let borderRadius = animation.interpolate({
         inputRange: [0, 0.1, 1],
-        outputRange: [0, 40, 40]
+        outputRange: [0, 40, 40],
     });
     return (
         <View style={styles.plane}>
@@ -88,12 +88,12 @@ const CustomDrawer = ({
                     <View style={styles.avatarContainer}>
                         <View
                             style={{
-                                flexDirection: 'row'
+                                flexDirection: 'row',
                             }}>
                             <Image
                                 source={{
                                     uri:
-                                        'https://docs.snapchat.com/images/docs/design-guidelines/black-background@2x.png'
+                                        'https://docs.snapchat.com/images/docs/design-guidelines/black-background@2x.png',
                                 }}
                                 style={styles.avatar}
                             />
@@ -101,8 +101,8 @@ const CustomDrawer = ({
                                 style={[
                                     styles.column,
                                     {
-                                        paddingHorizontal: 20
-                                    }
+                                        paddingHorizontal: 20,
+                                    },
                                 ]}>
                                 <Text style={styles.username}>Kamuran</Text>
                                 <Text style={styles.id}>
@@ -128,8 +128,8 @@ const CustomDrawer = ({
                         style={[
                             styles.row,
                             {
-                                width: deviceWidth * 0.7
-                            }
+                                width: deviceWidth * 0.7,
+                            },
                         ]}>
                         <Buble state={UZ} />
                         <Buble state={RU} />
@@ -138,7 +138,7 @@ const CustomDrawer = ({
                 </View>
                 <View
                     style={{
-                        marginTop: -30
+                        marginTop: -30,
                     }}>
                     <DrawerItem
                         onPress={() => {
@@ -206,7 +206,7 @@ const CustomDrawer = ({
                     justifyContent: 'center',
                     overflow: 'hidden',
                     borderRadius,
-                    transform: [{scale}, {translateX}]
+                    transform: [{scale}, {translateX}],
                 }}>
                 {children}
             </Animated.View>
@@ -217,12 +217,12 @@ const CustomDrawer = ({
 const styles = StyleSheet.create({
     plane: {
         backgroundColor: colors.ultraLightBlue,
-        flex: 1
+        flex: 1,
     },
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingVertical: 20
+        paddingVertical: 20,
     },
     drawerContainer: {
         position: 'absolute',
@@ -230,40 +230,40 @@ const styles = StyleSheet.create({
         right: 20,
         left: 20,
         bottom: 0,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     avatarContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     avatar: {
         width: 85,
         height: 85,
         borderRadius: BORDER_RADIUS,
         borderWidth: 1,
-        borderColor: colors.lightPink
+        borderColor: colors.lightPink,
     },
     username: {
         fontWeight: 'bold',
         fontSize: 24,
         color: colors.darkBlack,
-        marginTop: 10
+        marginTop: 10,
     },
     id: {
         fontWeight: '300',
         fontSize: 17,
         color: colors.dimGray,
-        marginTop: 10
+        marginTop: 10,
     },
     normalBold: {
         fontSize: 17,
         fontWeight: 'bold',
-        color: colors.lightBlue
+        color: colors.lightBlue,
     },
     normalLight: {
         fontSize: 17,
         fontWeight: '300',
-        color: colors.black
+        color: colors.black,
     },
     borderedRegular: {
         fontSize: 17,
@@ -273,32 +273,32 @@ const styles = StyleSheet.create({
         // borderStyle: "dotted",
         marginLeft: 15,
         textDecorationStyle: 'dashed',
-        textDecorationLine: 'underline'
+        textDecorationLine: 'underline',
     },
     logout: {
         paddingTop: 50,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingBottom: 10
+        paddingBottom: 10,
     },
     closeWrapper: {
-        padding: 15
-    }
+        padding: 15,
+    },
 });
 
 const mapStateToProps = ({appState, mapState}) => ({
     menuOpen: appState.menuOpen,
     originalDataList: mapState.originalDataList,
-    language: appState.language
+    language: appState.language,
 });
 
 const mapDispatchToProps = {
-    toggleMenu
+    toggleMenu,
 };
 
 const ConnectedCustomDrawer = connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 )(CustomDrawer);
 
 export default ConnectedCustomDrawer;

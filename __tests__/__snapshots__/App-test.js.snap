@@ -1,0 +1,2040 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App/> should match snapshot 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#F3F3F9",
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "bottom": 0,
+            "justifyContent": "space-between",
+            "left": 20,
+            "position": "absolute",
+            "right": 20,
+            "top": 30,
+          },
+        ]
+      }
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flexDirection": "row",
+              }
+            }
+          >
+            <Image
+              source={
+                Object {
+                  "uri": "https://docs.snapchat.com/images/docs/design-guidelines/black-background@2x.png",
+                }
+              }
+              style={
+                Object {
+                  "borderColor": "#F7EAFE",
+                  "borderRadius": 5,
+                  "borderWidth": 1,
+                  "height": 85,
+                  "width": 85,
+                }
+              }
+            />
+            <View
+              style={
+                Array [
+                  undefined,
+                  Object {
+                    "paddingHorizontal": 20,
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontFamily": "Roboto-Black",
+                    },
+                    Object {
+                      "color": "#1b1b1b",
+                      "fontSize": 24,
+                      "fontWeight": "bold",
+                      "marginTop": 10,
+                    },
+                  ]
+                }
+              >
+                Kamuran
+              </Text>
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontFamily": "Roboto-Medium",
+                    },
+                    Object {
+                      "color": "#5c5c5c",
+                      "fontSize": 17,
+                      "fontWeight": "300",
+                      "marginTop": 10,
+                    },
+                  ]
+                }
+              >
+                ID:
+                 
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "fontFamily": "Roboto-Regular",
+                      },
+                      Object {
+                        "color": "#3ACCE1",
+                      },
+                    ]
+                  }
+                >
+                  009
+                </Text>
+              </Text>
+            </View>
+          </View>
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FF4F9A",
+                      "fontSize": 35,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Ionicons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "paddingVertical": 20,
+              },
+              Object {
+                "width": 525,
+              },
+            ]
+          }
+        >
+          <RNGestureHandlerButton
+            collapsable={false}
+            onGestureEvent={[Function]}
+            onGestureHandlerEvent={[Function]}
+            onGestureHandlerStateChange={[Function]}
+            onHandlerStateChange={[Function]}
+            rippleColor={0}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                undefined,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#F7EAFE",
+                      "borderRadius": 40,
+                      "justifyContent": "center",
+                      "padding": 10,
+                      "width": 70,
+                    },
+                    Object {
+                      "backgroundColor": "#D9E7F2",
+                    },
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#1b1b1b",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  uz
+                </Text>
+              </View>
+            </View>
+          </RNGestureHandlerButton>
+          <RNGestureHandlerButton
+            collapsable={false}
+            onGestureEvent={[Function]}
+            onGestureHandlerEvent={[Function]}
+            onGestureHandlerStateChange={[Function]}
+            onHandlerStateChange={[Function]}
+            rippleColor={0}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                undefined,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#F7EAFE",
+                      "borderRadius": 40,
+                      "justifyContent": "center",
+                      "padding": 10,
+                      "width": 70,
+                    },
+                    false,
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#1b1b1b",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  ru
+                </Text>
+              </View>
+            </View>
+          </RNGestureHandlerButton>
+          <RNGestureHandlerButton
+            collapsable={false}
+            onGestureEvent={[Function]}
+            onGestureHandlerEvent={[Function]}
+            onGestureHandlerStateChange={[Function]}
+            onHandlerStateChange={[Function]}
+            rippleColor={0}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                undefined,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#F7EAFE",
+                      "borderRadius": 40,
+                      "justifyContent": "center",
+                      "padding": 10,
+                      "width": 70,
+                    },
+                    false,
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#1b1b1b",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  eng
+                </Text>
+              </View>
+            </View>
+          </RNGestureHandlerButton>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "marginTop": -30,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "width": 525,
+            }
+          }
+        >
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "marginTop": 15,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#1b1b1b",
+                      "fontSize": 27,
+                    },
+                    Object {
+                      "width": 40,
+                    },
+                    Object {
+                      "fontFamily": "Ionicons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "borderBottomWidth": 1,
+                    "borderColor": "#1b1b1b",
+                    "color": "#303030",
+                    "fontSize": 17,
+                    "fontWeight": "300",
+                    "paddingBottom": 15,
+                    "width": 180,
+                  }
+                }
+              >
+                Asosiy
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "width": 525,
+            }
+          }
+        >
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "marginTop": 15,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#1b1b1b",
+                      "fontSize": 27,
+                    },
+                    Object {
+                      "width": 40,
+                    },
+                    Object {
+                      "fontFamily": "Ionicons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "borderBottomWidth": 1,
+                    "borderColor": "#1b1b1b",
+                    "color": "#303030",
+                    "fontSize": 17,
+                    "fontWeight": "300",
+                    "paddingBottom": 15,
+                    "width": 180,
+                  }
+                }
+              >
+                Profil
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "width": 525,
+            }
+          }
+        >
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "marginTop": 15,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#1b1b1b",
+                      "fontSize": 24,
+                    },
+                    Object {
+                      "width": 40,
+                    },
+                    Object {
+                      "fontFamily": "Ionicons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "borderBottomWidth": 1,
+                    "borderColor": "#1b1b1b",
+                    "color": "#303030",
+                    "fontSize": 17,
+                    "fontWeight": "300",
+                    "paddingBottom": 15,
+                    "width": 180,
+                  }
+                }
+              >
+                Joylar
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "width": 525,
+            }
+          }
+        >
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "marginTop": 15,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#1b1b1b",
+                      "fontSize": 24,
+                    },
+                    Object {
+                      "width": 40,
+                    },
+                    Object {
+                      "fontFamily": "Ionicons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "borderBottomWidth": 1,
+                    "borderColor": "#1b1b1b",
+                    "color": "#303030",
+                    "fontSize": 17,
+                    "fontWeight": "300",
+                    "paddingBottom": 15,
+                    "width": 180,
+                  }
+                }
+              >
+                Qo'ng'iroqlar markazi
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View>
+        <Text
+          style={
+            Array [
+              Object {
+                "fontFamily": "Roboto-Regular",
+              },
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontFamily": "Roboto-Medium",
+                },
+                Object {
+                  "color": "#000",
+                  "fontSize": 17,
+                  "fontWeight": "300",
+                },
+              ]
+            }
+          >
+            Barcha mavjud joylar
+            : 
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontFamily": "Roboto-Black",
+                },
+                Object {
+                  "color": "#3ACCE1",
+                  "fontSize": 17,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            0
+          </Text>
+        </Text>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "paddingBottom": 10,
+              "paddingTop": 50,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "width": 525,
+              }
+            }
+          >
+            <View
+              accessible={true}
+              focusable={false}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "flexDirection": "row",
+                    "marginTop": 15,
+                  }
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#1b1b1b",
+                        "fontSize": 24,
+                      },
+                      Object {
+                        "width": 40,
+                      },
+                      Object {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+                <Text
+                  style={
+                    Object {
+                      "borderBottomWidth": 0,
+                      "borderColor": "#1b1b1b",
+                      "color": "#303030",
+                      "fontSize": 17,
+                      "fontWeight": "300",
+                      "paddingBottom": 15,
+                      "width": 180,
+                    }
+                  }
+                >
+                  Chiqish
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      pointerEvents="auto"
+      style={
+        Object {
+          "borderRadius": 0,
+          "flex": 1,
+          "justifyContent": "center",
+          "overflow": "hidden",
+          "transform": Array [
+            Object {
+              "scale": 1,
+            },
+            Object {
+              "translateX": 0,
+            },
+          ],
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <RNCSafeAreaProvider
+          onInsetsChange={[Function]}
+          style={
+            Array [
+              Object {
+                "flex": 1,
+              },
+              undefined,
+            ]
+          }
+        >
+          <View
+            onLayout={[Function]}
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          >
+            <View
+              pointerEvents="box-none"
+              style={
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                style={
+                  Object {
+                    "opacity": 1,
+                  }
+                }
+              />
+              <View
+                accessibilityElementsHidden={false}
+                closing={false}
+                gestureVelocityImpact={0.3}
+                importantForAccessibility="auto"
+                onClose={[Function]}
+                onGestureBegin={[Function]}
+                onGestureCanceled={[Function]}
+                onOpen={[Function]}
+                onTransitionStart={[Function]}
+                pointerEvents="box-none"
+                style={
+                  Object {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+                transitionSpec={
+                  Object {
+                    "close": Object {
+                      "animation": "spring",
+                      "config": Object {
+                        "damping": 500,
+                        "mass": 3,
+                        "overshootClamping": true,
+                        "restDisplacementThreshold": 10,
+                        "restSpeedThreshold": 10,
+                        "stiffness": 1000,
+                      },
+                    },
+                    "open": Object {
+                      "animation": "spring",
+                      "config": Object {
+                        "damping": 500,
+                        "mass": 3,
+                        "overshootClamping": true,
+                        "restDisplacementThreshold": 10,
+                        "restSpeedThreshold": 10,
+                        "stiffness": 1000,
+                      },
+                    },
+                  }
+                }
+              >
+                <View
+                  pointerEvents="box-none"
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <View
+                    collapsable={false}
+                    forwardedRef={[Function]}
+                    onGestureHandlerEvent={[Function]}
+                    onGestureHandlerStateChange={[Function]}
+                    style={
+                      Object {
+                        "flex": 1,
+                        "transform": Array [
+                          Object {
+                            "translateX": 0,
+                          },
+                          Object {
+                            "translateX": 0,
+                          },
+                        ],
+                      }
+                    }
+                  >
+                    <View
+                      pointerEvents="none"
+                      style={
+                        Object {
+                          "backgroundColor": "rgb(242, 242, 242)",
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "shadowColor": "#000",
+                          "shadowOffset": Object {
+                            "height": 1,
+                            "width": -1,
+                          },
+                          "shadowOpacity": 0.3,
+                          "shadowRadius": 5,
+                          "top": 0,
+                          "width": 3,
+                        }
+                      }
+                    />
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "flex": 1,
+                            "overflow": "hidden",
+                          },
+                          Array [
+                            Object {
+                              "backgroundColor": "rgb(242, 242, 242)",
+                            },
+                            undefined,
+                          ],
+                        ]
+                      }
+                    >
+                      <View
+                        style={
+                          Object {
+                            "flex": 1,
+                            "flexDirection": "column-reverse",
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "flex": 1,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Object {
+                                "backgroundColor": "#fff",
+                                "flex": 1,
+                                "paddingTop": 30,
+                                "resizeMode": "contain",
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                Object {
+                                  "alignItems": "center",
+                                  "backgroundColor": "white",
+                                  "flexDirection": "row",
+                                  "padding": 10,
+                                  "paddingBottom": 0,
+                                  "paddingTop": 40,
+                                }
+                              }
+                            >
+                              <View
+                                style={
+                                  Object {
+                                    "alignItems": "center",
+                                    "borderRadius": 150,
+                                    "elevation": 5,
+                                    "height": 80,
+                                    "justifyContent": "center",
+                                    "marginHorizontal": 10,
+                                    "overflow": "hidden",
+                                    "shadowColor": "rgb(8,114,73)",
+                                    "shadowOffset": Object {
+                                      "height": 5,
+                                      "width": 2,
+                                    },
+                                    "shadowOpacity": 0.5,
+                                    "shadowRadius": 5,
+                                    "width": 80,
+                                  }
+                                }
+                              >
+                                <Image
+                                  source={
+                                    Object {
+                                      "process": [Function],
+                                    }
+                                  }
+                                  style={
+                                    Object {
+                                      "height": 100,
+                                      "resizeMode": "contain",
+                                      "width": 100,
+                                    }
+                                  }
+                                />
+                              </View>
+                              <View
+                                style={
+                                  Object {
+                                    "paddingHorizontal": 0,
+                                  }
+                                }
+                              >
+                                <Text
+                                  style={
+                                    Array [
+                                      Object {
+                                        "fontFamily": "Roboto-Regular",
+                                      },
+                                      Object {
+                                        "color": "rgb(8,114,73)",
+                                        "fontSize": 25,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Ipak Yoli Locator
+                                </Text>
+                                <Text
+                                  style={
+                                    Array [
+                                      Object {
+                                        "fontFamily": "Roboto-Regular",
+                                      },
+                                      Object {
+                                        "color": "#5773FF",
+                                        "fontSize": 14,
+                                        "opacity": 0.7,
+                                        "textDecorationLine": "underline",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  ipakyulibank.uz
+                                </Text>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                Object {
+                                  "flexDirection": "row",
+                                  "paddingHorizontal": 20,
+                                  "paddingTop": 5,
+                                }
+                              }
+                            >
+                              <Text
+                                allowFontScaling={false}
+                                style={
+                                  Array [
+                                    Object {
+                                      "color": "rgb(8,114,73)",
+                                      "fontSize": 14,
+                                    },
+                                    undefined,
+                                    Object {
+                                      "fontFamily": "Ionicons",
+                                      "fontStyle": "normal",
+                                      "fontWeight": "normal",
+                                    },
+                                    Object {},
+                                  ]
+                                }
+                              >
+                                
+                              </Text>
+                              <Text
+                                style={
+                                  Array [
+                                    Object {
+                                      "fontFamily": "Roboto-Regular",
+                                    },
+                                    Object {
+                                      "fontSize": 12,
+                                      "maxWidth": "90%",
+                                      "paddingLeft": 5,
+                                    },
+                                  ]
+                                }
+                              >
+                                Bank bosh ofisi manzili: O’zbekiston, Toshkent sh. 100017, A.Qodiriy ko’chasi 2 uy
+                              </Text>
+                            </View>
+                            <View
+                              accessible={true}
+                              focusable={true}
+                              onClick={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
+                              style={
+                                Object {
+                                  "opacity": 1,
+                                }
+                              }
+                            >
+                              <View
+                                style={
+                                  Object {
+                                    "flexDirection": "row",
+                                    "paddingHorizontal": 20,
+                                    "paddingTop": 5,
+                                  }
+                                }
+                              >
+                                <Text
+                                  allowFontScaling={false}
+                                  style={
+                                    Array [
+                                      Object {
+                                        "color": "rgb(8,114,73)",
+                                        "fontSize": 14,
+                                      },
+                                      undefined,
+                                      Object {
+                                        "fontFamily": "Ionicons",
+                                        "fontStyle": "normal",
+                                        "fontWeight": "normal",
+                                      },
+                                      Object {},
+                                    ]
+                                  }
+                                >
+                                  
+                                </Text>
+                                <Text
+                                  style={
+                                    Array [
+                                      Object {
+                                        "fontFamily": "Roboto-Regular",
+                                      },
+                                      Object {
+                                        "fontSize": 12,
+                                        "paddingLeft": 5,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  78 140 78 33
+                                </Text>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-evenly",
+                                  "paddingHorizontal": 40,
+                                  "paddingVertical": 10,
+                                }
+                              }
+                            >
+                              <View
+                                accessible={true}
+                                focusable={true}
+                                onClick={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                                style={
+                                  Object {
+                                    "opacity": 1,
+                                  }
+                                }
+                              >
+                                <View
+                                  style={
+                                    Object {
+                                      "backgroundColor": "#fff",
+                                      "borderRadius": 100,
+                                      "elevation": 5,
+                                      "padding": 5,
+                                      "shadowColor": "#000",
+                                      "shadowOpacity": 0.3,
+                                      "shadowRadius": 5,
+                                    }
+                                  }
+                                >
+                                  <Image
+                                    source={
+                                      Object {
+                                        "process": [Function],
+                                      }
+                                    }
+                                    style={
+                                      Object {
+                                        "height": 25,
+                                        "resizeMode": "contain",
+                                        "width": 25,
+                                      }
+                                    }
+                                  />
+                                </View>
+                              </View>
+                              <View
+                                accessible={true}
+                                focusable={true}
+                                onClick={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                                style={
+                                  Object {
+                                    "opacity": 1,
+                                  }
+                                }
+                              >
+                                <View
+                                  style={
+                                    Object {
+                                      "backgroundColor": "#fff",
+                                      "borderRadius": 100,
+                                      "elevation": 5,
+                                      "padding": 5,
+                                      "shadowColor": "#000",
+                                      "shadowOpacity": 0.3,
+                                      "shadowRadius": 5,
+                                    }
+                                  }
+                                >
+                                  <Image
+                                    source={
+                                      Object {
+                                        "process": [Function],
+                                      }
+                                    }
+                                    style={
+                                      Object {
+                                        "height": 25,
+                                        "resizeMode": "contain",
+                                        "width": 25,
+                                      }
+                                    }
+                                  />
+                                </View>
+                              </View>
+                              <View
+                                accessible={true}
+                                focusable={true}
+                                onClick={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                                style={
+                                  Object {
+                                    "opacity": 1,
+                                  }
+                                }
+                              >
+                                <View
+                                  style={
+                                    Object {
+                                      "backgroundColor": "#fff",
+                                      "borderRadius": 100,
+                                      "elevation": 5,
+                                      "padding": 5,
+                                      "shadowColor": "#000",
+                                      "shadowOpacity": 0.3,
+                                      "shadowRadius": 5,
+                                    }
+                                  }
+                                >
+                                  <Image
+                                    source={
+                                      Object {
+                                        "process": [Function],
+                                      }
+                                    }
+                                    style={
+                                      Object {
+                                        "height": 25,
+                                        "resizeMode": "contain",
+                                        "width": 25,
+                                      }
+                                    }
+                                  />
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                Array [
+                                  Object {
+                                    "alignSelf": "center",
+                                    "borderColor": "#ccc",
+                                    "borderTopWidth": 0.5,
+                                  },
+                                  undefined,
+                                  Object {
+                                    "width": "90%",
+                                  },
+                                ]
+                              }
+                            />
+                            <RCTScrollView
+                              style={Object {}}
+                            >
+                              <View>
+                                <View
+                                  style={
+                                    Object {
+                                      "padding": 10,
+                                      "paddingHorizontal": 20,
+                                    }
+                                  }
+                                >
+                                  <Text
+                                    style={
+                                      Array [
+                                        Object {
+                                          "fontFamily": "Roboto-Regular",
+                                        },
+                                        Object {
+                                          "color": "#000",
+                                          "fontSize": 14,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Ilova sizga eng yaqin filialni topishga, uning kontaktlari va bog'lanishlarini yoki navbatini bron qilishga yordam beradi
+                                  </Text>
+                                </View>
+                                <View
+                                  style={
+                                    Array [
+                                      Object {
+                                        "alignSelf": "center",
+                                        "borderColor": "#ccc",
+                                        "borderTopWidth": 0.5,
+                                      },
+                                      undefined,
+                                      Object {
+                                        "width": "90%",
+                                      },
+                                    ]
+                                  }
+                                />
+                                <View
+                                  style={Object {}}
+                                >
+                                  <View
+                                    style={
+                                      Object {
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-around",
+                                        "paddingVertical": 10,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      accessible={true}
+                                      focusable={true}
+                                      onClick={[Function]}
+                                      onResponderGrant={[Function]}
+                                      onResponderMove={[Function]}
+                                      onResponderRelease={[Function]}
+                                      onResponderTerminate={[Function]}
+                                      onResponderTerminationRequest={[Function]}
+                                      onStartShouldSetResponder={[Function]}
+                                      style={
+                                        Object {
+                                          "opacity": 1,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          Object {
+                                            "alignItems": "center",
+                                            "backgroundColor": "#F3F3F9",
+                                            "borderRadius": 5,
+                                            "height": 120,
+                                            "justifyContent": "center",
+                                            "paddingHorizontal": 10,
+                                            "width": 140,
+                                          }
+                                        }
+                                      >
+                                        <Text
+                                          allowFontScaling={false}
+                                          style={
+                                            Array [
+                                              Object {
+                                                "color": "rgb(8,114,73)",
+                                                "fontSize": 30,
+                                              },
+                                              undefined,
+                                              Object {
+                                                "fontFamily": "Ionicons",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "normal",
+                                              },
+                                              Object {},
+                                            ]
+                                          }
+                                        >
+                                          
+                                        </Text>
+                                        <Text
+                                          style={
+                                            Array [
+                                              Object {
+                                                "fontFamily": "Roboto-Regular",
+                                              },
+                                              Object {
+                                                "color": "#1b1b1b",
+                                                "paddingTop": 10,
+                                                "textAlign": "center",
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          Hamma manzillar
+                                           
+                                          , xaritada
+                                        </Text>
+                                      </View>
+                                    </View>
+                                    <View
+                                      accessible={true}
+                                      focusable={true}
+                                      onClick={[Function]}
+                                      onResponderGrant={[Function]}
+                                      onResponderMove={[Function]}
+                                      onResponderRelease={[Function]}
+                                      onResponderTerminate={[Function]}
+                                      onResponderTerminationRequest={[Function]}
+                                      onStartShouldSetResponder={[Function]}
+                                      style={
+                                        Object {
+                                          "opacity": 1,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          Object {
+                                            "alignItems": "center",
+                                            "backgroundColor": "#F3F3F9",
+                                            "borderRadius": 5,
+                                            "height": 120,
+                                            "justifyContent": "center",
+                                            "paddingHorizontal": 10,
+                                            "width": 140,
+                                          }
+                                        }
+                                      >
+                                        <Text
+                                          allowFontScaling={false}
+                                          style={
+                                            Array [
+                                              Object {
+                                                "color": "rgb(8,114,73)",
+                                                "fontSize": 30,
+                                              },
+                                              undefined,
+                                              Object {
+                                                "fontFamily": "Ionicons",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "normal",
+                                              },
+                                              Object {},
+                                            ]
+                                          }
+                                        >
+                                          
+                                        </Text>
+                                        <Text
+                                          style={
+                                            Array [
+                                              Object {
+                                                "fontFamily": "Roboto-Regular",
+                                              },
+                                              Object {
+                                                "color": "#1b1b1b",
+                                                "paddingTop": 10,
+                                                "textAlign": "center",
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          Hamma manzillar
+                                           
+                                          , ro'yxatda
+                                        </Text>
+                                      </View>
+                                    </View>
+                                  </View>
+                                  <View
+                                    style={
+                                      Object {
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-around",
+                                        "paddingVertical": 10,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      accessible={true}
+                                      focusable={true}
+                                      onClick={[Function]}
+                                      onResponderGrant={[Function]}
+                                      onResponderMove={[Function]}
+                                      onResponderRelease={[Function]}
+                                      onResponderTerminate={[Function]}
+                                      onResponderTerminationRequest={[Function]}
+                                      onStartShouldSetResponder={[Function]}
+                                      style={
+                                        Object {
+                                          "opacity": 1,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          Object {
+                                            "alignItems": "center",
+                                            "backgroundColor": "#F3F3F9",
+                                            "borderRadius": 5,
+                                            "height": 120,
+                                            "justifyContent": "center",
+                                            "paddingHorizontal": 10,
+                                            "width": 140,
+                                          }
+                                        }
+                                      >
+                                        <Text
+                                          allowFontScaling={false}
+                                          style={
+                                            Array [
+                                              Object {
+                                                "color": "rgb(8,114,73)",
+                                                "fontSize": 30,
+                                              },
+                                              undefined,
+                                              Object {
+                                                "fontFamily": "Ionicons",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "normal",
+                                              },
+                                              Object {},
+                                            ]
+                                          }
+                                        >
+                                          
+                                        </Text>
+                                        <Text
+                                          style={
+                                            Array [
+                                              Object {
+                                                "fontFamily": "Roboto-Regular",
+                                              },
+                                              Object {
+                                                "color": "#1b1b1b",
+                                                "paddingTop": 10,
+                                                "textAlign": "center",
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          Qidirish
+                                        </Text>
+                                      </View>
+                                    </View>
+                                    <View
+                                      accessible={true}
+                                      focusable={true}
+                                      onClick={[Function]}
+                                      onResponderGrant={[Function]}
+                                      onResponderMove={[Function]}
+                                      onResponderRelease={[Function]}
+                                      onResponderTerminate={[Function]}
+                                      onResponderTerminationRequest={[Function]}
+                                      onStartShouldSetResponder={[Function]}
+                                      style={
+                                        Object {
+                                          "opacity": 1,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          Object {
+                                            "alignItems": "center",
+                                            "backgroundColor": "#F3F3F9",
+                                            "borderRadius": 5,
+                                            "height": 120,
+                                            "justifyContent": "center",
+                                            "paddingHorizontal": 10,
+                                            "width": 140,
+                                          }
+                                        }
+                                      >
+                                        <Text
+                                          allowFontScaling={false}
+                                          style={
+                                            Array [
+                                              Object {
+                                                "color": "rgb(8,114,73)",
+                                                "fontSize": 30,
+                                              },
+                                              undefined,
+                                              Object {
+                                                "fontFamily": "Ionicons",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "normal",
+                                              },
+                                              Object {},
+                                            ]
+                                          }
+                                        >
+                                          
+                                        </Text>
+                                        <Text
+                                          style={
+                                            Array [
+                                              Object {
+                                                "fontFamily": "Roboto-Regular",
+                                              },
+                                              Object {
+                                                "color": "#1b1b1b",
+                                                "paddingTop": 10,
+                                                "textAlign": "center",
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          Mening joylashuvim
+                                        </Text>
+                                      </View>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                            </RCTScrollView>
+                            <View
+                              style={
+                                Object {
+                                  "alignItems": "flex-end",
+                                  "justifyContent": "flex-end",
+                                  "padding": 20,
+                                  "position": "absolute",
+                                  "right": 0,
+                                  "top": 40,
+                                }
+                              }
+                            >
+                              <View
+                                style={
+                                  Array [
+                                    Object {
+                                      "alignSelf": "stretch",
+                                    },
+                                    undefined,
+                                  ]
+                                }
+                              >
+                                <View
+                                  accessible={true}
+                                  focusable={true}
+                                  onClick={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                  style={
+                                    Object {
+                                      "opacity": 1,
+                                    }
+                                  }
+                                  testID="ios_touchable_wrapper"
+                                >
+                                  <View
+                                    pointerEvents="box-only"
+                                  >
+                                    <View
+                                      style={
+                                        Object {
+                                          "alignItems": "center",
+                                          "backgroundColor": "#F3F3F9",
+                                          "borderRadius": 5,
+                                          "flexDirection": "row",
+                                          "height": 30,
+                                          "justifyContent": "space-evenly",
+                                          "width": 70,
+                                        }
+                                      }
+                                    >
+                                      <Image
+                                        source={
+                                          Object {
+                                            "process": [Function],
+                                          }
+                                        }
+                                        style={
+                                          Object {
+                                            "height": 20,
+                                            "width": 20,
+                                          }
+                                        }
+                                      />
+                                      <Text
+                                        style={
+                                          Array [
+                                            Object {
+                                              "fontFamily": "Roboto-Regular",
+                                            },
+                                            Object {
+                                              "fontSize": 16,
+                                              "textTransform": "uppercase",
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        uz
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={false}
+                                        style={
+                                          Array [
+                                            Object {
+                                              "color": "#5c5c5c",
+                                              "fontSize": 15,
+                                            },
+                                            undefined,
+                                            Object {
+                                              "fontFamily": "Ionicons",
+                                              "fontStyle": "normal",
+                                              "fontWeight": "normal",
+                                            },
+                                            Object {},
+                                          ]
+                                        }
+                                      >
+                                        
+                                      </Text>
+                                    </View>
+                                  </View>
+                                </View>
+                                <Modal
+                                  hardwareAccelerated={false}
+                                  onOrientationChange={[Function]}
+                                  supportedOrientations={
+                                    Array [
+                                      "portrait",
+                                      "landscape",
+                                    ]
+                                  }
+                                  testID="ios_modal"
+                                  transparent={true}
+                                  visible={false}
+                                >
+                                  <View
+                                    accessible={true}
+                                    focusable={true}
+                                    onClick={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
+                                    style={
+                                      Object {
+                                        "flex": 1,
+                                        "opacity": 1,
+                                      }
+                                    }
+                                    testID="ios_modal_top"
+                                  />
+                                  <View
+                                    style={
+                                      Array [
+                                        Object {
+                                          "alignItems": "center",
+                                          "backgroundColor": "#f8f8f8",
+                                          "borderTopColor": "#dedede",
+                                          "borderTopWidth": 1,
+                                          "flexDirection": "row",
+                                          "height": 45,
+                                          "justifyContent": "space-between",
+                                          "paddingHorizontal": 10,
+                                          "zIndex": 2,
+                                        },
+                                        undefined,
+                                      ]
+                                    }
+                                    testID="input_accessory_view"
+                                  >
+                                    <View
+                                      style={
+                                        Array [
+                                          Object {
+                                            "flexDirection": "row",
+                                          },
+                                          undefined,
+                                        ]
+                                      }
+                                    >
+                                      <View
+                                        accessible={true}
+                                        focusable={true}
+                                        onClick={[Function]}
+                                        onResponderGrant={[Function]}
+                                        onResponderMove={[Function]}
+                                        onResponderRelease={[Function]}
+                                        onResponderTerminate={[Function]}
+                                        onResponderTerminationRequest={[Function]}
+                                        onStartShouldSetResponder={[Function]}
+                                        style={
+                                          Object {
+                                            "opacity": 1,
+                                          }
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            Array [
+                                              Object {
+                                                "backgroundColor": "transparent",
+                                                "borderColor": "#a1a1a1",
+                                                "borderRightWidth": 1.5,
+                                                "borderTopWidth": 1.5,
+                                                "height": 15,
+                                                "width": 15,
+                                              },
+                                              undefined,
+                                              Object {
+                                                "marginLeft": 11,
+                                                "transform": Array [
+                                                  Object {
+                                                    "translateY": 4,
+                                                  },
+                                                  Object {
+                                                    "rotate": "-45deg",
+                                                  },
+                                                ],
+                                              },
+                                              undefined,
+                                              Object {},
+                                            ]
+                                          }
+                                        />
+                                      </View>
+                                      <View
+                                        accessible={true}
+                                        focusable={true}
+                                        onClick={[Function]}
+                                        onResponderGrant={[Function]}
+                                        onResponderMove={[Function]}
+                                        onResponderRelease={[Function]}
+                                        onResponderTerminate={[Function]}
+                                        onResponderTerminationRequest={[Function]}
+                                        onStartShouldSetResponder={[Function]}
+                                        style={
+                                          Object {
+                                            "opacity": 1,
+                                          }
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            Array [
+                                              Object {
+                                                "backgroundColor": "transparent",
+                                                "borderColor": "#a1a1a1",
+                                                "borderRightWidth": 1.5,
+                                                "borderTopWidth": 1.5,
+                                                "height": 15,
+                                                "width": 15,
+                                              },
+                                              undefined,
+                                              Object {
+                                                "marginLeft": 22,
+                                                "transform": Array [
+                                                  Object {
+                                                    "translateY": -5,
+                                                  },
+                                                  Object {
+                                                    "rotate": "135deg",
+                                                  },
+                                                ],
+                                              },
+                                              undefined,
+                                              Object {},
+                                            ]
+                                          }
+                                        />
+                                      </View>
+                                    </View>
+                                    <View
+                                      accessible={true}
+                                      focusable={true}
+                                      hitSlop={
+                                        Object {
+                                          "bottom": 4,
+                                          "left": 4,
+                                          "right": 4,
+                                          "top": 4,
+                                        }
+                                      }
+                                      onClick={[Function]}
+                                      onResponderGrant={[Function]}
+                                      onResponderMove={[Function]}
+                                      onResponderRelease={[Function]}
+                                      onResponderTerminate={[Function]}
+                                      onResponderTerminationRequest={[Function]}
+                                      onStartShouldSetResponder={[Function]}
+                                      style={
+                                        Object {
+                                          "opacity": 1,
+                                        }
+                                      }
+                                      testID="done_button"
+                                    >
+                                      <View
+                                        testID="needed_for_touchable"
+                                      >
+                                        <Text
+                                          allowFontScaling={false}
+                                          style={
+                                            Array [
+                                              Object {
+                                                "color": "#007aff",
+                                                "fontSize": 17,
+                                                "fontWeight": "600",
+                                                "paddingRight": 11,
+                                                "paddingTop": 1,
+                                              },
+                                              undefined,
+                                              Object {},
+                                            ]
+                                          }
+                                          testID="done_text"
+                                        >
+                                          Done
+                                        </Text>
+                                      </View>
+                                    </View>
+                                  </View>
+                                  <View
+                                    style={
+                                      Array [
+                                        Object {
+                                          "backgroundColor": "#d0d4da",
+                                          "justifyContent": "center",
+                                        },
+                                        Object {
+                                          "height": 215,
+                                        },
+                                        undefined,
+                                      ]
+                                    }
+                                  >
+                                    <View>
+                                      <RNCPicker
+                                        items={
+                                          Array [
+                                            Object {
+                                              "label": "uz",
+                                              "textColor": undefined,
+                                              "value": "uz",
+                                            },
+                                            Object {
+                                              "label": "ru",
+                                              "textColor": undefined,
+                                              "value": "ru",
+                                            },
+                                            Object {
+                                              "label": "eng",
+                                              "textColor": undefined,
+                                              "value": "eng",
+                                            },
+                                          ]
+                                        }
+                                        onChange={[Function]}
+                                        selectedIndex={0}
+                                        style={
+                                          Array [
+                                            Object {
+                                              "height": 216,
+                                            },
+                                            undefined,
+                                          ]
+                                        }
+                                        testID="ios_picker"
+                                      />
+                                    </View>
+                                  </View>
+                                </Modal>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </RNCSafeAreaProvider>
+      </View>
+    </View>
+  </View>
+</View>
+`;

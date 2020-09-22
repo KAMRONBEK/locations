@@ -1,7 +1,7 @@
 import mapType, {
     PROVIDER_GOOGLE,
     Marker,
-    MapViewProps
+    MapViewProps,
 } from 'react-native-maps';
 import MapView from 'react-native-map-clustering';
 import React, {
@@ -9,7 +9,7 @@ import React, {
     useEffect,
     useCallback,
     useRef,
-    RefObject
+    RefObject,
 } from 'react';
 import {
     StyleSheet,
@@ -28,7 +28,7 @@ import {
     ScrollViewComponent,
     ViewProps,
     ScrollViewProps,
-    SectionList
+    SectionList,
 } from 'react-native';
 import mapConfig from '../../configs/mapConfig';
 import images from '../../assets/images';
@@ -41,12 +41,12 @@ import {
     deviceHeight,
     CARD_WIDTH,
     CARD_HEIGHT,
-    SPACING_FOR_CARD_INSET
+    SPACING_FOR_CARD_INSET,
 } from '../../constants';
 import Service from '../../services/service';
 import {
     // getCurrentLocation,
-    requestLocationPermission
+    requestLocationPermission,
 } from '../../services/functions';
 import FilterItem from '../../component/common/FilterItem';
 import {strings} from '../../locales/strings';
@@ -85,7 +85,7 @@ const Map = ({showMapLoading, hideMapLoading, appState}: any) => {
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA
+        longitudeDelta: LONGITUDE_DELTA,
     });
     let [branchList, setBranchList] = useState<branchType[]>([]);
     let [orignialBranchList, setOriginalBranchList] = useState([]);
@@ -116,12 +116,12 @@ const Map = ({showMapLoading, hideMapLoading, appState}: any) => {
                     key={index}
                     style={{
                         width: 15,
-                        height: 15
+                        height: 15,
                     }}
                     tracksViewChanges={false}
                     coordinate={{
                         latitude: region.latitude,
-                        longitude: region.longitude
+                        longitude: region.longitude,
                     }}
                     icon={
                         region.type == 'branch'
@@ -168,9 +168,9 @@ const Map = ({showMapLoading, hideMapLoading, appState}: any) => {
                             latitude: latitude,
                             longitude: longitude,
                             latitudeDelta: LATITUDE_DELTA,
-                            longitudeDelta: LONGITUDE_DELTA
+                            longitudeDelta: LONGITUDE_DELTA,
                         },
-                        1200
+                        1200,
                     );
                 }
             }
@@ -184,7 +184,7 @@ const Map = ({showMapLoading, hideMapLoading, appState}: any) => {
 
     const onMarkerPress = (mapEventData: any) => {
         const markerID = parseFloat(
-            mapEventData._targetInst.return.key.split('$')[1]
+            mapEventData._targetInst.return.key.split('$')[1],
         );
 
         let x = markerID * CARD_WIDTH + markerID * 20;
@@ -205,13 +205,13 @@ const Map = ({showMapLoading, hideMapLoading, appState}: any) => {
             const inputRange = [
                 (index - 1) * CARD_WIDTH,
                 index * CARD_WIDTH,
-                (index + 1) * CARD_WIDTH
+                (index + 1) * CARD_WIDTH,
             ];
 
             const opacity = mapAnimation.interpolate({
                 inputRange,
                 outputRange: [0.6, 1, 0.6],
-                extrapolate: 'clamp'
+                extrapolate: 'clamp',
             });
 
             return {opacity};
@@ -221,7 +221,7 @@ const Map = ({showMapLoading, hideMapLoading, appState}: any) => {
         if (_draggablePanel.current) {
             _draggablePanel.current.show({
                 toValue: CARD_HEIGHT + 60,
-                velocity: 0.1
+                velocity: 0.1,
             });
         }
         // InteractionManager.runAfterInteractions(() => {
@@ -294,10 +294,10 @@ const Map = ({showMapLoading, hideMapLoading, appState}: any) => {
                             top: 0,
                             left: 0,
                             bottom: 0,
-                            right: 20
+                            right: 20,
                         }}
                         contentContainerStyle={{
-                            paddingRight: Platform.OS === 'android' ? 20 : 0
+                            paddingRight: Platform.OS === 'android' ? 20 : 0,
                         }}>
                         <FilterItem
                             onPress={() => {}}
@@ -320,7 +320,7 @@ const Map = ({showMapLoading, hideMapLoading, appState}: any) => {
                     ref={_draggablePanel}
                     draggableRange={{
                         top: CARD_HEIGHT + 60,
-                        bottom: CARD_HEIGHT / 2 + 40
+                        bottom: CARD_HEIGHT / 2 + 40,
                     }}
                     minimumVelocityThreshold={100}
                     height={CARD_HEIGHT + 60}
@@ -356,13 +356,13 @@ const Map = ({showMapLoading, hideMapLoading, appState}: any) => {
                                 top: 0,
                                 left: SPACING_FOR_CARD_INSET,
                                 bottom: 0,
-                                right: SPACING_FOR_CARD_INSET
+                                right: SPACING_FOR_CARD_INSET,
                             }}
                             contentContainerStyle={{
                                 paddingHorizontal:
                                     Platform.OS === 'android'
                                         ? SPACING_FOR_CARD_INSET
-                                        : 0
+                                        : 0,
                             }}
                             onScroll={() => {
                                 Animated.event(
@@ -370,12 +370,12 @@ const Map = ({showMapLoading, hideMapLoading, appState}: any) => {
                                         {
                                             nativeEvent: {
                                                 contentOffset: {
-                                                    x: mapAnimation
-                                                }
-                                            }
-                                        }
+                                                    x: mapAnimation,
+                                                },
+                                            },
+                                        },
                                     ],
-                                    {useNativeDriver: true}
+                                    {useNativeDriver: false},
                                 );
                             }}>
                             {!!branchList &&
@@ -391,9 +391,9 @@ const Map = ({showMapLoading, hideMapLoading, appState}: any) => {
                                                             longitude:
                                                                 region.longitude,
                                                             latitudeDelta: LATITUDE_DELTA,
-                                                            longitudeDelta: LONGITUDE_DELTA
+                                                            longitudeDelta: LONGITUDE_DELTA,
                                                         },
-                                                        1200
+                                                        1200,
                                                     );
                                                 }
                                             }}
@@ -418,36 +418,36 @@ const styles = StyleSheet.create({
         top: 0,
         bottom: 0,
         position: 'absolute',
-        zIndex: -1
+        zIndex: -1,
     },
     map: {
-        ...StyleSheet.absoluteFillObject
+        ...StyleSheet.absoluteFillObject,
     },
     marker: {
         margin: 10,
         height: 25,
         width: 25,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
     },
     top: {},
     content: {
         flex: 1,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     searchbarWrapper: {
         marginTop: Platform.OS === 'ios' ? 40 : 20,
         width: '90%',
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
 
     filterScrollView: {
         // position: 'absolute',
         top: Platform.OS === 'ios' ? 90 : 80,
         paddingHorizontal: 10,
-        display: 'none'
+        display: 'none',
     },
     footer: {
-        paddingBottom: 10
+        paddingBottom: 10,
     },
     markerWrapper: {
         // position: 'absolute',
@@ -462,22 +462,22 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         justifyContent: 'center',
         alignItems: 'center',
-        overflow: 'hidden'
+        overflow: 'hidden',
     },
     locationIcon: {
-        padding: 8
+        padding: 8,
     },
     scrollView: {
         paddingVertical: 10,
-        marginBottom: 10
-    }
+        marginBottom: 10,
+    },
 });
 
 const mapStateToProps = ({appState}: any) => ({appState});
 
 const mapDispatchToProps = {
     showMapLoading,
-    hideMapLoading
+    hideMapLoading,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);
