@@ -9,6 +9,7 @@ import CustomDrawer from '../component/drawer/CustomDrawer';
 import Chat from '../views/chat';
 import Home from '../views/home';
 import {navigationRef} from '../services/navigationServices';
+import {Loader} from '../views';
 
 let Stack = createStackNavigator();
 
@@ -19,8 +20,11 @@ const AppRouter = () => {
                 <CustomDrawer>
                     <Stack.Navigator headerMode="none">
                         {/* <Stack.Screen name={SCREENS.mapStack} component={MapStack} /> */}
+                        <Stack.Screen
+                            name={SCREENS.loader}
+                            component={Loader}
+                        />
                         <Stack.Screen name={SCREENS.home} component={Home} />
-
                         <Stack.Screen
                             name={SCREENS.map}
                             component={MapController}

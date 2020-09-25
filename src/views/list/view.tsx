@@ -22,9 +22,15 @@ interface listProps {
     panelVisibility: boolean;
     hideList: any;
     displayData: Array<branchType>;
+    language: string;
 }
 
-const List = ({panelVisibility, hideList, displayData}: listProps) => {
+const List = ({
+    panelVisibility,
+    hideList,
+    displayData,
+    language,
+}: listProps) => {
     let [animatedRadius, setRadius] = useState(new Animated.Value(0));
     let [opacity, setOpacity] = useState(new Animated.Value(0));
     let [translateY, setTanslateY] = useState(new Animated.Value(deviceHeight));
@@ -149,9 +155,10 @@ const styles = StyleSheet.create({
     closeWrapper: {},
 });
 
-const mapStateToProps = ({listState, mapState}: any) => ({
+const mapStateToProps = ({listState, mapState, appState}: any) => ({
     panelVisibility: listState.panelVisibility,
     displayData: mapState.displayDataList,
+    language: appState.language,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

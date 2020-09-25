@@ -15,6 +15,7 @@ test('test flatlist', () => {
             testID="flat-list"
         />,
     );
+
     const eventData = {
         nativeEvent: {
             contentOffset: {

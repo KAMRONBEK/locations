@@ -3,4 +3,5 @@ export const SCREENS = {
     mapStack: 'MapStack',
     chat: 'Chat',
     home: 'Home',
+    loader: 'Loader',
 };

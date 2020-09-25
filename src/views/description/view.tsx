@@ -11,7 +11,7 @@ import {
     LayoutAnimation,
     ScrollView,
     PanResponder,
-    StyleSheet
+    StyleSheet,
 } from 'react-native';
 import {styles} from './styles';
 import {connect} from 'react-redux';
@@ -28,7 +28,7 @@ import {
     deviceWidth,
     MAP_WITH_SEARCH,
     deviceHeightW,
-    SCREENS
+    SCREENS,
 } from '../../constants';
 import images from '../../assets/images';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -36,7 +36,8 @@ import {callPress, locationPress, getDirections} from '../../redux/thunks';
 import {
     setDestinationCoords,
     mapPressed,
-    setMapMode
+    setMapMode,
+    hideDescription,
 } from '../../redux/actions';
 import {strings} from '../../locales/strings';
 import RectangleButton from '../../component/common/RectangleButton';
@@ -56,6 +57,7 @@ interface descriptionProps {
     setDestinationCoords: any;
     setMapMode: any;
     descVisibility: boolean;
+    hideDescription: any;
 }
 
 const Description = ({
@@ -64,7 +66,8 @@ const Description = ({
     locationPress,
     setDestinationCoords,
     setMapMode,
-    descVisibility
+    descVisibility,
+    hideDescription,
 }: // getDirections,
 // myRegion,
 descriptionProps) => {
@@ -72,40 +75,40 @@ descriptionProps) => {
 
     let contentTop = animatedValue.interpolate({
         inputRange: [0, deviceHeightW],
-        outputRange: [0, deviceHeightW - 140]
+        outputRange: [0, deviceHeightW],
     });
 
     let imageHeight = animatedValue.interpolate({
         inputRange: [140, deviceHeightW],
-        outputRange: [200, 100]
+        outputRange: [200, 100],
     });
     let imageWidth = animatedValue.interpolate({
         inputRange: [140, deviceHeightW],
-        outputRange: [deviceWidth - 40, CARD_WIDTH + 20]
+        outputRange: [deviceWidth - 40, CARD_WIDTH + 20],
     });
     let imagePadding = animatedValue.interpolate({
         inputRange: [140, deviceHeightW],
-        outputRange: [0, 20]
+        outputRange: [0, 20],
     });
     let backgroundColor = animatedValue.interpolate({
         inputRange: [140, deviceHeightW],
-        outputRange: [colors.ultraLightBlue, colors.white]
+        outputRange: [colors.ultraLightBlue, colors.white],
     });
     let borderRadius = animatedValue.interpolate({
         inputRange: [140, deviceHeightW],
-        outputRange: [0, BORDER_RADIUS]
+        outputRange: [0, BORDER_RADIUS],
     });
     let notchVisibility = animatedValue.interpolate({
         inputRange: [140, deviceHeightW],
-        outputRange: [0, 1]
+        outputRange: [0, 1],
     });
     let closeVisibility = animatedValue.interpolate({
         inputRange: [140, deviceHeightW],
-        outputRange: [1, 0]
+        outputRange: [1, 0],
     });
     let paddingTop = animatedValue.interpolate({
         inputRange: [140, deviceHeightW],
-        outputRange: [0, 10]
+        outputRange: [0, 10],
     });
 
     const onRoutePress = () => {
@@ -134,21 +137,28 @@ descriptionProps) => {
     let imgs = [images.banner1, images.banner2, images.banner3];
 
     useEffect(() => {
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        console.log(currentRegion, 'desc region');
+        if (descVisibility) {
+            Animated.spring(animatedValue, {
+                toValue: 0,
+                speed: 5,
+                useNativeDriver: false,
+            }).start();
+        } else {
+            animatedValue.setValue(deviceHeightW);
+        }
     }, [descVisibility]);
 
     const onBankingPress = async () => {
         try {
             let isInstalled = await SendIntentAndroid.isAppInstalled(
-                'com.ipakyulibank.mobile'
+                'com.ipakyulibank.mobile',
             );
             if (isInstalled) {
                 console.log('installed');
 
                 let isOpen = await SendIntentAndroid.openApp(
                     'com.ipakyulibank.mobile',
-                    {}
+                    {},
                 );
             }
         } catch (error) {
@@ -157,7 +167,7 @@ descriptionProps) => {
                     if (supported) {
                         console.log('accepted');
                         return Linking.openURL(
-                            'market://details?id=com.ipakyulibank.mobile'
+                            'market://details?id=com.ipakyulibank.mobile',
                         );
                     } else {
                         console.log('an error occured');
@@ -165,6 +175,17 @@ descriptionProps) => {
                 })
                 .catch((err) => console.log('an error occured'));
         }
+    };
+    const onClosePress = () => {
+        Animated.spring(animatedValue, {
+            toValue: deviceHeight,
+            useNativeDriver: false,
+            velocity: 10,
+        }).start(() => hideDescription());
+
+        // setTimeout(() => {
+        // hideDescription();
+        // }, 800);
     };
 
     const panResponder = useRef(
@@ -189,16 +210,18 @@ descriptionProps) => {
                 if (gestureState.dy > 0) {
                     Animated.spring(animatedValue, {
                         toValue: deviceHeight,
-                        useNativeDriver: false
+                        useNativeDriver: false,
+                        velocity: 10,
                     }).start();
                 } else if (gestureState.dy < 0) {
                     Animated.spring(animatedValue, {
                         toValue: 0,
-                        useNativeDriver: false
+                        useNativeDriver: false,
+                        velocity: 10,
                     }).start();
                 }
-            }
-        })
+            },
+        }),
     ).current;
 
     const scollerPanResponder = PanResponder.create({
@@ -208,7 +231,7 @@ descriptionProps) => {
         },
         onPanResponderMove: (evt, gestureState) => {
             console.log('SCROLLER MOVED');
-        }
+        },
     });
 
     //render
@@ -222,17 +245,17 @@ descriptionProps) => {
             style={{
                 top: contentTop,
                 position: 'absolute',
-                zIndex: 3
+                zIndex: 3,
             }}>
-            <View
+            {/* <View
                 {...panResponder.panHandlers}
                 style={{
                     // ...StyleSheet.absoluteFillObject,
                     padding: 100,
                     zIndex: 3,
-                    position: 'absolute'
+                    position: 'absolute',
                 }}
-            />
+            /> */}
             <Animated.View
                 style={[
                     styles.content,
@@ -240,22 +263,22 @@ descriptionProps) => {
                         backgroundColor: backgroundColor,
                         // borderTopRightRadius: borderRadius,
                         // borderTopLeftRadius: borderRadius,
-                        paddingTop: paddingTop
-                    }
+                        paddingTop: paddingTop,
+                    },
                 ]}>
                 <Animated.View
                     style={[
                         styles.notch,
                         {
-                            opacity: notchVisibility
-                        }
+                            opacity: notchVisibility,
+                        },
                     ]}>
                     <View
                         style={{
                             borderWidth: 2,
                             width: 40,
                             borderColor: colors.gray,
-                            borderRadius: BORDER_RADIUS
+                            borderRadius: BORDER_RADIUS,
                         }}
                     />
                 </Animated.View>
@@ -263,8 +286,8 @@ descriptionProps) => {
                     style={[
                         styles.row,
                         {
-                            paddingTop: paddingTop
-                        }
+                            paddingTop: paddingTop,
+                        },
                     ]}>
                     <Animated.ScrollView
                         horizontal
@@ -279,11 +302,11 @@ descriptionProps) => {
                             top: 0,
                             left: 20,
                             bottom: 0,
-                            right: 20
+                            right: 20,
                         }}
                         contentContainerStyle={{
                             paddingHorizontal:
-                                Platform.OS === 'android' ? 20 : 0
+                                Platform.OS === 'android' ? 20 : 0,
                         }}>
                         {imgs.map((image, index) => {
                             return (
@@ -295,8 +318,8 @@ descriptionProps) => {
                                             height: imageHeight,
                                             marginRight: imagePadding,
                                             borderRadius: borderRadius,
-                                            width: imageWidth
-                                        }
+                                            width: imageWidth,
+                                        },
                                     ]}
                                     source={image}
                                 />
@@ -308,20 +331,13 @@ descriptionProps) => {
                             position: 'absolute',
                             top: 10,
                             right: 0,
-                            zIndex: 4
+                            zIndex: 4,
                         }}
-                        onPress={() => {
-                            // animatedValue.setValue(deviceHeight);
-                            Animated.timing(animatedValue, {
-                                toValue: deviceHeightW,
-                                duration: 500,
-                                useNativeDriver: false
-                            }).start();
-                        }}>
+                        onPress={onClosePress}>
                         <Animated.View
                             style={{
                                 padding: 10,
-                                opacity: closeVisibility
+                                opacity: closeVisibility,
                             }}>
                             <Ionicons
                                 name="close"
@@ -334,14 +350,14 @@ descriptionProps) => {
 
                 <View
                     style={{
-                        flex: 1
+                        flex: 1,
                     }}>
                     <ScrollView>
                         <View style={styles.column}>
                             <View
                                 style={{
                                     flexDirection: 'row',
-                                    alignItems: 'flex-start'
+                                    alignItems: 'flex-start',
                                 }}>
                                 <View
                                     style={[
@@ -353,8 +369,8 @@ descriptionProps) => {
                                                     : currentRegion?.type ==
                                                       'branch'
                                                     ? colors.redTrans
-                                                    : colors.violateTrans
-                                        }
+                                                    : colors.violateTrans,
+                                        },
                                     ]}>
                                     <Text
                                         style={[
@@ -366,8 +382,8 @@ descriptionProps) => {
                                                         : currentRegion?.type ==
                                                           'branch'
                                                         ? colors.red
-                                                        : colors.violate
-                                            }
+                                                        : colors.violate,
+                                            },
                                         ]}>
                                         {currentRegion?.type == 'atm'
                                             ? strings.atm
@@ -505,7 +521,7 @@ const mapStateToProps = ({descState, listState, mapState}: any) => ({
     descVisibility: descState.descVisibility,
     currentRegion: descState.currentRegion,
     panelVisibility: listState.panelVisibility,
-    myRegion: mapState.myRegion
+    myRegion: mapState.myRegion,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -513,7 +529,8 @@ const mapDispatchToProps = (dispatch: any) => ({
     locationPress: () => dispatch(locationPress()),
     setDestinationCoords: (location: any) =>
         dispatch(setDestinationCoords(location)),
-    setMapMode: (mode: any) => dispatch(setMapMode(mode))
+    setMapMode: (mode: any) => dispatch(setMapMode(mode)),
+    hideDescription: () => dispatch(hideDescription()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Description);

@@ -23,6 +23,14 @@ target 'LocationApp' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
+  #permissions
+  permissions_path = '../node_modules/react-native-permissions/ios'
+
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways.podspec"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse.podspec"
+
   target 'LocationAppTests' do
     inherit! :complete
     # Pods for testing

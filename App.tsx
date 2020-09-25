@@ -12,6 +12,7 @@ import {Provider} from 'react-redux';
 import configureStore from './src/redux/configureStore';
 import LoadingModal from './src/component/container/LoadingModal';
 import SplashScreen from 'react-native-splash-screen';
+import {colors} from './src/constants';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -21,23 +22,25 @@ if (Platform.OS === 'android') {
 
 const App = () => {
     console.disableYellowBox = true;
-    // useEffect(() => {
-    // SplashScreen.hide();
-    // }, []);
+    useEffect(() => {
+        SplashScreen.hide();
+    }, []);
     let store = configureStore();
     return (
         <>
             <StatusBar
+                backgroundColor={colors.white}
                 barStyle="dark-content"
-                backgroundColor={'transparent'}
                 translucent={true}
             />
-            {/* <SafeAreaView style={{flex: 1}}> */}
-            <Provider store={store}>
-                <AppRouter />
-                <LoadingModal />
-            </Provider>
-            {/* </SafeAreaView> */}
+            <SafeAreaView
+                // forceInset={{top: 'always'}}
+                style={{backgroundColor: 'transparent', flex: 1}}>
+                <Provider store={store}>
+                    <AppRouter />
+                    <LoadingModal />
+                </Provider>
+            </SafeAreaView>
         </>
     );
 };

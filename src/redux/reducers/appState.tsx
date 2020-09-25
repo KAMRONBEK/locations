@@ -6,6 +6,7 @@ import {
     SET_LANGUAGE,
 } from '../types';
 import {ENG, UZ} from '../../constants';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export interface appStateProps {
     flashMessage: string;
@@ -42,6 +43,7 @@ export default (state = initialState, {type, payload}: any) => {
                 mapLoading: false,
             };
         case SET_LANGUAGE: {
+            AsyncStorage.setItem('@language', JSON.stringify(payload));
             return {
                 ...state,
                 language: payload,

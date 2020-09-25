@@ -6,6 +6,7 @@ import searchState from './reducers/searchState';
 import listState from './reducers/listState';
 import scrollViewState from './reducers/scrollViewState';
 import descState from './reducers/descState';
+import calloutState from './reducers/calloutState';
 import createFlipperDebugger from 'redux-flipper';
 
 let middlewaresToApply = [];
@@ -29,6 +30,7 @@ let configureStore = () => {
             listState,
             scrollViewState,
             descState,
+            calloutState,
         }),
         middleware,
     );

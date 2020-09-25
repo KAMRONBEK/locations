@@ -16,9 +16,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {strings} from '../../locales/strings';
 import {connect} from 'react-redux';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import moment from 'moment';
 import SendIntentAndroid from 'react-native-send-intent';
-import Tooltip from 'react-native-walkthrough-tooltip';
 import Seperator from '../common/Seperator';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {branchType} from '../../screens/map/Map';
@@ -34,17 +32,19 @@ import {
     WaveIndicator,
 } from 'react-native-indicators';
 import {cardPressed} from '../../redux/thunks';
+import TimeToolTip from '../common/TimeToolTip';
 
 interface listItemProps {
     item: branchType;
     index: number;
     cardPressed: any;
+    language: string;
 }
 
-const ListItem = ({item, index, cardPressed}: listItemProps) => {
+const ListItem = ({item, index, cardPressed, language}: listItemProps) => {
     // alarm-outline
     // business-outline
-    //bus-outline
+    // bus-outline
 
     const onPress = useCallback(() => {
         cardPressed(item);
@@ -56,7 +56,6 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
     const imageList = [
         {
             url: 'https://miro.medium.com/max/11730/0*ihTZPO4iffJ8n69_',
-
             // Optional, if you know the image size, you can set the optimization performance
             // You can pass props to <Image />.
             props: {
@@ -82,12 +81,6 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
             BackHandler.removeEventListener('hardwareBackPress', onBackPress);
         };
     }, []);
-
-    let [currentTime, setCurrentTime] = useState(
-        moment(new Date(), 'hh:mm:ss'),
-    );
-
-    let [toolTipVis, setToolTipVis] = useState(false);
 
     const onBankingPress = async () => {
         try {
@@ -153,155 +146,7 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
         </Modal>
     );
 
-    // let temp = (
-    //     <TouchableOpacity onPress={onPress} style={styles.container}>
-    //         <View style={styles.plain}>
-    //             <View>
-    //                 <TouchableOpacity onPress={() => setSliderVisible(true)}>
-    //                     <Image style={styles.image} source={images.banner1} />
-    //                 </TouchableOpacity>
-
-    //                 <View style={{}}>
-    //                     <Text
-    //                         style={{
-    //                             paddingTop: 10,
-    //                         }}>
-    //                         9:00-16:00{' '}
-    //                     </Text>
-    //                     <Text
-    //                         style={{
-    //                             color: currentTime.isBetween(
-    //                                 moment('09:00:00', 'hh:mm:ss'),
-    //                                 moment('16:00:00', 'hh:mm:ss'),
-    //                             )
-    //                                 ? colors.lightBlue
-    //                                 : colors.pink,
-    //                         }}>
-    //                         {currentTime.isBetween(
-    //                             moment('09:00:00', 'hh:mm:ss'),
-    //                             moment('16:00:00', 'hh:mm:ss'),
-    //                         )
-    //                             ? strings.open
-    //                             : strings.closed}
-    //                     </Text>
-    //                 </View>
-    //             </View>
-    //             <View
-    //                 style={{
-    //                     paddingLeft: 10,
-    //                 }}>
-    //                 <View
-    //                     style={[
-    //                         {
-    //                             alignSelf: 'flex-start',
-    //                             position: 'absolute',
-    //                         },
-    //                     ]}>
-    //                     {index == 0 && (
-    //                         <Text style={styles.accent}>
-    //                             {strings.closestOne}
-    //                         </Text>
-    //                     )}
-    //                 </View>
-    //                 <View style={styles.row}>
-    //                     <Ionicons
-    //                         name="business-outline"
-    //                         size={15}
-    //                         color={colors.green}
-    //                     />
-
-    //                     <Text style={styles.title}>{item.name} </Text>
-    //                 </View>
-    //                 <View style={styles.row}>
-    //                     <Ionicons
-    //                         name="location-outline"
-    //                         size={15}
-    //                         color={colors.green}
-    //                     />
-    //                     <Text numberOfLines={2} style={styles.text}>
-    //                         {item.address}
-    //                     </Text>
-    //                 </View>
-    //                 {/* <View style={styles.row}>
-    // 			<Ionicons
-    // 				name="alarm-outline"
-    // 				size={15}
-    // 				color={colors.green}
-    // 			/>
-    // 			<Text style={styles.text}>9:00 - 16:00</Text>
-    // 		</View> */}
-    //                 <View style={styles.row}>
-    //                     <Ionicons
-    //                         name="wallet-outline"
-    //                         size={15}
-    //                         color={colors.green}
-    //                     />
-    //                     <Text style={styles.text}>{item.type}</Text>
-    //                 </View>
-    //                 <View style={styles.row}>
-    //                     <Ionicons
-    //                         name="bus-outline"
-    //                         size={15}
-    //                         color={colors.green}
-    //                     />
-    //                     <Text style={styles.text}>
-    //                         {item.distance} {strings.km}{' '}
-    //                     </Text>
-    //                 </View>
-    //             </View>
-    //         </View>
-    //         <View
-    //             style={[
-    //                 styles.row,
-    //                 {
-    //                     paddingTop: 10,
-    //                     justifyContent: 'space-evenly',
-    //                 },
-    //             ]}>
-    //             {item.phone.map((number) => (
-    //                 <TouchableOpacity
-    //                     onPress={() => Linking.openURL(`tel:${number}`)}>
-    //                     <View
-    //                         style={{
-    //                             flexDirection: 'row',
-    //                             justifyContent: 'center',
-    //                             alignItems: 'center',
-    //                             borderRadius: BORDER_RADIUS,
-    //                             padding: 5,
-    //                             backgroundColor: colors.lightPink,
-    //                             paddingHorizontal: 10,
-    //                         }}>
-    //                         <Text
-    //                             style={{
-    //                                 fontSize: 16,
-    //                                 color: colors.darkBlack,
-    //                                 maxWidth: deviceWidth * 0.5,
-    //                                 paddingRight: 15,
-    //                             }}>
-    //                             {number}
-    //                         </Text>
-    //                         <Ionicons
-    //                             name="call-outline"
-    //                             size={20}
-    //                             color={colors.green}
-    //                         />
-    //                     </View>
-    //                 </TouchableOpacity>
-    //             ))}
-    //         </View>
-    //         <TouchableOpacity onPress={onBankingPress}>
-    //             <View
-    //                 style={{
-    //                     flexDirection: 'row',
-    //                     alignSelf: 'center',
-    //                     alignItems: 'center',
-    //                 }}>
-    //                 <Image style={styles.bankingImg} source={images.banking} />
-    //                 <Text> INTERNET BANKING</Text>
-    //             </View>
-    //         </TouchableOpacity>
-    //     </TouchableOpacity>
-    // );
+    let [labelWidth, setLabelWidth] = useState(0);
 
     return (
         <TouchableOpacity
@@ -318,103 +163,45 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                 },
             ]}>
             <View style={styles.container}>
-                <View>
-                    <TouchableOpacity onPress={() => setSliderVisible(true)}>
+                <View
+                    style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                    <TouchableOpacity
+                        style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                        onPress={() => setSliderVisible(true)}>
                         <Image style={styles.image} source={images.banner1} />
                         {imageModal()}
                         <View style={styles.lupaWrapper}>
                             <Ionicons
                                 name="search-outline"
                                 size={60}
-                                color={'rgba(255,255,255,0.3)'}
+                                color={'rgba(255,255,255,0.4)'}
                             />
                         </View>
                     </TouchableOpacity>
 
-                    <Tooltip
-                        isVisible={toolTipVis}
-                        backgroundColor={'rgba(0,0,0,0.7)'}
-                        content={
-                            <View style={{flex: 1}}>
-                                {currentTime.isBetween(
-                                    moment('09:00:00', 'hh:mm:ss'),
-                                    moment('16:00:00', 'hh:mm:ss'),
-                                ) ? (
-                                    <Text
-                                        style={{
-                                            fontSize: 12,
-                                            color: colors.gray,
-                                        }}>
-                                        {Math.round(
-                                            moment
-                                                .duration(
-                                                    currentTime.diff(
-                                                        moment(
-                                                            '09:00:00',
-                                                            'hh:mm:ss',
-                                                        ),
-                                                    ),
-                                                )
-                                                .asMinutes(),
-                                        )}{' '}
-                                        {strings.min} {strings.closesAfter}
-                                    </Text>
-                                ) : (
-                                    <Text
-                                        style={{
-                                            fontSize: 12,
-                                            color: colors.gray,
-                                        }}>
-                                        ' (' + `$
-                                        {Math.round(
-                                            moment
-                                                .duration(
-                                                    currentTime.diff(
-                                                        moment(
-                                                            '09:00:00',
-                                                            'hh:mm:ss',
-                                                        ),
-                                                    ),
-                                                )
-                                                .asMinutes(),
-                                        )}{' '}
-                                        ${strings.min} ${strings.opensAfter})`
-                                    </Text>
-                                )}
-                            </View>
-                        }
-                        placement="right"
-                        onClose={() => setToolTipVis(false)}>
-                        <TouchableOpacity onPress={() => setToolTipVis(true)}>
-                            <View
-                                style={{
-                                    flexDirection: 'row',
-                                    width: 100,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    paddingTop: 5,
-                                }}>
-                                <Text
-                                    style={{
-                                        color: colors.textGray,
-                                        textAlign: 'center',
-                                        textTransform: 'capitalize',
-                                    }}>
-                                    {currentTime.isBetween(
-                                        moment('09:00:00', 'hh:mm:ss'),
-                                        moment('16:00:00', 'hh:mm:ss'),
-                                    )
-                                        ? strings.open
-                                        : strings.opensAt}
-                                </Text>
-                                <Ionicons
-                                    name="information-circle"
-                                    size={15}
-                                    color={colors.blue}
-                                />
-                            </View>
-                        </TouchableOpacity>
-                    </Tooltip>
+                    <View
+                        style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}>
+                        <TimeToolTip
+                            beginTime={'09:00:00'}
+                            endTime={'18:00:00'}
+                        />
+                        <Text
+                            style={{
+                                fontSize: 12,
+                                color: colors.textGray,
+                            }}>
+                            (09:00 - 18:00)
+                        </Text>
+                    </View>
                 </View>
                 <View style={styles.content}>
                     <View style={styles.titleWrapper}>
@@ -422,42 +209,43 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                             numberOfLines={2}
                             style={[
                                 styles.title,
-                                index == 0 && {
-                                    width: deviceWidth * 0.6 - 80,
+                                // index == 0 && {
+                                // width: deviceWidth * 0.6 - 80,
+                                // },
+                            ]}>
+                            {item.name}
+                        </Text>
+                    </View>
+                    <View
+                        style={[
+                            styles.typeWrapper,
+                            {
+                                alignSelf: 'flex-start',
+                                backgroundColor:
+                                    item.type == 'atm'
+                                        ? colors.pinkTrans
+                                        : item.type == 'branch'
+                                        ? colors.redTrans
+                                        : colors.violateTrans,
+                            },
+                        ]}>
+                        <Text
+                            style={[
+                                styles.type,
+                                {
+                                    color:
+                                        item.type == 'atm'
+                                            ? colors.pink
+                                            : item.type == 'branch'
+                                            ? colors.red
+                                            : colors.violate,
                                 },
                             ]}>
-                            <View
-                                style={[
-                                    styles.typeWrapper,
-                                    {
-                                        backgroundColor:
-                                            item.type == 'atm'
-                                                ? colors.pinkTrans
-                                                : item.type == 'branch'
-                                                ? colors.redTrans
-                                                : colors.violateTrans,
-                                    },
-                                ]}>
-                                <Text
-                                    style={[
-                                        styles.type,
-                                        {
-                                            color:
-                                                item.type == 'atm'
-                                                    ? colors.pink
-                                                    : item.type == 'branch'
-                                                    ? colors.red
-                                                    : colors.violate,
-                                        },
-                                    ]}>
-                                    {item.type == 'atm'
-                                        ? strings.atm
-                                        : item.type == 'branch'
-                                        ? strings.branches
-                                        : strings.minibanks}
-                                </Text>
-                            </View>
-                            {item.name}
+                            {item.type == 'atm'
+                                ? strings.atm
+                                : item.type == 'branch'
+                                ? strings.branches
+                                : strings.minibanks}
                         </Text>
                     </View>
                     <View style={styles.row}>
@@ -489,7 +277,7 @@ const ListItem = ({item, index, cardPressed}: listItemProps) => {
                             9:00 - 18:00 Пн, Вт, Ср, Чт, Пт
                         </Text>
                     </View>
-                    <Seperator width="90%" />
+                    <Seperator width="95%" containerStyle={{paddingTop: 10}} />
                     <View style={styles.buttonWrapper}>
                         <TouchableOpacity onPress={onBankingPress}>
                             <View style={styles.transferWrapper}>
@@ -571,21 +359,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
         // justifyContent: 'flex-start',
+        // borderWidth: 1,
+        paddingTop: 10,
     },
     row: {
-        marginBottom: 3,
+        marginBottom: 5,
         flexDirection: 'row',
         // alignItems: 'baseline',
     },
     image: {
-        height: 90,
-        width: 100,
+        height: 100,
+        width: 120,
         borderRadius: BORDER_RADIUS,
-        marginRight: 10,
         resizeMode: 'cover',
     },
     title: {
-        width: deviceWidth * 0.4,
         fontSize: 14,
         color: colors.green,
         textTransform: 'capitalize',
@@ -622,6 +410,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         // paddingVertical: 10,
         flex: 1,
+        paddingHorizontal: 10,
     },
     buttonWrapper: {
         flexDirection: 'row',
@@ -664,12 +453,12 @@ const styles = StyleSheet.create({
     },
     lupaWrapper: {
         position: 'absolute',
-        left: 20,
-        top: 20,
     },
 });
 
-const mapStateToProps = ({}: any) => ({});
+const mapStateToProps = ({appState}: any) => ({
+    language: appState.language,
+});
 
 const mapDispatchToProps = (dispatch: any) => ({
     cardPressed: (region: branchType) => dispatch(cardPressed(region)),

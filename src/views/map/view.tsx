@@ -5,10 +5,16 @@ import {
     LayoutAnimation,
     Keyboard,
     ImageBackground,
+    TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
 import MapView from 'react-native-map-clustering';
-import mapType, {PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps';
+import mapType, {
+    PROVIDER_GOOGLE,
+    Marker,
+    Callout,
+    CalloutSubview,
+} from 'react-native-maps';
 import {connect} from 'react-redux';
 import {
     colors,
@@ -27,6 +33,7 @@ import {
     hideMapLoading,
     setZoomLevel,
     setSearchFocus,
+    hideCallout,
 } from '../../redux/actions';
 import {markerPressed} from '../../redux/thunks';
 import MapViewDirections from 'react-native-maps-directions';
@@ -74,60 +81,32 @@ const Map = ({
                     //         ? images.atm
                     //         : images.bank
                     // }
-                    title={region.name}>
+                >
                     <View
                         style={{
                             justifyContent: 'center',
                             padding: 10,
                             paddingTop: 4,
                             alignItems: 'center',
-                            height: 40,
-                            width: 35,
+                            height: 45,
+                            width: 45,
                             overflow: 'hidden',
                         }}>
                         {region.type == 'branch' ? (
-                            <Branch height={25} width={25} />
+                            <Branch height={40} width={40} />
                         ) : region.type == 'atm' ? (
-                            <Atm height={25} width={25} />
+                            <Atm height={40} width={40} />
                         ) : (
-                            <Bank height={25} width={25} />
+                            <Bank height={40} width={40} />
                         )}
                     </View>
-                    <Callout tooltip={true}>
-                        <View style={styles.callout}>
-                            <Text numberOfLines={3} style={styles.calloutText}>
-                                {region.type == 'branch' ? (
-                                    <Branch
-                                        height={25}
-                                        width={25}
-                                        style={{
-                                            height: 25,
-                                            width: 25,
-                                        }}
-                                    />
-                                ) : region.type == 'atm' ? (
-                                    <Atm
-                                        height={25}
-                                        width={25}
-                                        style={{
-                                            height: 25,
-                                            width: 25,
-                                        }}
-                                    />
-                                ) : (
-                                    <Bank
-                                        height={25}
-                                        width={25}
-                                        style={{
-                                            height: 25,
-                                            width: 25,
-                                        }}
-                                    />
-                                )}
-                                {region.name} {region.id}
-                            </Text>
-                        </View>
-                    </Callout>
+
+                    <Callout
+                        tooltip={true}
+                        style={{
+                            width: 0,
+                        }}
+                    />
                 </Marker>
             ))
         );
@@ -177,15 +156,19 @@ const Map = ({
         if (_map.current) {
             _map.current.fitToCoordinates(displayDataList, {
                 edgePadding: {
-                    top: 20,
+                    top: 60,
                     left: 40,
                     right: 40,
-                    bottom: 20,
+                    bottom: 60,
                 },
                 animated: true,
             });
         }
     }, [displayDataList]);
+
+    useEffect(() => {
+        console.log(zoomLevel);
+    }, [zoomLevel]);
 
     return (
         <View style={styles.container}>
@@ -201,6 +184,7 @@ const Map = ({
                     setZoomLevel(event.longitudeDelta)
                 }
                 radius={10}
+                edgePadding={{top: 150, left: 50, bottom: 150, right: 50}}
                 // customMapStyle={mapConfig}
                 layoutAnimationConf={LayoutAnimation.Presets.easeInEaseOut}
                 ref={_map}
@@ -245,12 +229,16 @@ const mapStateToProps = ({mapState, listState, descState}: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
     // hidePanel: () => dispatch(hidePanel()),
-    mapDragStarted: () => dispatch(mapDragStarted()),
+    mapDragStarted: () => {
+        dispatch(mapDragStarted());
+        dispatch(hideCallout());
+    },
     markerPressed: (mapEvent: any) => dispatch(markerPressed(mapEvent)),
     showMapLoading: () => dispatch(showMapLoading()),
     hideMapLoading: () => dispatch(hideMapLoading()),
     mapPressed: (state: any) => {
         dispatch(hideDescription());
+        dispatch(hideCallout());
         dispatch(setSearchFocus(false));
     },
     setZoomLevel: (delta: any) => {

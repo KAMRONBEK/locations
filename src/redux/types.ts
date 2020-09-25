@@ -38,7 +38,7 @@ export const SEARCH_REQUEST_SUCCESS = 'SEARCH_REQUEST_SUCCESS';
 export const SEARCH_REQUEST_NOT_FOUND = 'SEARCH_REQUEST_NOT_FOUND';
 export const RESET_SEARCH = 'RESET_SEARCH';
 
-//draggable
+//list
 export const SHOW_LIST = 'SHOW_LIST';
 export const HIDE_LIST = 'HIDE_LIST';
 export const TOGGLE_LIST = 'TOGGLE_LIST';
@@ -49,3 +49,7 @@ export const SCROLL_TO = 'SCROLL_TO';
 //description
 export const SHOW_DESCRIPTION = 'SHOW_DESCRIPTION';
 export const HIDE_DESCRIPTION = 'HIDE_DESCRIPTION';
+
+//callout
+export const SHOW_CALLOUT = 'SHOW_CALLOUT';
+export const HIDE_CALLOUT = 'HIDE_CALLOUT';

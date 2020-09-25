@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {colors, BORDER_RADIUS} from '../../constants';
+import {colors, BORDER_RADIUS, deviceWidth} from '../../constants';
 
 export default StyleSheet.create({
     container: {
@@ -21,10 +21,10 @@ export default StyleSheet.create({
     },
     callout: {
         backgroundColor: colors.ultraLightBlue,
-        minWidth: 100,
-        maxWidth: 300,
+        width: deviceWidth * 0.9,
+        height: 150,
         borderRadius: BORDER_RADIUS,
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderColor: colors.lightBlue,
         padding: 7,
     },
