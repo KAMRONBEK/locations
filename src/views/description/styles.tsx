@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
         right: 0,
         left: 0,
         top: 0,
+        borderWidth: 1,
     },
     content: {
         borderTopRightRadius: 14,

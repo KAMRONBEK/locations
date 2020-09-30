@@ -5,7 +5,7 @@ import {
     TouchableOpacity,
     Keyboard,
     Text as OriginText,
-    Image
+    Image,
 } from 'react-native';
 import {styles} from './styles';
 import {connect} from 'react-redux';
@@ -18,14 +18,15 @@ import {
     setDestinationCoords,
     toggleMenu,
     hideDescription,
-    setSearchFocus
+    setSearchFocus,
+    hideCallout,
 } from '../../redux/actions';
 import {
     INITIAL,
     DONE_SEARCHING,
     colors,
     SEARCHING,
-    MAP_WITH_LIST
+    MAP_WITH_LIST,
 } from '../../constants';
 import {search} from '../../redux/thunks';
 import {strings} from '../../locales/strings';
@@ -51,6 +52,7 @@ interface SearchInterface {
     hideDescription: any;
     setSearchFocus: any;
     focus: boolean;
+    hideCallout: any;
 }
 
 const Search = ({
@@ -69,7 +71,8 @@ const Search = ({
     language,
     hideDescription,
     setSearchFocus,
-    focus
+    focus,
+    hideCallout,
 }: SearchInterface) => {
     let _searchInput = useRef<TextInput>(null);
 
@@ -102,6 +105,7 @@ const Search = ({
                     style={{flex: 1, padding: 0, color: colors.black}}
                     keyboardAppearance={'dark'}
                     onFocus={() => {
+                        hideCallout();
                         setSearchFocus(true);
                         setSearchStatus(INITIAL);
                         setSearchResultText('');
@@ -165,7 +169,7 @@ const Search = ({
                     style={{
                         flexDirection: 'row',
                         paddingVertical: 10,
-                        justifyContent: 'center'
+                        justifyContent: 'center',
                     }}>
                     <FilterItem
                         text={strings.atm}
@@ -221,7 +225,7 @@ const mapStateToProps = ({searchState, mapState, appState}: any) => ({
     originalData: mapState.originalDataList,
     searchResultText: searchState.searchResultText,
     language: appState.language,
-    focus: searchState.focusSearch
+    focus: searchState.focusSearch,
 });
 const mapDispatchToProps = (dispatch: any) => ({
     setSearchKeyword: (text: any) => dispatch(setSearchKeyword(text)),
@@ -234,9 +238,10 @@ const mapDispatchToProps = (dispatch: any) => ({
         dispatch(setDestinationCoords(location)),
     toggleMenu: () => dispatch(toggleMenu()),
     hideDescription: () => dispatch(hideDescription()),
-    setSearchFocus: (mode: any) => dispatch(setSearchFocus(mode))
+    setSearchFocus: (mode: any) => dispatch(setSearchFocus(mode)),
+    hideCallout: () => dispatch(hideCallout()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {
-    forwardRef: true
+    forwardRef: true,
 })(memo(Search));

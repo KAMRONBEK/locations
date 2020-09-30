@@ -33,14 +33,14 @@ const App = () => {
                 barStyle="dark-content"
                 translucent={true}
             />
-            <SafeAreaView
-                // forceInset={{top: 'always'}}
-                style={{backgroundColor: 'transparent', flex: 1}}>
-                <Provider store={store}>
-                    <AppRouter />
-                    <LoadingModal />
-                </Provider>
-            </SafeAreaView>
+            {/* <SafeAreaView */}
+            {/* // forceInset={{top: 'always'}} */}
+            {/* style={{backgroundColor: 'transparent', flex: 1}}> */}
+            <Provider store={store}>
+                <AppRouter />
+                <LoadingModal />
+            </Provider>
+            {/* </SafeAreaView> */}
         </>
     );
 };

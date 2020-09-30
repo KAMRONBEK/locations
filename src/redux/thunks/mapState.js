@@ -42,6 +42,7 @@ export const init = () => async (dispatch) => {
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
         };
+
         dispatch(setMyRegion(myLocationRegion));
         let result = await Service.get(myLocation);
         if (result) {
@@ -166,15 +167,15 @@ export const focusRegion = () => async (dispatch) => {
                             console.log(
                                 'The permission has not been requested / is denied but requestable',
                             );
-                            request(
-                                PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-                            ).then(() => {
-                                loadLocationInfo().then((info) => {
-                                    console.log(info, 'info');
-                                    dispatch(setMyRegion(info));
-                                    dispatch(regionSelected(info));
-                                });
+                            // request(
+                            // PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+                            // ).then(() => {
+                            loadLocationInfo().then((info) => {
+                                console.log(info, 'info');
+                                dispatch(setMyRegion(info));
+                                dispatch(regionSelected(info));
                             });
+                            // });
                             break;
                         case RESULTS.GRANTED:
                             console.log('The permission is granted');

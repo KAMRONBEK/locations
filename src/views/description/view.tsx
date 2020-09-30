@@ -112,9 +112,11 @@ descriptionProps) => {
     });
 
     const onRoutePress = () => {
-        setTimeout(() => {
-            animatedValue.setValue(deviceHeight);
-        }, 500);
+        Animated.spring(animatedValue, {
+            toValue: deviceHeight,
+            useNativeDriver: false,
+            velocity: 10,
+        }).start(() => hideDescription());
         // getDirections(myRegion, currentRegion);
         setDestinationCoords(currentRegion);
     };
@@ -246,6 +248,7 @@ descriptionProps) => {
                 top: contentTop,
                 position: 'absolute',
                 zIndex: 3,
+                flex: 1,
             }}>
             {/* <View
                 {...panResponder.panHandlers}
@@ -264,6 +267,7 @@ descriptionProps) => {
                         // borderTopRightRadius: borderRadius,
                         // borderTopLeftRadius: borderRadius,
                         paddingTop: paddingTop,
+                        flex: 1,
                     },
                 ]}>
                 <Animated.View
@@ -298,15 +302,8 @@ descriptionProps) => {
                         snapToInterval={CARD_WIDTH + 40}
                         snapToAlignment="end"
                         style={[styles.scrollView]}
-                        contentInset={{
-                            top: 0,
-                            left: 20,
-                            bottom: 0,
-                            right: 20,
-                        }}
                         contentContainerStyle={{
-                            paddingHorizontal:
-                                Platform.OS === 'android' ? 20 : 0,
+                            paddingHorizontal: 20,
                         }}>
                         {imgs.map((image, index) => {
                             return (
@@ -348,11 +345,25 @@ descriptionProps) => {
                     </TouchableOpacity>
                 </Animated.View>
 
-                <View
-                    style={{
-                        flex: 1,
-                    }}>
-                    <ScrollView>
+                <ScrollView
+                    // contentContainerStyle={{flex: 1}}
+                    contentContainerStyle={{flexGrow: 1}}>
+                    <View
+                        style={{
+                            flex: 1,
+                            ...Platform.select({
+                                ios: {
+                                    // top: 40,
+                                },
+                                android: {
+                                    paddingBottom: 50,
+                                },
+                                default: {
+                                    // other platforms, web for example
+                                    // top: 5,
+                                },
+                            }),
+                        }}>
                         <View style={styles.column}>
                             <View
                                 style={{
@@ -509,8 +520,8 @@ descriptionProps) => {
                                 accentColor={colors.lightGreen}
                             />
                         </View>
-                    </ScrollView>
-                </View>
+                    </View>
+                </ScrollView>
             </Animated.View>
         </Animated.View>
         // </Swiper>

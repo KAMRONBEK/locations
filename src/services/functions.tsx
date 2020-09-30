@@ -23,8 +23,8 @@ export const requestLocationPermission = () => {
                 {
                     title: 'Example App',
                     message: 'Example App access to your location ',
-                    buttonPositive: 'Yes'
-                }
+                    buttonPositive: 'Yes',
+                },
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                 resolve();
@@ -42,7 +42,9 @@ export const requestLocationPermission = () => {
 
 export const getCurrentPosition = () => {
     return new Promise((resolve, reject) =>
-        Geolocation.getCurrentPosition(resolve, reject)
+        Geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: true,
+        }),
     );
     // return new Promise((resolve) => resolve({}));
 };

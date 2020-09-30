@@ -22,6 +22,9 @@ import Social from '../../component/common/Social';
 import source from '../../assets/branches';
 import Text from '../../component/common/Text';
 import {NavigationProp} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
+
+// Within your render function
 
 let languages = [
     {
@@ -79,7 +82,11 @@ let Home = ({navigation, language, setLanguage, hideList}: homeProps) => {
     };
 
     return (
-        <View style={styles.container}>
+        <LinearGradient
+            colors={[colors.lightGreen, colors.white]}
+            start={{x: 0, y: 1}}
+            end={{x: 1, y: 0}}
+            style={styles.container}>
             <View style={styles.top}>
                 <View style={styles.logoWrapper}>
                     <Image source={images.logo} style={styles.logo} />
@@ -141,15 +148,15 @@ let Home = ({navigation, language, setLanguage, hideList}: homeProps) => {
                 />
             </View>
 
-            <Seperator width="90%" />
-            <ScrollView style={styles.content}>
+            <Seperator width="90%" containerStyle={{paddingVertical: 10}} />
+            <ScrollView style={styles.content} contentContainerStyle={{}}>
                 <View style={styles.descWrapper}>
                     {/* <Text style={styles.title}> */}
                     {/* Ipak Yoli Locator -{' '} */}
                     <Text style={styles.descText}>{strings.appDesc}</Text>
                     {/* </Text> */}
                 </View>
-                <Seperator width="90%" />
+                <Seperator width="90%" containerStyle={{paddingVertical: 20}} />
                 <View style={styles.boxWrapper}>
                     <View style={styles.row}>
                         <TouchableOpacity onPress={onMapPress}>
@@ -234,7 +241,7 @@ let Home = ({navigation, language, setLanguage, hideList}: homeProps) => {
                     </View>
                 </RNPickerSelect>
             </View>
-        </View>
+        </LinearGradient>
     );
 };
 

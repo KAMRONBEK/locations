@@ -203,12 +203,14 @@ const Map = ({
                         origin={myRegion}
                         destination={routeDestination}
                         mode={'DRIVING'}
-                        precision={'low'}
+                        precision={'high'}
                         apikey={DIRECTION_API_KEY}
                         strokeWidth={8}
                         strokeColor={colors.blue}
                         onStart={onDirecionStart}
                         onReady={onDirectionReady}
+                        splitWaypoints={true}
+                        region={'uz'}
                     />
                 )}
             </MapView>

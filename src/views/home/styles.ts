@@ -6,18 +6,6 @@ export const styles = StyleSheet.create({
         backgroundColor: colors.white,
         flex: 1,
         resizeMode: 'contain',
-        // ...Platform.select({
-        //     ios: {
-        //         paddingTop: 30
-        //     },
-        //     android: {
-        //         paddingTop: 0
-        //     },
-        //     default: {
-        //         // other platforms, web for example
-        //         paddingTop: 0
-        //     }
-        // })
     },
     imageBanner: {
         position: 'absolute',
@@ -31,7 +19,6 @@ export const styles = StyleSheet.create({
         padding: 10,
         paddingTop: 40,
         paddingBottom: 0,
-        backgroundColor: 'white',
     },
     logoWrapper: {
         borderRadius: 150,
@@ -41,8 +28,10 @@ export const styles = StyleSheet.create({
             width: 2,
             height: 5,
         },
-        shadowOpacity: 0.5,
-        shadowRadius: 5,
+        borderWidth: 0.2,
+        borderColor: colors.green,
+        shadowOpacity: 0.9,
+        shadowRadius: 10,
         overflow: 'hidden',
         height: 80,
         width: 80,
@@ -75,7 +64,7 @@ export const styles = StyleSheet.create({
     },
     name: {
         fontSize: 25,
-        color: colors.green,
+        color: colors.darkBlack,
     },
     link: {
         fontSize: 14,
@@ -89,13 +78,15 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
     },
     card: {
-        backgroundColor: colors.ultraLightBlue,
+        backgroundColor: 'rgba(0,100,0,0.1)',
         width: 140,
         height: 120,
         borderRadius: BORDER_RADIUS,
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 10,
+        borderWidth: 0.5,
+        borderColor: 'rgba(255,255,255,0.4)',
     },
     row: {
         flexDirection: 'row',
@@ -113,7 +104,7 @@ export const styles = StyleSheet.create({
                 top: 40,
             },
             android: {
-                top: 5,
+                top: 10,
             },
             default: {
                 // other platforms, web for example
@@ -122,9 +113,9 @@ export const styles = StyleSheet.create({
         }),
     },
     round: {
-        width: 70,
+        width: 80,
         height: 30,
-        backgroundColor: colors.ultraLightBlue,
+        backgroundColor: colors.lightGreen,
         borderRadius: BORDER_RADIUS,
         justifyContent: 'space-evenly',
         alignItems: 'center',
