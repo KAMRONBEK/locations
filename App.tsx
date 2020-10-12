@@ -28,11 +28,7 @@ const App = () => {
     let store = configureStore();
     return (
         <>
-            <StatusBar
-                backgroundColor={colors.white}
-                barStyle="dark-content"
-                translucent={true}
-            />
+            <StatusBar translucent backgroundColor="transparent" />
             {/* <SafeAreaView */}
             {/* // forceInset={{top: 'always'}} */}
             {/* style={{backgroundColor: 'transparent', flex: 1}}> */}

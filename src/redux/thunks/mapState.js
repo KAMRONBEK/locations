@@ -11,12 +11,12 @@ import {
     markerSelected,
     regionSelected,
     showCallout,
-    hideCallout,
+    hideCallout
 } from '../actions';
 import {Alert, Linking, Platform} from 'react-native';
 import {
     requestLocationPermission,
-    getCurrentPosition,
+    getCurrentPosition
 } from '../../services/functions';
 import Geolocation from '@react-native-community/geolocation';
 import {LATITUDE_DELTA, LONGITUDE_DELTA, MAP_WITH_DESC} from '../../constants';
@@ -40,7 +40,7 @@ export const init = () => async (dispatch) => {
         const myLocationRegion = {
             ...myLocation,
             latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA
         };
 
         dispatch(setMyRegion(myLocationRegion));
@@ -81,7 +81,7 @@ export const loadingData = () => async (dispatch) => {
 };
 
 export const getDirections = (startLocation, endLocation) => async (
-    dispatch,
+    dispatch
 ) => {
     dispatch(showMapLoading());
 
@@ -90,17 +90,17 @@ export const getDirections = (startLocation, endLocation) => async (
     try {
         let resp = await fetch(
             //fix API
-            `https://maps.googleapis.com/maps/api/directions/json?origin=${start}&destination=${end}&key=AIzaSyAbI94kGVXviZKmvBCLkNj4zkxX5MilzUM`,
+            `https://maps.googleapis.com/maps/api/directions/json?origin=${start}&destination=${end}&key=AIzaSyAbI94kGVXviZKmvBCLkNj4zkxX5MilzUM`
         );
         let respJson = await resp.json();
         console.log(respJson);
         let points = Polyline.decode(
-            respJson.routes[0].overview_polyline.points,
+            respJson.routes[0].overview_polyline.points
         );
         let coords = points.map((point, index) => {
             return {
                 latitude: point[0],
-                longitude: point[1],
+                longitude: point[1]
             };
         });
         dispatch(setDestinationCoords(coords));
@@ -142,7 +142,7 @@ const loadLocationInfo = async (dispatch) =>
         const myLocationRegion = {
             ...myLocation,
             latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA
         };
         if (myLocationRegion) {
             resolve(myLocationRegion);
@@ -160,12 +160,12 @@ export const focusRegion = () => async (dispatch) => {
                     switch (result) {
                         case RESULTS.UNAVAILABLE:
                             console.log(
-                                'This feature is not available (on this device / in this context)',
+                                'This feature is not available (on this device / in this context)'
                             );
                             break;
                         case RESULTS.DENIED:
                             console.log(
-                                'The permission has not been requested / is denied but requestable',
+                                'The permission has not been requested / is denied but requestable'
                             );
                             // request(
                             // PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
@@ -187,7 +187,7 @@ export const focusRegion = () => async (dispatch) => {
                             break;
                         case RESULTS.BLOCKED:
                             console.log(
-                                'The permission is denied and not requestable anymore',
+                                'The permission is denied and not requestable anymore'
                             );
                             Alert.alert(
                                 'Location',
@@ -197,14 +197,14 @@ export const focusRegion = () => async (dispatch) => {
                                         text: 'Cancel',
                                         onPress: () =>
                                             console.log('Cancel Pressed'),
-                                        style: 'cancel',
+                                        style: 'cancel'
                                     },
                                     {
                                         text: 'OK',
-                                        onPress: () => Linking.openSettings(),
-                                    },
+                                        onPress: () => Linking.openSettings()
+                                    }
                                 ],
-                                {cancelable: false},
+                                {cancelable: false}
                             );
                             break;
                     }
@@ -218,7 +218,7 @@ export const focusRegion = () => async (dispatch) => {
                     switch (result) {
                         case RESULTS.UNAVAILABLE:
                             console.log(
-                                'This feature is not available (on this device / in this context)',
+                                'This feature is not available (on this device / in this context)'
                             );
                             break;
                         case RESULTS.DENIED:
@@ -231,8 +231,8 @@ export const focusRegion = () => async (dispatch) => {
                                             dispatch(setMyRegion(info));
                                             dispatch(regionSelected(info));
                                         });
-                                    },
-                                ),
+                                    }
+                                )
                             );
                             break;
                         case RESULTS.GRANTED:
@@ -244,7 +244,7 @@ export const focusRegion = () => async (dispatch) => {
                             break;
                         case RESULTS.BLOCKED:
                             console.log(
-                                'The permission is denied and not requestable anymore',
+                                'The permission is denied and not requestable anymore'
                             );
                             Alert.alert(
                                 'Location',
@@ -254,14 +254,14 @@ export const focusRegion = () => async (dispatch) => {
                                         text: 'Cancel',
                                         onPress: () =>
                                             console.log('Cancel Pressed'),
-                                        style: 'cancel',
+                                        style: 'cancel'
                                     },
                                     {
                                         text: 'OK',
-                                        onPress: () => Linking.openSettings(),
-                                    },
+                                        onPress: () => Linking.openSettings()
+                                    }
                                 ],
-                                {cancelable: false},
+                                {cancelable: false}
                             );
                             break;
                     }

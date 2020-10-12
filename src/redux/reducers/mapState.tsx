@@ -10,6 +10,7 @@ import {
     SET_ROUTE_DESTINATION,
     SET_MAP_MODE,
     SET_ZOOM_LEVEL,
+    TOGGLE_MAP_TYPE,
 } from '../types';
 import {
     LATITUDE,
@@ -20,6 +21,8 @@ import {
     FREE_MAP,
     MAP_WITH_SEARCH,
     MAP_WITH_LIST,
+    standard,
+    satellite,
 } from '../../constants';
 
 export interface appStateProps {
@@ -48,6 +51,7 @@ const initialState = {
     mapMode: MAP_WITH_SEARCH, //FREE_MAP,MAP_WITH_SEARCH,MAP_WITH_LIST
     routeDestination: null,
     zoomLevel: 1,
+    mapType: standard, //standard,satellite
 };
 export default (state = initialState, {type, payload}: any) => {
     switch (type) {
@@ -97,6 +101,12 @@ export default (state = initialState, {type, payload}: any) => {
             return {
                 ...state,
                 zoomLevel: Math.round(Math.log(360 / payload) / Math.LN2),
+            };
+        }
+        case TOGGLE_MAP_TYPE: {
+            return {
+                ...state,
+                mapType: state.mapType == standard ? satellite : standard,
             };
         }
         default:

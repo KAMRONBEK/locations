@@ -5,27 +5,35 @@ import {
     BORDER_RADIUS,
     colors,
     deviceHeight,
-    deviceWidth,
+    deviceWidth
 } from '../../constants';
 import {strings} from '../../locales/strings';
 import {branchType} from '../../screens/map/Map';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Seperator from '../common/Seperator';
 import {onCalloutPress} from '../../redux/thunks';
+import {hideCallout} from '../../redux/actions';
 
 interface customCalloutProps {
     visibility: boolean;
     region: branchType;
     onCalloutPress: any;
+    hideCallout: any;
 }
 
 const CustomCallout = ({
     visibility,
     region,
     onCalloutPress,
+    hideCallout
 }: customCalloutProps) => {
-    const onPress = () => {
+    const onCardPress = () => {
         onCalloutPress(region);
+        console.log('card');
+    };
+    const onExitPress = () => {
+        hideCallout();
+        console.log('hide');
     };
 
     useEffect(() => {
@@ -38,83 +46,49 @@ const CustomCallout = ({
     }
     return (
         <View style={styles.plain}>
-            <TouchableOpacity onPress={onPress}>
-                <View style={styles.container}>
-                    <View style={styles.content}>
-                        <View style={styles.titleWrapper}>
-                            <Text
-                                numberOfLines={2}
-                                style={[
-                                    styles.title,
-                                    // index == 0 && {
-                                    // width: deviceWidth * 0.6 - 80,
-                                    // },
-                                ]}>
-                                {region?.name}
-                            </Text>
-                        </View>
-                        <View
-                            style={[
-                                styles.typeWrapper,
-                                {
-                                    alignSelf: 'flex-start',
-                                    backgroundColor:
-                                        region?.type == 'atm'
-                                            ? colors.pinkTrans
+            <TouchableOpacity onPress={onExitPress}>
+                <View style={styles.innerPlain}>
+                    <TouchableOpacity onPress={onCardPress}>
+                        <View style={styles.container}>
+                            <View style={styles.content}>
+                                <View style={[styles.typeWrapper]}>
+                                    <Text style={[styles.type]}>
+                                        {region?.type == 'atm'
+                                            ? strings.atm
                                             : region?.type == 'branch'
-                                            ? colors.redTrans
-                                            : colors.violateTrans,
-                                },
-                            ]}>
-                            <Text
-                                style={[
-                                    styles.type,
-                                    {
-                                        color:
-                                            region?.type == 'atm'
-                                                ? colors.pink
-                                                : region?.type == 'branch'
-                                                ? colors.red
-                                                : colors.violate,
-                                    },
-                                ]}>
-                                {region?.type == 'atm'
-                                    ? strings.atm
-                                    : region?.type == 'branch'
-                                    ? strings.branches
-                                    : strings.minibanks}
-                            </Text>
+                                            ? strings.branches
+                                            : strings.minibanks}
+                                    </Text>
+                                </View>
+                                <View style={styles.titleWrapper}>
+                                    <Text
+                                        numberOfLines={2}
+                                        style={[
+                                            styles.title
+                                            // index == 0 && {
+                                            // width: deviceWidth * 0.6 - 80,
+                                            // },
+                                        ]}>
+                                        {region?.name}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.row}>
+                                    <Text numberOfLines={2} style={styles.text}>
+                                        {region?.address.split(',')[1]},
+                                        {region?.address.split(',')[2]}
+                                        {/* {item.address} */}
+                                    </Text>
+                                </View>
+                                <View style={styles.row}>
+                                    <Text numberOfLines={2} style={styles.text}>
+                                        {' '}
+                                        9:00 - 18:00 Пн, Вт, Ср, Чт, Пт
+                                    </Text>
+                                </View>
+                            </View>
                         </View>
-                        <View style={styles.row}>
-                            <Ionicons
-                                name="location"
-                                size={12}
-                                color={colors.green}
-                                style={{
-                                    paddingTop: 2,
-                                }}
-                            />
-                            <Text numberOfLines={2} style={styles.text}>
-                                {region?.address.split(',')[1]},
-                                {region?.address.split(',')[2]}
-                                {/* {item.address} */}
-                            </Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Ionicons
-                                name="time"
-                                size={12}
-                                color={colors.green}
-                                style={{
-                                    paddingTop: 2,
-                                }}
-                            />
-                            <Text numberOfLines={2} style={styles.text}>
-                                {' '}
-                                9:00 - 18:00 Пн, Вт, Ср, Чт, Пт
-                            </Text>
-                        </View>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </TouchableOpacity>
         </View>
@@ -124,64 +98,72 @@ const CustomCallout = ({
 const styles = StyleSheet.create({
     plain: {
         position: 'absolute',
-        bottom: deviceHeight / 2 + 30,
-        right: 20,
-        left: 20,
+        top: 0,
+        right: 0,
+        left: 0,
+        bottom: 0,
         zIndex: 3,
-        padding: 10,
-        borderWidth: 0.5,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    innerPlain: {
+        flex: 1,
+        width: deviceWidth,
+        justifyContent: 'center',
+        paddingHorizontal: 20
+        // alignItems: 'center',
+    },
+    container: {
+        // bottom: deviceHeight / 2 + 30,
+        // right: 20,
+        // left: 20,
+        // padding: 10,
         borderColor: colors.lightBlue,
         backgroundColor: colors.ultraLightBlue,
         borderRadius: BORDER_RADIUS,
+        paddingVertical: 40
     },
-    container: {},
     content: {
-        justifyContent: 'space-between',
-        // paddingVertical: 10,
-        flex: 1,
-        paddingHorizontal: 10,
+        alignItems: 'center'
     },
     text: {
         fontSize: 12,
-        color: colors.darkBlack,
+        color: colors.darkBlack
     },
     typeWrapper: {
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 5,
+        paddingHorizontal: 5
     },
     type: {
-        fontSize: 12,
-        textTransform: 'capitalize',
+        fontSize: 16,
+        textTransform: 'capitalize'
     },
     buttonWrapper: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
     },
     titleWrapper: {
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        // justifyContent: 'flex-start',
-        // borderWidth: 1,
-        paddingTop: 10,
+        flexDirection: 'row'
     },
     row: {
-        marginBottom: 5,
-        flexDirection: 'row',
+        flexDirection: 'row'
         // alignItems: 'baseline',
     },
     image: {
         height: 100,
         width: 120,
         borderRadius: BORDER_RADIUS,
-        resizeMode: 'cover',
+        resizeMode: 'cover'
     },
     title: {
-        fontSize: 14,
-        color: colors.green,
+        fontSize: 25,
+        color: colors.darkBlack,
         textTransform: 'capitalize',
         paddingLeft: 5,
+        textAlign: 'center'
     },
     callWrapper: {
         marginLeft: 5,
@@ -190,7 +172,7 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: colors.lightGreen,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     navigateWrapper: {
         borderRadius: 100,
@@ -198,12 +180,12 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: colors.lightGreen,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     transferWrapper: {
         flexDirection: 'row-reverse',
         // justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     round: {
         width: 40,
@@ -212,24 +194,25 @@ const styles = StyleSheet.create({
         backgroundColor: colors.lightGreen,
         justifyContent: 'center',
         alignItems: 'center',
-        elevation: 5,
+        elevation: 5
     },
     transferText: {
         color: colors.dimGray,
-        fontSize: 13,
+        fontSize: 13
     },
     lupaWrapper: {
-        position: 'absolute',
-    },
+        position: 'absolute'
+    }
 });
 
 const mapStateToProps = ({calloutState}: any) => ({
     visibility: calloutState.calloutVisibility,
-    region: calloutState.currentRegion,
+    region: calloutState.currentRegion
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
     onCalloutPress: (region: branchType) => dispatch(onCalloutPress(region)),
+    hideCallout: () => dispatch(hideCallout())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomCallout);

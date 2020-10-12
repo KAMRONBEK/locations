@@ -1,6 +1,6 @@
 import source from '../assets/branches';
 import {getDistance, getPreciseDistance} from 'geolib';
-import {sortArrayAsc} from './functions';
+import {getRandomInRange, sortArrayAsc} from './functions';
 import {strings} from '../locales/strings';
 // import branchType from '../screens/map/Map';
 
@@ -22,6 +22,27 @@ interface searchProps {
     searchKey: string;
     list: branchType[];
 }
+
+let testData = Array.apply(null, Array(5000)).map(function (x, i) {
+    return {
+        id: i,
+        name: Math.random().toString(36).substring(7),
+        address: Math.random().toString(36).substring(7),
+        location: {
+            latitude: Math.floor(Math.random() * (42 - 40 + 1)) + 40,
+            longitude: Math.floor(Math.random() * (70 - 68 + 1)) + 68,
+        },
+        mfo: Math.random(),
+        bank: Math.random().toString(36).substring(7),
+        phone: Math.random(),
+        trial503: Math.random().toString(36).substring(7),
+        latitude: getRandomInRange(20, 62, 180, 3),
+        longitude: getRandomInRange(28, 100, 180, 3),
+        tag: 'test',
+        type: 'atm',
+    };
+});
+
 class Service {
     static get(myLocation) {
         return new Promise((resolve, reject) => {
@@ -48,7 +69,7 @@ class Service {
                         'filial' +
                         ' ' +
                         'filiallar'
-                    } `
+                    } `,
                 };
             });
 
@@ -73,7 +94,7 @@ class Service {
                         'minibanklar' +
                         ' ' +
                         'minibanks'
-                    } `
+                    } `,
                 };
             });
 
@@ -92,7 +113,7 @@ class Service {
                         'Банкомат' +
                         ' ' +
                         'shahobcha'
-                    } `
+                    } `,
                 };
             });
 
@@ -104,7 +125,9 @@ class Service {
                         ? 0
                         : getPreciseDistance(myLocation, {
                               latitude: parseFloat(item.location.split(',')[0]),
-                              longitude: parseFloat(item.location.split(',')[1])
+                              longitude: parseFloat(
+                                  item.location.split(',')[1],
+                              ),
                           }) / 1000;
                 let newItem = {...item, id: index, distance: distance};
                 return newItem;
@@ -112,6 +135,7 @@ class Service {
 
             setTimeout(() => {
                 resolve(identified);
+                // resolve(testData);
             }, 0);
         });
     }

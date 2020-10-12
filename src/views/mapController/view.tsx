@@ -5,6 +5,7 @@ import {
     Keyboard,
     LayoutAnimation,
     StyleSheet,
+    StatusBar
 } from 'react-native';
 import {styles} from './styles';
 import Map from '../map';
@@ -20,6 +21,7 @@ import {
     MAP_WITH_SEARCH,
     MAP_WITH_LIST,
     MAP_WITH_DESC,
+    colors
 } from '../../constants';
 import Description from '../description';
 import {strings} from '../../locales/strings';
@@ -28,7 +30,7 @@ import {
     showList,
     hideList,
     setSearchFocus,
-    regionSelected,
+    regionSelected
 } from '../../redux/actions';
 import CustomCallout from '../../component/mapRelated/CustomCallout';
 
@@ -44,12 +46,18 @@ const MapController = ({
     setSearchFocus,
     regionSelected,
     myRegion,
+    navigation
 }: any) => {
     useEffect(() => {
         setImmediate(() => hideList());
     }, [language]);
 
     useEffect(() => {
+        StatusBar.setBarStyle('light-content');
+    }, [navigation]);
+
+    useEffect(() => {
+        console.log('%c who called me?', "color: 'pink';");
         init();
         switch (route.params.action) {
             case 'list': {
@@ -62,15 +70,15 @@ const MapController = ({
                 setSearchFocus(true);
                 return;
             }
-            case 'location': {
+            case 'location':
                 {
-                    setTimeout(() => {
-                        regionSelected(myRegion);
-                    }, 400);
-                    return;
+                    {
+                        setTimeout(() => {
+                            regionSelected(myRegion);
+                        }, 400);
+                        return;
+                    }
                 }
-            }
-            default:
                 return;
         }
     }, []);
@@ -93,7 +101,7 @@ const mapStateToProps = ({mapState, descState, appState}: any) => ({
     mapMode: mapState.mapMode,
     descVisibility: descState.descVisibility,
     currentRegion: descState.currentRegion,
-    language: appState.language,
+    language: appState.language
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -101,7 +109,7 @@ const mapDispatchToProps = (dispatch: any) => ({
     showList: () => dispatch(showList()),
     hideList: () => dispatch(hideList()),
     setSearchFocus: (mode: string) => dispatch(setSearchFocus(mode)),
-    regionSelected: (region: object) => dispatch(regionSelected(region)),
+    regionSelected: (region: object) => dispatch(regionSelected(region))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapController);

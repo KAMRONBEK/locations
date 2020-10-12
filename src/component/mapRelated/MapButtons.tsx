@@ -1,9 +1,15 @@
 import React, {useCallback} from 'react';
 import {StyleSheet, Text, View, Platform, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
-import {colors, BORDER_RADIUS} from '../../constants';
+import {colors, BORDER_RADIUS, standard} from '../../constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {hideCallout, regionSelected, showList} from '../../redux/actions';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+    hideCallout,
+    regionSelected,
+    showList,
+    toggleMapType
+} from '../../redux/actions';
 import {branchType, regionType} from '../../screens/map/Map';
 import {focusRegion} from '../../redux/thunks';
 
@@ -12,6 +18,9 @@ interface mapButtonsProps {
     myRegion: regionType;
     showList: any;
     focusRegion: any;
+    mapType: string;
+    toggleMapType: any;
+    zoomLevel: number;
 }
 
 const MapButtons = ({
@@ -19,23 +28,56 @@ const MapButtons = ({
     myRegion,
     showList,
     focusRegion,
+    mapType,
+    toggleMapType,
+    zoomLevel
 }: mapButtonsProps) => {
     const onLocationPress = useCallback(() => {
         focusRegion();
     }, [myRegion]);
 
+    const onSatellitePress = () => {
+        toggleMapType();
+    };
+
     const toggleList = () => {};
 
     return (
         <View style={styles.container}>
+            <View
+                style={{
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}>
+                <Text
+                    style={{
+                        color:
+                            mapType == standard
+                                ? colors.lightDark
+                                : colors.ultraLightBlue,
+                        fontSize: 20
+                    }}>
+                    {zoomLevel}
+                </Text>
+            </View>
+
+            <View style={styles.markerWrapper}>
+                <TouchableOpacity onPress={onSatellitePress}>
+                    <View style={styles.locationIcon}>
+                        <MaterialCommunityIcons
+                            name={
+                                mapType == standard
+                                    ? 'satellite-uplink'
+                                    : 'map-outline'
+                            }
+                            size={24}
+                            color={colors.white}
+                        />
+                    </View>
+                </TouchableOpacity>
+            </View>
             {displayData.length > 0 && (
-                <View
-                    style={[
-                        styles.markerWrapper,
-                        {
-                            marginRight: 10,
-                        },
-                    ]}>
+                <View style={[styles.markerWrapper]}>
                     <TouchableOpacity onPress={showList}>
                         <View style={styles.locationIcon}>
                             <Ionicons
@@ -71,7 +113,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         zIndex: 2,
         right: 0,
-        left: 0,
+        left: 0
     },
     markerWrapper: {
         // position: 'absolute',
@@ -79,21 +121,23 @@ const styles = StyleSheet.create({
         // top: -40,
         width: 40,
         height: 40,
-        backgroundColor: colors.lightBlue,
-        borderColor: colors.gray,
+        backgroundColor: colors.dimGreen,
         borderRadius: BORDER_RADIUS,
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
+        marginLeft: 10
     },
     locationIcon: {
-        padding: 8,
-    },
+        padding: 8
+    }
 });
 
 const mapStateToProps = ({mapState}: any) => ({
     displayData: mapState.displayDataList,
     myRegion: mapState.myRegion,
+    mapType: mapState.mapType,
+    zoomLevel: mapState.zoomLevel
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -103,6 +147,7 @@ const mapDispatchToProps = (dispatch: any) => ({
         dispatch(hideCallout());
         dispatch(showList());
     },
+    toggleMapType: () => dispatch(toggleMapType())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapButtons);

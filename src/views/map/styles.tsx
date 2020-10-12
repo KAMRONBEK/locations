@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StatusBar, StyleSheet} from 'react-native';
 import {colors, BORDER_RADIUS, deviceWidth} from '../../constants';
 
 export default StyleSheet.create({
@@ -9,15 +9,15 @@ export default StyleSheet.create({
         // top: 0,
         // bottom: 0,
         // position: 'absolute',
-        zIndex: 1,
+        zIndex: 1
     },
     map: {
-        ...StyleSheet.absoluteFillObject,
+        ...StyleSheet.absoluteFillObject
     },
     marker: {
         height: 80,
         width: 80,
-        resizeMode: 'contain',
+        resizeMode: 'contain'
     },
     callout: {
         backgroundColor: colors.ultraLightBlue,
@@ -26,9 +26,12 @@ export default StyleSheet.create({
         borderRadius: BORDER_RADIUS,
         borderWidth: 0.5,
         borderColor: colors.lightBlue,
-        padding: 7,
+        padding: 7
     },
     calloutText: {
-        color: colors.black,
+        color: colors.black
     },
+    gradient: {
+        height: Platform.OS === 'ios' ? 100 : 2 * StatusBar.currentHeight
+    }
 });

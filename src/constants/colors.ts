@@ -23,4 +23,5 @@ export const colors = {
     lightGreen: '#D1EACC',
     lightPink: '#F7EAFE',
     lightViolet: '#D9E7F2',
+    dimGreen: '#3ead85'
 };

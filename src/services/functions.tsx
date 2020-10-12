@@ -77,3 +77,8 @@ export const findDuplicates = (arr: any) => {
     }
     return results;
 };
+
+export function getRandomInRange(from, to) {
+    return (Math.random() * (to - from) + from).toFixed(3) * 1;
+    // .toFixed() returns string, so ' * 1' is a trick to convert to number
+}

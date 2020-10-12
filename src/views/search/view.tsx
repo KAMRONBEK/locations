@@ -5,7 +5,7 @@ import {
     TouchableOpacity,
     Keyboard,
     Text as OriginText,
-    Image,
+    Image
 } from 'react-native';
 import {styles} from './styles';
 import {connect} from 'react-redux';
@@ -19,7 +19,7 @@ import {
     toggleMenu,
     hideDescription,
     setSearchFocus,
-    hideCallout,
+    hideCallout
 } from '../../redux/actions';
 import {
     INITIAL,
@@ -27,6 +27,8 @@ import {
     colors,
     SEARCHING,
     MAP_WITH_LIST,
+    SCREENS,
+    BORDER_RADIUS
 } from '../../constants';
 import {search} from '../../redux/thunks';
 import {strings} from '../../locales/strings';
@@ -34,6 +36,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MaterialIndicator} from 'react-native-indicators';
 import images from '../../assets/images';
 import FilterItem from '../../component/common/FilterItem';
+import {navigate} from '../../services/navigationServices';
 
 interface SearchInterface {
     setSearchStatus: any;
@@ -72,7 +75,7 @@ const Search = ({
     hideDescription,
     setSearchFocus,
     focus,
-    hideCallout,
+    hideCallout
 }: SearchInterface) => {
     let _searchInput = useRef<TextInput>(null);
 
@@ -84,10 +87,20 @@ const Search = ({
         }
     }, [focus]);
 
+    const onHomePress = () => {
+        navigate(SCREENS.home, {});
+    };
+
     return (
         <View style={styles.plane}>
-            <View style={styles.searchbar}>
-                <TouchableOpacity onPress={toggleMenu}>
+            <View
+                style={[
+                    styles.searchbar,
+                    focus && {
+                        shadowColor: colors.dimGreen
+                    }
+                ]}>
+                <TouchableOpacity onPress={onHomePress}>
                     <View>
                         <Image style={styles.menu} source={images.menu} />
                     </View>
@@ -102,7 +115,14 @@ const Search = ({
                     value={keyword}
                     placeholder={strings.searchHere}
                     // placeholderTextColor={colors.textGray}
-                    style={{flex: 1, padding: 0, color: colors.black}}
+                    style={{
+                        flex: 1,
+                        color: colors.black,
+                        padding: 10,
+                        backgroundColor: colors.ultraLightBlue,
+                        borderRadius: BORDER_RADIUS,
+                        marginHorizontal: 10
+                    }}
                     keyboardAppearance={'dark'}
                     onFocus={() => {
                         hideCallout();
@@ -134,7 +154,7 @@ const Search = ({
                                 <Ionicons
                                     name="ios-search"
                                     size={20}
-                                    color={colors.green}
+                                    color={colors.dimGreen}
                                 />
                             </View>
                         </TouchableOpacity>
@@ -169,7 +189,7 @@ const Search = ({
                     style={{
                         flexDirection: 'row',
                         paddingVertical: 10,
-                        justifyContent: 'center',
+                        justifyContent: 'center'
                     }}>
                     <FilterItem
                         text={strings.atm}
@@ -225,7 +245,7 @@ const mapStateToProps = ({searchState, mapState, appState}: any) => ({
     originalData: mapState.originalDataList,
     searchResultText: searchState.searchResultText,
     language: appState.language,
-    focus: searchState.focusSearch,
+    focus: searchState.focusSearch
 });
 const mapDispatchToProps = (dispatch: any) => ({
     setSearchKeyword: (text: any) => dispatch(setSearchKeyword(text)),
@@ -239,9 +259,9 @@ const mapDispatchToProps = (dispatch: any) => ({
     toggleMenu: () => dispatch(toggleMenu()),
     hideDescription: () => dispatch(hideDescription()),
     setSearchFocus: (mode: any) => dispatch(setSearchFocus(mode)),
-    hideCallout: () => dispatch(hideCallout()),
+    hideCallout: () => dispatch(hideCallout())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {
-    forwardRef: true,
+    forwardRef: true
 })(memo(Search));

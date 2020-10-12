@@ -24,4 +24,5 @@ export default {
     humo: require('./humo.png'),
     call: require('./call.png'),
     visa: require('./visa.png'),
+    pin: require('./pin.png'),
 };

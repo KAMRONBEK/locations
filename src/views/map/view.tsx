@@ -6,14 +6,15 @@ import {
     Keyboard,
     ImageBackground,
     TouchableOpacity,
+    Image
 } from 'react-native';
 import styles from './styles';
 import MapView from 'react-native-map-clustering';
 import mapType, {
     PROVIDER_GOOGLE,
-    Marker,
     Callout,
     CalloutSubview,
+    Marker
 } from 'react-native-maps';
 import {connect} from 'react-redux';
 import {
@@ -21,7 +22,7 @@ import {
     LATITUDE_DELTA,
     LONGITUDE_DELTA,
     MAP_WITH_SEARCH,
-    DIRECTION_API_KEY,
+    DIRECTION_API_KEY
 } from '../../constants';
 import mapConfig from '../../configs/mapConfig';
 import images from '../../assets/images';
@@ -33,14 +34,16 @@ import {
     hideMapLoading,
     setZoomLevel,
     setSearchFocus,
-    hideCallout,
+    hideCallout
 } from '../../redux/actions';
 import {markerPressed} from '../../redux/thunks';
 import MapViewDirections from 'react-native-maps-directions';
 import Bank from '../../assets/vectors/Bank';
 import Branch from '../../assets/vectors/Branch';
 import Atm from '../../assets/vectors/Atm';
+import LocationPin from '../../assets/vectors/Marker';
 import {branchType} from '../../screens/map/Map';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Map = ({
     myRegion,
@@ -61,6 +64,7 @@ const Map = ({
     zoomLevel,
     setZoomLevel,
     descVis,
+    mapType
 }: any) => {
     let branchMarkers = useCallback(() => {
         return (
@@ -72,8 +76,10 @@ const Map = ({
                     tracksViewChanges={false}
                     coordinate={{
                         latitude: region.latitude,
-                        longitude: region.longitude,
+                        longitude: region.longitude
                     }}
+                    anchor={{x: 0.5, y: 1}}
+                    centerOffset={{x: 0.5, y: 1}}
                     // icon={
                     //     region.type == 'branch'
                     //         ? images.branch
@@ -90,21 +96,30 @@ const Map = ({
                             alignItems: 'center',
                             height: 45,
                             width: 45,
-                            overflow: 'hidden',
+                            overflow: 'hidden'
                         }}>
-                        {region.type == 'branch' ? (
+                        {/* {region.type == 'branch' ? (
                             <Branch height={40} width={40} />
                         ) : region.type == 'atm' ? (
                             <Atm height={40} width={40} />
                         ) : (
                             <Bank height={40} width={40} />
-                        )}
+                        )} */}
+                        {/* <LocationPin height={40} width={40} /> */}
+                        <Image
+                            source={images.pin}
+                            style={{
+                                width: 40,
+                                height: 40,
+                                tintColor: colors.dimGreen
+                            }}
+                        />
                     </View>
 
                     <Callout
                         tooltip={true}
                         style={{
-                            width: 0,
+                            width: 0
                         }}
                     />
                 </Marker>
@@ -145,9 +160,9 @@ const Map = ({
                     latitude: focusRegion?.latitude,
                     longitude: focusRegion?.longitude,
                     latitudeDelta: LATITUDE_DELTA,
-                    longitudeDelta: LONGITUDE_DELTA,
+                    longitudeDelta: LONGITUDE_DELTA
                 },
-                1200,
+                1200
             );
         }
     }, [focusRegion]);
@@ -159,9 +174,9 @@ const Map = ({
                     top: 60,
                     left: 40,
                     right: 40,
-                    bottom: 60,
+                    bottom: 60
                 },
-                animated: true,
+                animated: true
             });
         }
     }, [displayDataList]);
@@ -183,14 +198,15 @@ const Map = ({
                 onRegionChangeComplete={(event) =>
                     setZoomLevel(event.longitudeDelta)
                 }
-                radius={10}
+                mapType={mapType}
+                radius={40}
                 edgePadding={{top: 150, left: 50, bottom: 150, right: 50}}
-                // customMapStyle={mapConfig}
+                customMapStyle={mapConfig}
                 layoutAnimationConf={LayoutAnimation.Presets.easeInEaseOut}
                 ref={_map}
                 showsBuildings={true}
                 onClusterPress={(cluster, markers) => {}}
-                clusterColor={colors.lightBlue}
+                clusterColor={colors.dimGreen}
                 showsMyLocationButton={false}
                 onPress={onMapPress}
                 onPanDrag={mapDragStarted}
@@ -214,6 +230,12 @@ const Map = ({
                     />
                 )}
             </MapView>
+            <LinearGradient
+                colors={[colors.dimGreen, 'transparent']}
+                start={{x: 0, y: 0}}
+                end={{x: 0, y: 1}}
+                style={styles.gradient}
+            />
         </View>
     );
 };
@@ -227,6 +249,7 @@ const mapStateToProps = ({mapState, listState, descState}: any) => ({
     routeDestination: mapState.routeDestination,
     zoomLevel: mapState.zoomLevel,
     descVis: descState.descVisibility,
+    mapType: mapState.mapType
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -245,9 +268,9 @@ const mapDispatchToProps = (dispatch: any) => ({
     },
     setZoomLevel: (delta: any) => {
         dispatch(setZoomLevel(delta));
-    },
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {
-    forwardRef: true,
+    forwardRef: true
 })(memo(Map));

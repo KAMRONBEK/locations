@@ -37,3 +37,6 @@ export const BORDER_RADIUS = 5;
 export const UZ = 'uz';
 export const RU = 'ru';
 export const ENG = 'eng';
+
+export const standard = 'standard';
+export const satellite = 'satellite';

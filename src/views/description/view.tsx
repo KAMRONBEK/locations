@@ -120,6 +120,14 @@ descriptionProps) => {
         // getDirections(myRegion, currentRegion);
         setDestinationCoords(currentRegion);
     };
+    const onLocatePress = () => {
+        Animated.spring(animatedValue, {
+            toValue: deviceHeight,
+            useNativeDriver: false,
+            velocity: 10,
+        }).start(() => hideDescription());
+        locationPress();
+    };
 
     const onSharePress = () => {
         console.log('share');
@@ -464,12 +472,7 @@ descriptionProps) => {
                             <ServiceItem
                                 text={strings.showOnMap}
                                 icon="gps-fixed"
-                                onPress={() => {
-                                    setTimeout(() => {
-                                        animatedValue.setValue(deviceHeightW);
-                                    }, 100);
-                                    locationPress();
-                                }}
+                                onPress={onLocatePress}
                             />
                             <ServiceItem
                                 text={strings.call}
