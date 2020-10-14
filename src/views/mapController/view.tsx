@@ -53,7 +53,7 @@ const MapController = ({
     }, [language]);
 
     useEffect(() => {
-        StatusBar.setBarStyle('light-content');
+        StatusBar.setBarStyle('dark-content');
     }, [navigation]);
 
     useEffect(() => {

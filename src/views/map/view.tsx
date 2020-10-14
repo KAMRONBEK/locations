@@ -6,7 +6,8 @@ import {
     Keyboard,
     ImageBackground,
     TouchableOpacity,
-    Image
+    Image,
+    Platform
 } from 'react-native';
 import styles from './styles';
 import MapView from 'react-native-map-clustering';
@@ -202,7 +203,19 @@ const Map = ({
                 radius={40}
                 edgePadding={{top: 150, left: 50, bottom: 150, right: 50}}
                 customMapStyle={mapConfig}
-                layoutAnimationConf={LayoutAnimation.Presets.easeInEaseOut}
+                layoutAnimationConf={{
+                    duration: 700,
+                    create: {
+                        type: 'spring',
+                        springDamping: 0.5,
+                        property: 'opacity'
+                    },
+                    update: {
+                        type: 'spring',
+                        springDamping: 0.7,
+                        property: 'opacity'
+                    }
+                }}
                 ref={_map}
                 showsBuildings={true}
                 onClusterPress={(cluster, markers) => {}}
@@ -221,7 +234,7 @@ const Map = ({
                         mode={'DRIVING'}
                         precision={'high'}
                         apikey={DIRECTION_API_KEY}
-                        strokeWidth={8}
+                        strokeWidth={4}
                         strokeColor={colors.blue}
                         onStart={onDirecionStart}
                         onReady={onDirectionReady}

@@ -30,7 +30,7 @@ let testData = Array.apply(null, Array(5000)).map(function (x, i) {
         address: Math.random().toString(36).substring(7),
         location: {
             latitude: Math.floor(Math.random() * (42 - 40 + 1)) + 40,
-            longitude: Math.floor(Math.random() * (70 - 68 + 1)) + 68,
+            longitude: Math.floor(Math.random() * (70 - 68 + 1)) + 68
         },
         mfo: Math.random(),
         bank: Math.random().toString(36).substring(7),
@@ -39,7 +39,7 @@ let testData = Array.apply(null, Array(5000)).map(function (x, i) {
         latitude: getRandomInRange(20, 62, 180, 3),
         longitude: getRandomInRange(28, 100, 180, 3),
         tag: 'test',
-        type: 'atm',
+        type: 'atm'
     };
 });
 
@@ -69,7 +69,7 @@ class Service {
                         'filial' +
                         ' ' +
                         'filiallar'
-                    } `,
+                    } `
                 };
             });
 
@@ -94,7 +94,7 @@ class Service {
                         'minibanklar' +
                         ' ' +
                         'minibanks'
-                    } `,
+                    } `
                 };
             });
 
@@ -113,7 +113,7 @@ class Service {
                         'Банкомат' +
                         ' ' +
                         'shahobcha'
-                    } `,
+                    } `
                 };
             });
 
@@ -125,9 +125,7 @@ class Service {
                         ? 0
                         : getPreciseDistance(myLocation, {
                               latitude: parseFloat(item.location.split(',')[0]),
-                              longitude: parseFloat(
-                                  item.location.split(',')[1],
-                              ),
+                              longitude: parseFloat(item.location.split(',')[1])
                           }) / 1000;
                 let newItem = {...item, id: index, distance: distance};
                 return newItem;
